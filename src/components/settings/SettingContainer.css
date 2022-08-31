@@ -1,0 +1,21 @@
+.settingContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.settingLinksContainer {
+    flex: 1;
+}
+
+.logoutButtonContainer {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.logoutButtonContainer>button {
+    align-self: flex-end;
+}

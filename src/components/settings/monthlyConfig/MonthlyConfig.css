@@ -1,0 +1,15 @@
+.monthlyConfig {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.monthlyConfigSlides {
+    flex: 1;
+}
+
+.monthlyConfigSliderButtonsContainer {
+    display: flex;
+    justify-content: end;
+}
