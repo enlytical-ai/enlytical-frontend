@@ -10,6 +10,7 @@ import Otp from "./components/auth/Otp";
 import User from "./components/auth/User";
 import SettingContainer from "./components/settings/SettingContainer";
 import DashboardsContainer from "./components/dashboards/DashboardsContainer"
+import AdvertisingReportContainer from "./components/dashboards/advertisingReport/AdvertisingReportContainer";
 import MonthlyConfig from "./components/settings/monthlyConfig/MonthlyConfig";
 
 function App() {
@@ -33,7 +34,8 @@ function App() {
               </Route>
             </Route>
             <Route path="dashboards" element={<DashboardsContainer />} >
-
+              <Route path="advertisingReport" element={<AdvertisingReportContainer />} >
+              </Route>
             </Route>
           </Route>
         </Routes>

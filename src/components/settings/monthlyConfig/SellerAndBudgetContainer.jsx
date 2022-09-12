@@ -11,17 +11,17 @@ const SellerAndBudgetContainer = (props) => {
                 <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
                 <div style={{ border: "1px solid  #bdbdbd", height: "500px", paddingLeft: "20px", paddingRight: "20px", borderRadius: "5px", backgroundColor: "white" }} >
                     <form >
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="inputBudget">Input Budget</label>
-                            <input type="number" class="form-control" id="inputBudget" placeholder="Input Budget"></input>
+                            <input type="number" className="form-control" id="inputBudget" placeholder="Input Budget"></input>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="monthlyBudget">Monthly Budget</label>
-                            <input type="number" class="form-control" id="monthlyBudget" placeholder="Monthly Budget"></input>
+                            <input type="number" className="form-control" id="monthlyBudget" placeholder="Monthly Budget"></input>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="targetAcos">Target ACOS</label>
-                            <input type="number" class="form-control" id="targetAcos" placeholder="Target ACOS"></input>
+                            <input type="number" className="form-control" id="targetAcos" placeholder="Target ACOS"></input>
                         </div>
                     </form>
                 </div>

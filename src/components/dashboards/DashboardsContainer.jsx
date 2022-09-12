@@ -5,12 +5,14 @@ import DashboardsLeft from "./DashboardsLeft";
 import LineGraph from "./../graphs/LineGraph";
 const DashboardsContainer = () => {
     return (
-        <div className="settingContainer" >
+        <div className="dashboardsContainer" >
             <DashboardsLeft>
-
+                <div className="dashboardsLinksContainer" >
+                    <Link to={"/home/dashboards/advertisingReport"} >Advertising Report</Link>
+                </div>
             </DashboardsLeft>
             <DashboardsRight>
-                <LineGraph />
+                <Outlet />
             </DashboardsRight>
         </div>
     )

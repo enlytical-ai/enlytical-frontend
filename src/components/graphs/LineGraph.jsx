@@ -1,58 +1,87 @@
-import { Line } from 'react-chartjs-2';
+import { Chart, Line, Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend,
+
 } from 'chart.js';
 ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+
+
 );
-const LineGraph = () => {
-    const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-        datasets: [
-            {
-                label: 'Impressions',
-                data: [1, 2, 3, 4, 5],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Clicks',
-                data: [12, 28, 2, 4, 100],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    }
+const LineGraph = (props) => {
+    const { data, graphDataType } = props;
+
     return (
         <div>
-            <Line
+            <  Chart
+
+
                 data={data}
-                height={400}
+                height={300}
                 options={
                     {
+                        tension: 0.4,
+                        borderWidth: 1,
                         maintainAspectRatio: false,
+
                         plugins: {
                             legend: {
                                 position: 'bottom',
                             },
                             title: {
                                 display: true,
-                                text: 'Chart.js Line Chart',
+                                //  text: 'Chart.js Line Chart',
                             },
                         },
+                        interaction: {
+                            mode: "index"
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                // ticks: {
+                                //     callback: function (val, index) {
+                                //         // Hide every 2nd tick label
+                                //         if (graphDataType === "daily") {
+                                //             const time_stamp = this.getLabelForValue(val);
+                                //             const day = new Date(`${time_stamp}T00:00:00.000+00:00`).getDay();
+                                //             if (day === 0) return "Sunday";
+                                //             if (day === 6) return "Saturday";
+                                //             return this.getLabelForValue(val)
+                                //         } else {
+                                //             return this.getLabelForValue(val);
+                                //         }
+                                //     },
+                                // }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                }
+                            },
+
+                        },
+
+                        onClick: function (e, x) {
+                            console.log(e, x);
+                        }
                     }
                 }
             />

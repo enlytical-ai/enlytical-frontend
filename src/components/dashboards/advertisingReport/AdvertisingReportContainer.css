@@ -1,0 +1,71 @@
+.advertisingReportContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    height: calc(100vh - 48px - 40px);
+}
+
+.advertisingReportContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.advertisingReportContainerRow_1>h1 {
+    font-size: 18px;
+    color: #757575;
+}
+
+.advertisingReportContainerRow_2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.advertisingReportContainerRow_4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+
+.row_2Filter {
+    display: flex;
+    flex-direction: row;
+}
+
+.row_4Filter {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter {
+    color: #757575;
+    font-size: 16px;
+    margin: 5px;
+    border-bottom: 2px solid white;
+    border-radius: 3px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.filterClicked {
+    border-bottom: 2px solid #00e676;
+}
+
+.advertisingReportContainerRow_3 {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.advertisingReportContainerRow_4 {
+    margin-top: 10px;
+
+}
