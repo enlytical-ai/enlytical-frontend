@@ -9,3 +9,33 @@
     flex: 1;
 }
 
+
+
+.menuElement {
+    padding: 0px 8px;
+    color: #757575;
+    border-radius: 5px;
+    margin: 4px 4px 4px 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.menuElementClicked {
+    background-color: #EEEEEE;
+}
+
+.menuElement:hover {
+    background-color: #EEEEEE;
+    color: #757575;
+}
+
+.accordion-button {
+    padding: 10px;
+}
+
+.accordion-body {
+    padding: 0px;
+    padding-left: 10px;
+}

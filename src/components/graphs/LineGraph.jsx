@@ -24,13 +24,11 @@ ChartJS.register(
 
 );
 const LineGraph = (props) => {
-    const { data, graphDataType } = props;
+    const { data, graphDataType, yAxesColor, y1AxesColor } = props;
 
     return (
         <div>
             <  Chart
-
-
                 data={data}
                 height={300}
                 options={
@@ -73,8 +71,18 @@ const LineGraph = (props) => {
                             },
                             y: {
                                 grid: {
-                                    display: false
+                                    display: false,
+                                    borderColor: yAxesColor?yAxesColor: "#e0e0e0" ,
+                                    borderWidth: 2
                                 }
+                            },
+                            y1: {
+                                position: 'right',
+                                grid: {
+                                    display: false,
+                                    borderColor: y1AxesColor ? y1AxesColor : "#e0e0e0",
+                                    borderWidth: 2
+                                },
                             },
 
                         },

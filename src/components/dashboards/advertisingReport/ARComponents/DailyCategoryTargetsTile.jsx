@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import "./Tile.css";
-const Tiles = (props) => {
-    const { tile, tileGraphIconClicked } = props;
+import "./DailyCategoryTargetsTile.css";
+const DailyCategoryTargetsTile = (props) => {
+    const { tile } = props;
     return (
         <div className="tileAndIconContainer" >
             <div
@@ -24,15 +24,8 @@ const Tiles = (props) => {
                 <p className="tileRow_3"  >L7D Avg: {tile.from_day_before_yesterday_pre_seven_days_avg}</p>
                 <p className="tileRow_4" >({tile.percentage_change}%)</p>
             </div>
-            <div className={tileGraphIconClicked === tile.name ? "tileGraphIconContainer graphIconClicked" : "tileGraphIconContainer"}
-
-            >
-                {
-                    tileGraphIconClicked === tile.name ? <i onClick={() => props.tileGraphIconClickedFn(null)} class="bi bi-bar-chart"></i> : <i onClick={() => props.tileGraphIconClickedFn(tile.name)} class="bi bi-bar-chart"></i>
-                }
-            </div>
         </div>
     )
 }
 
-export default Tiles;
+export default DailyCategoryTargetsTile;

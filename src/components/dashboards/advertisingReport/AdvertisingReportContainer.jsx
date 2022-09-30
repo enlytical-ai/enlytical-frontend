@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoryTableComponent from "./ARComponents/CategoryTableComponent";
+import TargetsTableComponent from "./ARComponents/TargetsTableComponent"
+import Grid from "../../Grids/Grid"
 import "./AdvertisingReportContainer.css"
 import LineGraphComponent from "./ARComponents/LineGraphComponent";
 import Tile from "./ARComponents/Tile";
+import DateRangeSlider from "../../commonComponent/DateRangeSlider";
 const AdvertisingReportContainer = (props) => {
     const [filter, setFilter] = useState([
         { name: "SB", status: false },
@@ -16,19 +19,15 @@ const AdvertisingReportContainer = (props) => {
         { name: "Weekly", status: false },
         { name: "Monthly", status: false },
     ]);
+    const [dateFilter, setDateFilter] = useState({
+        start_date: null,
+        end_date: null
+    })
     const [graphDataType, setGraphDataType] = useState("daily");
     const [state, setState] = useState({})
-    const [clickedTile, setClickedTile] = useState([
-        { name: "sales", status: false },
-        { name: "cost", status: false },
-        { name: "acos", status: false },
-        { name: "orders", status: false },
-        { name: "clicks", status: false },
-        { name: "cpc", status: false },
-        { name: "impressions", status: false },
-        { name: "ctr", status: false }
-    ])
+    const [clickedTile, setClickedTile] = useState(["sales"]);
     const [tileGraphIconClicked, setTileGraphIconClicked] = useState();
+    const [lineGraphErrorToggle, setLineGraphErrorToggle] = useState(false);
     useEffect(() => {
         let campaign_type_array = [];
         filter.forEach(e => {
@@ -40,7 +39,7 @@ const AdvertisingReportContainer = (props) => {
             campaign_type_array = ["SB", "SBVC", "SD", "SP"]
         }
         axios.post('http://localhost:5000/dashboard/advertisingReport/getTileData', {
-            time_stamp: "2022-09-05T00:00:00.000+00:00",
+            time_stamp: "2022-07-30T00:00:00.000+00:00",
             campaign_type_array
         }).then(function (response) {
             const { tile_array } = response.data.data;
@@ -51,7 +50,7 @@ const AdvertisingReportContainer = (props) => {
         });
 
         axios.post('http://localhost:5000/dashboard/advertisingReport/getCategoryTableData', {
-            time_stamp: "2022-09-05T00:00:00.000+00:00",
+            time_stamp: "2022-07-31T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
                 "Coffee Maker",
@@ -65,12 +64,33 @@ const AdvertisingReportContainer = (props) => {
                 "Roasted coffee beans"
             ]
         }).then(function (response) {
-            const { category_tabel_data_array } = response.data.data;
-            setState(prevState => ({ ...prevState, category_tabel_data_array }))
+            const { category_table_data_array } = response.data.data;
+            console.log(category_table_data_array)
+            setState(prevState => ({ ...prevState, category_table_data_array }))
         }).catch(function (error) {
             console.log(error);
         });
+        axios.post('http://localhost:5000/dashboard/advertisingReport/getTargetsTableData', {
+            time_stamp: "2022-07-31T00:00:00.000+00:00",
+            campaign_type_array,
+            category_array: [
+                "Coffee Maker",
+                "Cold Brew",
+                "Cold Coffee",
+                "Filter coffee",
+                "Ground Coffee",
+                "Hampers & Gourmet Gifts",
+                "Hot Brew",
+                "Instant Coffee",
+                "Roasted coffee beans"
+            ]
+        }).then(function (response) {
+            const { targets_table_data_array } = response.data.data;
 
+            setState(prevState => ({ ...prevState, targets_table_data_array }))
+        }).catch(function (error) {
+            console.log(error);
+        });
 
 
     }, [filter])
@@ -99,18 +119,40 @@ const AdvertisingReportContainer = (props) => {
     }
 
 
-    const tileClicked = (id) => {
-        const newFilter = clickedTile.map(el => {
-            return {
-                name: el.name,
-                status: id === el.name ? !el.status : el.status,
+    const tileClickedFn = (id) => {
+        const arr = [...clickedTile];
+        const index = arr.indexOf(id);
+
+        if (index === -1) {
+            if (arr.length < 2) {
+                arr.push(id);
+            } else {
+                setLineGraphErrorToggle(true);
+                setTimeout(() => {
+                    setLineGraphErrorToggle(false);
+                }, 2000)
             }
-        })
-        setClickedTile(newFilter);
+        } else {
+            arr.splice(index, 1);
+        }
+        setClickedTile(arr);
+
+
     }
 
     const tileGraphIconClickedFn = (id) => {
         setTileGraphIconClicked(id);
+    }
+    let timeOut;
+    const getSelectedStartEndDate = (startDate, endDate) => {
+        clearTimeout(timeOut)
+        timeOut = setTimeout(() => {
+            console.log(startDate, endDate)
+            setDateFilter({
+                start_date: startDate,
+                end_date: endDate
+            })
+        }, 1000)
     }
 
     return (
@@ -134,20 +176,22 @@ const AdvertisingReportContainer = (props) => {
                     }
 
                 </div>
-                <div><input type="range" className="form-range" min="0" max="5" id="customRange2"></input></div>
+                <div>
+                    <DateRangeSlider
+                        startDate={"2022-07-01T00:00:00.000+00:00"}
+                        endDate={"2022-07-31T00:00:00.000+00:00"}
+                        getSelectedStartEndDate={getSelectedStartEndDate}
+                    />
+                </div>
             </div>
             <div className="advertisingReportContainerRow_3" >
                 {
                     state.tile_array && state.tile_array.map(tile => {
                         let obj
-                        clickedTile.forEach(e => {
-                            if (e.name === tile.name) {
-                                obj = e;
-                            }
-                        });
+                        const status = clickedTile.includes(tile.name);
                         return <Tile
-                            clicked={obj.status}
-                            tileClicked={tileClicked}
+                            clicked={status}
+                            tileClickedFn={tileClickedFn}
                             tileGraphIconClickedFn={tileGraphIconClickedFn}
                             tileGraphIconClicked={tileGraphIconClicked}
                             key={tile.name}
@@ -176,16 +220,25 @@ const AdvertisingReportContainer = (props) => {
                 </div>
             </div>
             <div className="advertisingReportContainerRow_5" >
+                {
+                    lineGraphErrorToggle && <div className="lineGraphComponentError"  >   <p>You cannot select more than two data sets.</p></div>
+                }
                 <LineGraphComponent
                     clickedTile={clickedTile}
                     filter={filter}
                     graphDataType={graphDataType}
                     tileGraphIconClicked={tileGraphIconClicked}
+                    dateFilter={dateFilter}
                 />
             </div>
             {/* Grid */}
             <div className="advertisingReportContainerRow_6" >
-                <CategoryTableComponent category_tabel_data_array={state.category_tabel_data_array} />
+                <CategoryTableComponent category_table_data_array={state.category_table_data_array} />
+
+            </div>
+            <div className="advertisingReportContainerRow_7" >
+                <h3>Targets</h3>
+                <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
             </div>
 
         </div>

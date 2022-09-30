@@ -1,0 +1,15 @@
+.sellerTypeElement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00e676;
+    border-radius: 4px;
+    width: 130px;
+    margin: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.selectedSellerTypeElement {
+    background-color: #00e676;
+}

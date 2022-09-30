@@ -4,7 +4,7 @@ import LineGraph from "../../../graphs/LineGraph"
 import { useState } from "react"
 
 const LineGraphComponent = (props) => {
-    const { filter, graphDataType, tileGraphIconClicked } = props;
+    const { filter, graphDataType, tileGraphIconClicked, clickedTile, dateFilter } = props;
     const [state, setState] = useState({
         labels: [],
         sales: [],
@@ -17,6 +17,7 @@ const LineGraphComponent = (props) => {
     })
 
     useEffect(() => {
+        const { start_date, end_date } = dateFilter;
         let campaign_type_array = [];
         filter.forEach(e => {
             if (e.status) {
@@ -27,8 +28,8 @@ const LineGraphComponent = (props) => {
             campaign_type_array = ["SB", "SBVC", "SD", "SP"]
         }
         axios.post('http://localhost:5000/dashboard/advertisingReport/getGraphData', {
-            start_date: "2022-08-01T00:00:00.000+00:00",
-            end_date: "2022-08-31T00:00:00.000+00:00",
+            start_date,
+            end_date,
             campaign_type_array,
             graph_data_type: graphDataType
         }).then(function (response) {
@@ -82,18 +83,18 @@ const LineGraphComponent = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
-    }, [filter, graphDataType])
+    }, [filter, graphDataType, dateFilter])
 
-    const { clickedTile } = props;
-    let clicked_tile_array = [];
-    clickedTile.forEach(e => {
-        if (e.status) {
-            clicked_tile_array.push(e.name);
-        }
-    })
-    if (clicked_tile_array.length === 0) {
-        clicked_tile_array = ["sales", "cost", "acos", "orders", "clicks", "cpc", "impressions", "ctr"]
-    }
+    // const { clickedTile } = props;
+    // let clicked_tile_array = [];
+    // clickedTile.forEach(e => {
+    //     if (e.status) {
+    //         clicked_tile_array.push(e.name);
+    //     }
+    // })
+    // if (clicked_tile_array.length === 0) {
+    //     clicked_tile_array = ["sales", "cost", "acos", "orders", "clicks", "cpc", "impressions", "ctr"]
+    // }
     const getSunSatColorBackground = (index, defaultColor) => {
         const time_stamp = state.labels[index];
         if (state.graph_data_type === "daily") {
@@ -133,6 +134,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "sales" ? getSunSatColorBackground(index, 'rgba(255, 99, 132, 0.2)') : 'rgba(255, 99, 132, 0.2)';
             },
+            axesColor: 'rgba(255, 99, 132, 1)'
 
         },
         {
@@ -148,6 +150,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "cost" ? getSunSatColorBackground(index, 'rgba(54, 162, 235, 0.2)') : 'rgba(54, 162, 235, 0.2)';
             },
+            axesColor: "rgba(54, 162, 235, 1)"
 
         },
         {
@@ -163,6 +166,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "acos" ? getSunSatColorBackground(index, 'rgba(255, 206, 86, 0.2)') : 'rgba(255, 206, 86, 0.2)';
             },
+            axesColor: 'rgba(255, 206, 86, 1)'
 
         },
         {
@@ -178,7 +182,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "orders" ? getSunSatColorBackground(index, 'rgba(75, 192, 192, 0.2)') : 'rgba(75, 192, 192, 0.2)';
             },
-
+            axesColor: 'rgba(75, 192, 192, 0.2)'
         },
         {
             label: 'Clicks',
@@ -193,6 +197,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "clicks" ? getSunSatColorBackground(index, 'rgba(153, 102, 255, 0.2)') : 'rgba(153, 102, 255, 0.2)';
             },
+            axesColor: 'rgba(153, 102, 255, 0.2)'
 
         },
         {
@@ -208,7 +213,7 @@ const LineGraphComponent = (props) => {
                 const { index } = e;
                 return tileGraphIconClicked === "cpc" ? getSunSatColorBackground(index, 'rgba(255,20,147, 0.2)') : 'rgba(255,20,147, 0.2)';
             },
-
+            axesColor: 'rgba(255,20,147, 1)'
         },
         {
             label: 'Impressions',
@@ -216,14 +221,14 @@ const LineGraphComponent = (props) => {
             // borderColor: 'rgba(50,205,50, 1)',
             borderColor: function (e) {
                 const { index } = e;
-                return tileGraphIconClicked === "impression" ? getSunSatColorBorder(index, 'rgba(50,205,50, 1)') : 'rgba(50,205,50, 1)';
+                return tileGraphIconClicked === "impressions" ? getSunSatColorBorder(index, 'rgba(50,205,50, 1)') : 'rgba(50,205,50, 1)';
             },
             // backgroundColor: 'rgba(50,205,50, 0.2)',
             backgroundColor: function (e) {
                 const { index } = e;
-                return tileGraphIconClicked === "impression" ? getSunSatColorBackground(index, 'rgba(50,205,50, 0.2)') : 'rgba(50,205,50, 0.2)';
+                return tileGraphIconClicked === "impressions" ? getSunSatColorBackground(index, 'rgba(50,205,50, 0.2)') : 'rgba(50,205,50, 0.2)';
             },
-
+            axesColor: 'rgba(50,205,50, 0.2)'
         },
         {
             label: 'CTR',
@@ -231,35 +236,43 @@ const LineGraphComponent = (props) => {
             //  borderColor: 'rgba(205,92,92, 1)',
             borderColor: function (e) {
                 const { index } = e;
-                return tileGraphIconClicked === "ctr" ? getSunSatColorBorder(index, 'rgba(205,92,92, 1)') : 'rgba(205,92,92, 1)';
+                return tileGraphIconClicked === "ctr" ? getSunSatColorBorder(index, 'rgba(25,25,112, 1)') : 'rgba(25,25,112, 1)';
             },
             //  backgroundColor: 'rgba(205,92,92, 0.2)',
             backgroundColor: function (e) {
                 const { index } = e;
-                return tileGraphIconClicked === "ctr" ? getSunSatColorBackground(index, 'rgba(205,92,92, 0.2)') : 'rgba(205,92,92, 0.2)';
+                return tileGraphIconClicked === "ctr" ? getSunSatColorBackground(index, 'rgba(25,25,112, 0.2)') : 'rgba(25,25,112, 0.2)';
             },
-
+            axesColor: 'rgba(25,25,112, 0.2)'
         }
     ]
 
     const data_sets = [];
+    const yAxesArray = [{ axes: "y", color: null }, { axes: "y1", color: null }];
+    let yAxesArrayIndex = 0;
     graphDatasets.forEach(e => {
-        const status = clicked_tile_array.includes(e.label.toLowerCase());
+        const status = clickedTile.includes(e.label.toLowerCase());
         if (e.label.toLowerCase() === tileGraphIconClicked) {
             e.type = "bar"
         } else {
             e.type = "line"
         }
         if (status) {
+            e.yAxisID = yAxesArray[yAxesArrayIndex].axes;
+            yAxesArray[yAxesArrayIndex].color = e.axesColor;
+            delete e.axesColor;
             data_sets.push(e)
+            yAxesArrayIndex += 1;
         }
     })
-
     return <LineGraph
         data={{
             labels: state.labels,
             datasets: data_sets,
+
         }}
+        yAxesColor={yAxesArray[0].color}
+        y1AxesColor={yAxesArray[1].color}
         graphDataType={graphDataType}
     />
 }

@@ -1,0 +1,74 @@
+
+.tileContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    min-width: 120px;
+    border-radius: 5px;
+    cursor: pointer;
+    border-bottom: 2px solid white;
+}
+
+.tileContainer>p {
+    margin: 0px;
+}
+
+.tileRow_1 {
+    font-size: 12px;
+    color: #757575;
+    border-bottom: 1px solid #372f44;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tileRow_2 {
+    color: #00e676;
+}
+
+.positive {
+    color: #00e676;
+}
+
+.negative {
+    color: #d50000
+}
+
+.zero {
+    color: #ffeb3b;
+}
+
+.tileRow_3 {
+    font-size: 12px;
+    color: #757575;
+}
+
+.tileRow_4 {
+    font-size: 12px;
+    color: #757575;
+}
+
+.tileClicked {
+    border-bottom: 2px solid #00e676;
+}
+
+.tileAndIconContainer {
+    position: relative;
+}
+
+.tileGraphIconContainer {
+    color: #757575;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    cursor: pointer;
+}
+
+
+
+.graphIconClicked {
+    color: #00e676;
+}

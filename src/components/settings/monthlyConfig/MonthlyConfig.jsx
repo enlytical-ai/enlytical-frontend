@@ -2,25 +2,20 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import "./MonthlyConfig.css"
 import ProductTable from "./ProductTable"
-import SellerAndBudgetContainer from "./SellerAndBudgetContainer"
+import BudgetContainer from "./BudgetContainer"
 import ProgressBar from "../../commonComponent/ProgressBar"
+import SellerTable from "./SellerTable"
 const MonthlyConfig = () => {
     const [state, setState] = useState({
         page: 1,
-        maxPage: 2,
-        crawled_data_array: [],
-        seller_arrary: []
+        maxPage: 3,
+        product_data_array: [],
+        seller_arrary: [],
+        category_wise_sales_and_spend_target: []
     });
     useEffect(() => {
-        axios.get('http://localhost:5000/onbordingCrawledData')
-            .then(function (response) {
-                console.log(response.data.data);
-                const { crawled_data_array, seller_arrary } = response.data.data
-                setState((prevState) => ({ ...prevState, crawled_data_array, seller_arrary }))
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    
+
     }, [])
 
     const changePage = (action) => {
@@ -44,7 +39,7 @@ const MonthlyConfig = () => {
             <div className="monthlyConfigSlides" >
 
                 {
-                    state.page === 1 ? <ProductTable crawled_data_array={state.crawled_data_array} /> : state.page === 2 ? <SellerAndBudgetContainer seller_arrary={state.seller_arrary} /> : null
+                    state.page === 1 ? <ProductTable product_data_array={state.product_data_array} /> : state.page === 2 ? <SellerTable /> : state.page === 3 ? <BudgetContainer category_wise_sales_and_spend_target={state.category_wise_sales_and_spend_target} /> : null
                 }
             </div>
             <div>

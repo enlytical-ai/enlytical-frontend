@@ -1,0 +1,41 @@
+.form-group {
+    margin-top: 20px;
+}
+
+.editIcon {
+    cursor: pointer;
+}
+
+.editIcon>i:hover {
+    color: #00e676;
+}
+
+.salesSpendContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.editPopUp {
+    position: absolute;
+    border: 1px solid #bdbdbd;
+    height: 300px;
+    width: 500px;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    align-self: center;
+    justify-self: center;
+}
+.editPopUpButtonsContainer{
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+.salesSpendContainerHeader{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}

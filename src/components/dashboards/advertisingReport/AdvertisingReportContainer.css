@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: row;
     justify-content: end;
+    align-items: center;
     border-bottom: 1px solid #bdbdbd;
 }
 
@@ -68,4 +69,27 @@
 .advertisingReportContainerRow_4 {
     margin-top: 10px;
 
+}
+
+.advertisingReportContainerRow_5 {
+    position: relative;
+}
+
+.lineGraphComponentError {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+.lineGraphComponentError>p {
+    color: #e53935;
+
+}
+.advertisingReportContainerRow_7{
+    margin-top: 16px;
+}
+.advertisingReportContainerRow_7>h3 {
+    font-size: 18px;
+    color: #757575;
 }

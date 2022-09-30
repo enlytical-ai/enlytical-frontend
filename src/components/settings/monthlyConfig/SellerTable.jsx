@@ -1,48 +1,124 @@
+import "./SellerTable.css";
+import axios from "axios";
+import GridComponent from "../../Grids/GridComponent/GridComponent";
+import { useState } from "react";
+import { useEffect } from "react";
+
 const SellerTable = (props) => {
-    const { seller_arrary } = props
+
+    const [sellerDataArray, setSellerDataArray] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:5000/clientSellerDetail')
+            .then(function (response) {
+                console.log(response.data.data);
+                const { seller_data_array } = response.data.data
+                setSellerDataArray(seller_data_array);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+
+    const onRowSelected = (e, data) => {
+        const selected = e.target.checked;
+        const { _id } = data;
+        console.log(data)
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { selected })
+            .then(function (response) {
+                const { seller } = response.data.data;
+                const { _id, selected } = seller;
+                const sellerArray = [...sellerDataArray];
+                sellerArray.forEach(el => {
+                    if (el._id === _id) {
+                        el.selected = selected;
+                    }
+                })
+                setSellerDataArray(sellerArray);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    const onSellerTypeClicked = (e, data) => {
+        let seller_type = e.target.id;
+        if (seller_type === data.seller_type) {
+            seller_type = null;
+        }
+        const { _id } = data;
+        console.log(data)
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { seller_type })
+            .then(function (response) {
+                const { seller } = response.data.data;
+                const { _id, seller_type } = seller;
+                const sellerArray = [...sellerDataArray];
+                sellerArray.forEach(el => {
+                    if (el._id === _id) {
+                        el.seller_type = seller_type;
+                    }
+                })
+                setSellerDataArray(sellerArray);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
+
+    const checkBoxComponent = (props) => {
+        return (
+            <>
+                <input onChange={(e) => onRowSelected(e, props.data)} class="form-check-input" type="checkbox" checked={props.value}></input>
+            </>
+        )
+    }
+
+    const sellerType = (props) => {
+        const sellerTypeElementArray = ["FBA-Fullfillment", "Non-FBA-Fullfillment"];
+        const { seller_type } = props.data;
+        return (
+            <div style={{ display: "flex" }} >
+                {
+                    sellerTypeElementArray.map(p => {
+                        return <div onClick={(e) => onSellerTypeClicked(e, props.data)} key={p} id={p} className={`sellerTypeElement ${p === seller_type ? "selectedSellerTypeElement" : ""}`} >{p}</div>
+                    })
+                }
+            </div>
+        )
+    }
+
+    const headerArray = [
+        {
+            headerName: "",
+            field: "selected",
+            cellComponent: checkBoxComponent,
+            width: 30
+        },
+        {
+            headerName: "Seller Name",
+            field: "seller_name",
+            width: 520,
+            maxWidth: 720,
+            minWidth: 160
+        },
+        {
+            headerName: "Seller Type",
+            field: "seller_type",
+            cellComponent: sellerType,
+            maxWidth: 720,
+            minWidth: 160
+        }
+    ]
+
     return (
         <div className="sellerTable" >
             <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
-            <div className="table"  >
-                <div
-                    className="tableHeader"
-                >
-                    <div className="tableHeaderElement" style={{ width: "50px" }} >   #</div>
-                    <div className="tableHeaderElement" style={{ width: "260px" }} >Seller Name</div>
-                    <div className="tableHeaderElement" style={{ width: "260px" }} >Seller Fulfilment Method</div>
-
-                </div>
-                {
-                    seller_arrary.map((s) => {
-                        return (
-                            <div
-                                className="tableRow"
-                                style={{
-                                    display: "flex",
-                                    height: "40px",
-                                    alignItems: "center",
-                                    borderBottom: "1px solid #e0e0e0",
-                                    paddingLeft: "5px",
-
-
-                                }}
-                            >
-                                <div style={{ width: "50px" }} >
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id={s}
-                                    ></input>
-                                </div>
-                                <div style={{ color: "#757575", width: "260px" }}  >{s}</div>
-                                <div style={{ color: "#757575", width: "260px" }}  ></div>
-                            </div>
-                        )
-                    })
-                }
-
-            </div>
-
+            <GridComponent
+                headerArray={headerArray}
+                rowArray={sellerDataArray}
+                tableHeight={560}
+            />
         </div>
     )
 }

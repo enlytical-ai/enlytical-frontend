@@ -30,7 +30,7 @@ const Login = () => {
                 console.log(response.data.data);
                 const { token } = response.data.data;
                 localStorage.setItem("token", token);
-                navigate("/home/dashboards");
+                navigate("/home");
             })
             .catch(function (error) {
                 console.log(error);
