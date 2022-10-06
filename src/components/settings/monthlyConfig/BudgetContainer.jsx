@@ -5,6 +5,7 @@ import axios from "axios"
 import GridComponent from "../../Grids/GridComponent/GridComponent";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { getMonthAndYearArray } from "../../../utils/commonFunction";
+import { divTwoNum, roundOffToTwoDecimal } from "../../../commonFunction/commomFunction"
 const BudgetContainer = (props) => {
     const [popUp, setPopUp] = useState(false);
     const [searchDate, setSearchDate] = useState("Sep-2022");
@@ -20,9 +21,15 @@ const BudgetContainer = (props) => {
         setSearchDateArray(datesArray);
     }, [])
     useEffect(() => {
+        const token = localStorage.getItem("token");
         axios.post('http://localhost:5000/clientMonthlyConfig/monthlyBudget', {
             time_stamp: searchDate
-        })
+        },
+            {
+                headers: { token }
+            }
+
+        )
             .then(function (response) {
                 const { category_wise_sales_and_spend_target, _id } = response.data.data.clientMonthlyConfig
                 setState({ _id, category_wise_sales_and_spend_target })
@@ -76,7 +83,19 @@ const BudgetContainer = (props) => {
             </div>
         )
     }
-
+    const acosComponent = props => {
+        const { spend, ad_sales } = props.data
+        const div = divTwoNum(spend, ad_sales);
+        let result;
+        if (div === "error") {
+            result = ""
+        } else {
+            result = roundOffToTwoDecimal(div * 100)
+        }
+        return (
+            <div> {result}</div>
+        )
+    }
 
     const headerArray = [
         {
@@ -87,12 +106,18 @@ const BudgetContainer = (props) => {
         {
             headerName: "AD Sales Target",
             field: "ad_sales",
-            width: 240
+            width: 160
         },
         {
             headerName: "Spend Target Budget",
             field: "spend",
-            width: 240
+            width: 160
+        },
+        {
+            headerName: "Target ACOS",
+            field: "",
+            cellComponent: acosComponent,
+            width: 160
         },
         {
             headerName: "Date",
@@ -109,54 +134,54 @@ const BudgetContainer = (props) => {
     ]
     return (
         <div className="salesSpendContainer" >
-                <div style={{ flex: 1 }} >
-                    <div className="salesSpendContainerHeader" >
-                        <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Category wise Sales & Spend Target.</h3>
-                        <div className="salesSpendContainerDateContainer" >
-                            <select onChange={searchDateFn} class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                {
-                                    searchDateArray && searchDateArray.map((date, i) => {
-                                        return (
-                                            <option selected={searchDate === date ? true : false} key={i} value={date}>{date}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-
+            <div style={{ flex: 1 }} >
+                <div className="salesSpendContainerHeader" >
+                    <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Category wise Sales & Spend Target.</h3>
+                    <div className="salesSpendContainerDateContainer" >
+                        <select onChange={searchDateFn} class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            {
+                                searchDateArray && searchDateArray.map((date, i) => {
+                                    return (
+                                        <option selected={searchDate === date ? true : false} key={i} value={date}>{date}</option>
+                                    )
+                                })
+                            }
+                        </select>
                     </div>
-                    <GridComponent
-                        headerArray={headerArray}
-                        rowArray={state.category_wise_sales_and_spend_target}
-                        tableHeight={560}
-                    />
+
                 </div>
-                {
-                    popUp && (<div className="editPopUp"  >
-                        <form >
-                            <div className="form-group">
-                                <label for="inputCategory">Category</label>
-                                <input disabled type="text" value={popUpData.category} className="form-control" id="inputCategory" placeholder="Input Category"></input>
-                            </div>
-                            <div className="form-group">
-                                <label for="monthlyBudget">AD Sales Target</label>
-                                <input type="number" value={popUpData.ad_sales} name="ad_sales" onChange={onInputChange} className="form-control" id="monthlyBudget" placeholder="AD Sales Target"></input>
-                            </div>
-                            <div className="form-group">
-                                <label for="targetAcos">Spend Target</label>
-                                <input type="number" value={popUpData.spend} name="spend" onChange={onInputChange} className="form-control" id="targetAcos" placeholder="Spend Target"></input>
-                            </div>
-                        </form>
-                        <div className="editPopUpButtonsContainer" >
-                            <div className="editPopUpButtons" style={{ display: "flex" }} >
-                                <button style={{ marginRight: "20px" }} type="button" onClick={closePopUp} className="btn btn-warning btn-sm">Cancel</button>
-                            </div>
-                            <div className="editPopUpButtons" style={{ display: "flex" }} >
-                                <button type="button" onClick={onSave} className="btn btn-primary btn-sm">Save</button>
-                            </div>
+                <GridComponent
+                    headerArray={headerArray}
+                    rowArray={state.category_wise_sales_and_spend_target}
+                    tableHeight={560}
+                />
+            </div>
+            {
+                popUp && (<div className="editPopUp"  >
+                    <form >
+                        <div className="form-group">
+                            <label for="inputCategory">Category</label>
+                            <input disabled type="text" value={popUpData.category} className="form-control" id="inputCategory" placeholder="Input Category"></input>
                         </div>
-                    </div>)
-                }
+                        <div className="form-group">
+                            <label for="monthlyBudget">AD Sales Target</label>
+                            <input type="number" value={popUpData.ad_sales} name="ad_sales" onChange={onInputChange} className="form-control" id="monthlyBudget" placeholder="AD Sales Target"></input>
+                        </div>
+                        <div className="form-group">
+                            <label for="targetAcos">Spend Target</label>
+                            <input type="number" value={popUpData.spend} name="spend" onChange={onInputChange} className="form-control" id="targetAcos" placeholder="Spend Target"></input>
+                        </div>
+                    </form>
+                    <div className="editPopUpButtonsContainer" >
+                        <div className="editPopUpButtons" style={{ display: "flex" }} >
+                            <button style={{ marginRight: "20px" }} type="button" onClick={closePopUp} className="btn btn-warning btn-sm">Cancel</button>
+                        </div>
+                        <div className="editPopUpButtons" style={{ display: "flex" }} >
+                            <button type="button" onClick={onSave} className="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>)
+            }
         </div>
     )
 }

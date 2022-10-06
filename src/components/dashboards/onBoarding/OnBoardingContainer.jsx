@@ -3,11 +3,11 @@ import ProductTable from "../../settings/monthlyConfig/ProductTable";
 import SellerTable from "../../settings/monthlyConfig/SellerTable";
 
 const OnBoardingContainer = (props) => {
-    const { currentOnBoardingEl } = props;
+    const { currentOnBoardingEl, changeOnBoardingEl } = props;
     return (
         <>
-            {currentOnBoardingEl === "Portfolio" && <ProductTable />}
-            {currentOnBoardingEl === "Seller" && <SellerTable />}
+            {currentOnBoardingEl === "Portfolio" && <ProductTable changeOnBoardingEl={changeOnBoardingEl} />}
+            {currentOnBoardingEl === "Seller" && <SellerTable changeOnBoardingEl={changeOnBoardingEl} />}
             {currentOnBoardingEl === "Budget" && <BudgetContainer />}
         </>
 

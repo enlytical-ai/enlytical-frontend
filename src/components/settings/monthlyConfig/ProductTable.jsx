@@ -16,7 +16,12 @@ const ProductTable = (props) => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get('http://localhost:5000/clientProductDetail')
+        const token = localStorage.getItem("token");
+        axios.get('http://localhost:5000/clientProductDetail', {
+            headers: {
+                token
+            }
+        })
             .then(function (response) {
                 console.log(response.data.data);
                 const { product_data_array } = response.data.data
@@ -104,9 +109,15 @@ const ProductTable = (props) => {
             </div>
         )
     }
+
+    const asinComponent = props => {
+        return (
+            <a href={`https://www.amazon.in/dp/${props.value}`} target="_blank" style={{ color: "#1565C0", cursor: "pointer" }} >{props.value}</a>
+        )
+    }
     const headerArray = [
         { headerName: "", field: "selected", width: 30, cellComponent: checkBoxComponent },
-        { headerName: "Asin", field: 'platform_code', width: 120 },
+        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 120 },
         { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 160 },
         { headerName: "MRP", field: 'mrp', width: 80 },
         { headerName: "Category", field: "category", width: 180 },
@@ -117,23 +128,29 @@ const ProductTable = (props) => {
     ]
 
     return (
-        <div className="productTableContainer" >
-            <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
-            {
-                productDataArray.length > 0 && (
-                    <GridComponent
-                        headerArray={headerArray}
-                        rowArray={productDataArray}
-                        tableHeight={560}
-                        internalHorizontalScrollWidth={1300}
-                    />
-                )
-            }
-            {
-                loading && <Loader />
-            }
-
-        </div>
+        <>
+            <div className="productTableContainer" >
+                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
+                {/* {
+                    productDataArray.length > 0 && ( */}
+                        <GridComponent
+                            headerArray={headerArray}
+                            rowArray={productDataArray}
+                            tableHeight={500}
+                            internalHorizontalScrollWidth={1300}
+                        />
+                    {/* )
+                } */}
+                {/* {
+                    loading && <Loader />
+                } */}
+                <div className="nextButtonContainer" >
+                    <button onClick={() => {
+                        props.changeOnBoardingEl("Seller")
+                    }} type="button" class="btn btn-primary btn-sm">Next</button>
+                </div>
+            </div>
+        </>
     )
 }
 export default ProductTable;

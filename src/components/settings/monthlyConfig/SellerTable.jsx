@@ -8,7 +8,12 @@ const SellerTable = (props) => {
 
     const [sellerDataArray, setSellerDataArray] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:5000/clientSellerDetail')
+        const token = localStorage.getItem("token");
+        axios.get('http://localhost:5000/clientSellerDetail', {
+            headers: {
+                token
+            }
+        })
             .then(function (response) {
                 console.log(response.data.data);
                 const { seller_data_array } = response.data.data
@@ -117,8 +122,14 @@ const SellerTable = (props) => {
             <GridComponent
                 headerArray={headerArray}
                 rowArray={sellerDataArray}
-                tableHeight={560}
+                tableHeight={500}
             />
+            <div className="nextButtonContainer" >
+
+                <button onClick={() => { props.changeOnBoardingEl("Portfolio") }} type="button" class="btn btn-secondary btn-sm">Back</button>
+                <button style={{marginLeft:20}} onClick={() => { props.changeOnBoardingEl("Budget") }} type="button" class="btn btn-primary btn-sm">Next</button>
+
+            </div>
         </div>
     )
 }

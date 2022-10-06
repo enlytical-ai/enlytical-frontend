@@ -58,6 +58,13 @@
     cursor: pointer;
 }
 
-.selectedPriorityElement{
+.selectedPriorityElement {
     background-color: #00e676;
+}
+
+.nextButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 24px;
 }

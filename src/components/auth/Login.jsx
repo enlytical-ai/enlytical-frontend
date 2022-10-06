@@ -24,11 +24,12 @@ const Login = () => {
     }
 
     const handleSubmit = (e) => {
-        dispatch(saveUserData(state));
+
         axios.post('http://localhost:5000/auth/login', state)
             .then(function (response) {
                 console.log(response.data.data);
-                const { token } = response.data.data;
+                const { token, user } = response.data.data;
+                dispatch(saveUserData( user ));
                 localStorage.setItem("token", token);
                 navigate("/home");
             })
