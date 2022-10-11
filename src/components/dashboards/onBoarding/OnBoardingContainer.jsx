@@ -8,7 +8,7 @@ const OnBoardingContainer = (props) => {
         <>
             {currentOnBoardingEl === "Portfolio" && <ProductTable changeOnBoardingEl={changeOnBoardingEl} />}
             {currentOnBoardingEl === "Seller" && <SellerTable changeOnBoardingEl={changeOnBoardingEl} />}
-            {currentOnBoardingEl === "Budget" && <BudgetContainer />}
+            {currentOnBoardingEl === "Budget" && <BudgetContainer changeOnBoardingEl={changeOnBoardingEl} />}
         </>
 
     )

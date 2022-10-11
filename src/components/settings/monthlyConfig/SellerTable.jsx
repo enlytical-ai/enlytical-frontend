@@ -3,7 +3,7 @@ import axios from "axios";
 import GridComponent from "../../Grids/GridComponent/GridComponent";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 const SellerTable = (props) => {
 
     const [sellerDataArray, setSellerDataArray] = useState([]);
@@ -26,47 +26,55 @@ const SellerTable = (props) => {
     }, [])
 
     const onRowSelected = (e, data) => {
+        const token = localStorage.getItem("token");
         const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { selected })
-            .then(function (response) {
-                const { seller } = response.data.data;
-                const { _id, selected } = seller;
-                const sellerArray = [...sellerDataArray];
-                sellerArray.forEach(el => {
-                    if (el._id === _id) {
-                        el.selected = selected;
-                    }
-                })
-                setSellerDataArray(sellerArray);
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { selected }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { seller } = response.data.data;
+            const { _id, selected } = seller;
+            const sellerArray = [...sellerDataArray];
+            sellerArray.forEach(el => {
+                if (el._id === _id) {
+                    el.selected = selected;
+                }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            setSellerDataArray(sellerArray);
+        }).catch(function (error) {
+            console.log(error);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
     }
     const onSellerTypeClicked = (e, data) => {
+        const token = localStorage.getItem("token");
         let seller_type = e.target.id;
         if (seller_type === data.seller_type) {
             seller_type = null;
         }
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { seller_type })
-            .then(function (response) {
-                const { seller } = response.data.data;
-                const { _id, seller_type } = seller;
-                const sellerArray = [...sellerDataArray];
-                sellerArray.forEach(el => {
-                    if (el._id === _id) {
-                        el.seller_type = seller_type;
-                    }
-                })
-                setSellerDataArray(sellerArray);
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { seller_type }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { seller } = response.data.data;
+            const { _id, seller_type } = seller;
+            const sellerArray = [...sellerDataArray];
+            sellerArray.forEach(el => {
+                if (el._id === _id) {
+                    el.seller_type = seller_type;
+                }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            setSellerDataArray(sellerArray);
+        }).catch(function (error) {
+            console.log(error);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
 
     }
 
@@ -74,13 +82,13 @@ const SellerTable = (props) => {
     const checkBoxComponent = (props) => {
         return (
             <>
-                <input onChange={(e) => onRowSelected(e, props.data)} class="form-check-input" type="checkbox" checked={props.value}></input>
+                <input onChange={(e) => onRowSelected(e, props.data)} className="form-check-input" type="checkbox" checked={props.value}></input>
             </>
         )
     }
 
     const sellerType = (props) => {
-        const sellerTypeElementArray = ["FBA-Fullfillment", "Non-FBA-Fullfillment"];
+        const sellerTypeElementArray = ["Authorised", "Unauthorised"];
         const { seller_type } = props.data;
         return (
             <div style={{ display: "flex" }} >
@@ -122,14 +130,15 @@ const SellerTable = (props) => {
             <GridComponent
                 headerArray={headerArray}
                 rowArray={sellerDataArray}
-                tableHeight={500}
+                tableHeight={510}
             />
             <div className="nextButtonContainer" >
 
-                <button onClick={() => { props.changeOnBoardingEl("Portfolio") }} type="button" class="btn btn-secondary btn-sm">Back</button>
-                <button style={{marginLeft:20}} onClick={() => { props.changeOnBoardingEl("Budget") }} type="button" class="btn btn-primary btn-sm">Next</button>
+                <button onClick={() => { props.changeOnBoardingEl("Portfolio") }} type="button" className="btn btn-secondary btn-sm">Back</button>
+                <button style={{ marginLeft: 20 }} onClick={() => { props.changeOnBoardingEl("Budget") }} type="button" className="btn btn-primary btn-sm">Next</button>
 
             </div>
+            <NotificationContainer/>
         </div>
     )
 }

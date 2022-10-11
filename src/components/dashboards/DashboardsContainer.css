@@ -37,5 +37,12 @@
 
 .accordion-body {
     padding: 0px;
+    margin: 0px;
     padding-left: 10px;
+    background-color: #ffffff;
+}
+
+.accordion-header {
+    padding: 0px;
+    margin: 0px;
 }

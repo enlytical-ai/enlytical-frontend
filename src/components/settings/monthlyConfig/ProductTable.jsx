@@ -5,7 +5,7 @@ import GridComponent from "../../Grids/GridComponent/GridComponent";
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import "./ProductTable.css"
 import Loader from "../../commonComponent/Loader/Loader";
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 
 const ProductTable = (props) => {
@@ -29,54 +29,60 @@ const ProductTable = (props) => {
                 setLoading(false);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response.data.data.message);
             });
     }, []);
 
     const onRowSelected = (e, data) => {
+        const token = localStorage.getItem("token");
         const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { selected })
-            .then(function (response) {
-                const { product } = response.data.data;
-                const { _id, selected } = product;
-                const productArray = [...productDataArray];
-                productArray.forEach(el => {
-                    if (el._id === _id) {
-                        el.selected = selected;
-                    }
-                })
-                setProductDataArray(productArray);
-                console.log(response.data.data);
+        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { selected }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { product } = response.data.data;
+            const { _id, selected } = product;
+            const productArray = [...productDataArray];
+            productArray.forEach(el => {
+                if (el._id === _id) {
+                    el.selected = selected;
+                }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            setProductDataArray(productArray);
+        }).catch(function (error) {
+            console.log(error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
     }
     const onPriorityClicked = (e, data) => {
+        const token = localStorage.getItem("token");
         let priority = e.target.id;
         if (priority === data.priority) {
             priority = null;
         }
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { priority })
-            .then(function (response) {
-                const { product } = response.data.data;
-                const { _id, priority } = product;
-                const productArray = [...productDataArray];
-                productArray.forEach(el => {
-                    if (el._id === _id) {
-                        el.priority = priority;
-                    }
-                })
-                setProductDataArray(productArray);
-                console.log(response.data.data);
+        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { priority }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { product } = response.data.data;
+            const { _id, priority } = product;
+            const productArray = [...productDataArray];
+            productArray.forEach(el => {
+                if (el._id === _id) {
+                    el.priority = priority;
+                }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            setProductDataArray(productArray);
+        }).catch(function (error) {
+            console.log(error);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
 
     }
     const productNameComponent = (props) => {
@@ -92,7 +98,7 @@ const ProductTable = (props) => {
     const checkBoxComponent = (props) => {
         return (
             <>
-                <input onChange={(e) => onRowSelected(e, props.data)} class="form-check-input" type="checkbox" checked={props.value}></input>
+                <input onChange={(e) => onRowSelected(e, props.data)} className="form-check-input" type="checkbox" checked={props.value}></input>
             </>
         )
     }
@@ -112,17 +118,20 @@ const ProductTable = (props) => {
 
     const asinComponent = props => {
         return (
-            <a href={`https://www.amazon.in/dp/${props.value}`} target="_blank" style={{ color: "#1565C0", cursor: "pointer" }} >{props.value}</a>
+            <div style={{ display: "flex", alignItems: "center" }} >
+                <img src={props.data.image_url} style={{ height: "32px" }} ></img>
+                <a href={`https://www.amazon.in/dp/${props.value}`} target="_blank" style={{ color: "#1565C0", cursor: "pointer" }} >{props.value}</a>
+            </div>
         )
     }
     const headerArray = [
         { headerName: "", field: "selected", width: 30, cellComponent: checkBoxComponent },
-        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 120 },
-        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 160 },
+        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 160 },
+        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 220 },
         { headerName: "MRP", field: 'mrp', width: 80 },
         { headerName: "Category", field: "category", width: 180 },
-        { headerName: "Type", field: "type", width: 140 },
-        { headerName: "Platform", field: "platform", width: 140 },
+        { headerName: "Type", field: "type", width: 120 },
+        { headerName: "Platform", field: "platform", width: 120 },
         { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, width: 160 },
         { headerName: "Priority", field: "", cellComponent: priorityComponent, width: 230 }
     ]
@@ -133,13 +142,13 @@ const ProductTable = (props) => {
                 <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
                 {/* {
                     productDataArray.length > 0 && ( */}
-                        <GridComponent
-                            headerArray={headerArray}
-                            rowArray={productDataArray}
-                            tableHeight={500}
-                            internalHorizontalScrollWidth={1300}
-                        />
-                    {/* )
+                <GridComponent
+                    headerArray={headerArray}
+                    rowArray={productDataArray}
+                    tableHeight={510}
+                    internalHorizontalScrollWidth={1300}
+                />
+                {/* )
                 } */}
                 {/* {
                     loading && <Loader />
@@ -147,8 +156,9 @@ const ProductTable = (props) => {
                 <div className="nextButtonContainer" >
                     <button onClick={() => {
                         props.changeOnBoardingEl("Seller")
-                    }} type="button" class="btn btn-primary btn-sm">Next</button>
+                    }} type="button" className="btn btn-primary btn-sm">Next</button>
                 </div>
+                <NotificationContainer />
             </div>
         </>
     )

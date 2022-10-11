@@ -133,9 +133,9 @@ const DateRangeSlider = (props) => {
             <div className="slider">
                 <div className="progress"></div>
             </div>
-            <div class="range-input">
-                <input onChange={onChange} type="range" class="range-min" min={state.min} max={state.max} value={state.minSelectedValue} step="1"></input>
-                <input onChange={onChange} type="range" class="range-max" min={state.min} max={state.max} value={state.maxSelectedValue} step="1"></input>
+            <div className="range-input">
+                <input onChange={onChange} type="range" className="range-min" min={state.min} max={state.max} value={state.minSelectedValue} step="1"></input>
+                <input onChange={onChange} type="range" className="range-max" min={state.min} max={state.max} value={state.maxSelectedValue} step="1"></input>
             </div>
 
         </div>

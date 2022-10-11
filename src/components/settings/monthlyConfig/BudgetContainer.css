@@ -29,13 +29,30 @@
     align-self: center;
     justify-self: center;
 }
-.editPopUpButtonsContainer{
+
+.editPopUpButtonsContainer {
     display: flex;
     justify-content: end;
     margin-top: 10px;
 }
-.salesSpendContainerHeader{
+
+.salesSpendContainerHeader {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.adSalesTargetInput {
+    height: 16px;
+    width: 100px;
+    border: 0px;
+}
+
+.adSalesTargetInput:focus {
+    outline: none;
+    border-bottom: 1px solid gray;
+}
+.adSalesTargetInputContainer{
+    display: flex;
+    align-items: center;
 }

@@ -14,7 +14,7 @@ const MonthlyConfig = () => {
         category_wise_sales_and_spend_target: []
     });
     useEffect(() => {
-    
+
 
     }, [])
 

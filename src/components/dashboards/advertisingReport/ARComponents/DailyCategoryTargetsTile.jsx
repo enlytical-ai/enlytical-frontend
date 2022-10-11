@@ -19,7 +19,7 @@ const DailyCategoryTargetsTile = (props) => {
                     {tile.name === "ctr" && "%"}
                     {tile.flow === "positive" && <i className="bi bi-arrow-up-short"></i>}
                     {tile.flow === "negative" && <i className="bi bi-arrow-down-short"></i>}
-                    {tile.flow === "zero" && <i class="bi bi-dash"></i>}
+                    {tile.flow === "zero" && <i className="bi bi-dash"></i>}
                 </p>
                 <p className="tileRow_3"  >L7D Avg: {tile.from_day_before_yesterday_pre_seven_days_avg}</p>
                 <p className="tileRow_4" >({tile.percentage_change}%)</p>

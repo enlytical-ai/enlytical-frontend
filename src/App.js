@@ -1,7 +1,10 @@
+//import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../src/scss/main.scss";
+import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "../node_modules/bootstrap-icons/font/bootstrap-icons.css"
 import { useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
+
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import './App.css';
@@ -15,24 +18,42 @@ import MonthlyConfig from "./components/settings/monthlyConfig/MonthlyConfig";
 import GridComponent from "./components/Grids/GridComponent/GridComponent";
 import BrandHealth from "./components/dashboards/powerBiDashboard/powerBiDashboards/BrandHealth";
 import PowerBiDashboardContainer from "./components/dashboards/powerBiDashboard/PowerBiDashboardContainer";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { saveUserData } from "./redux/user/userActions";
+import 'react-notifications/lib/notifications.css';
 function App() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+
+  axios.get('http://localhost:5000/user', {
+    headers: {
+      token
+    }
+  }).then(function (response) {
+    const { user } = response.data.data;
+    dispatch(saveUserData(user));
+
+  })
+    .catch(function (error) {
+      console.log(error);
+    });
   useEffect(() => {
-    //token 
     token ? navigate("/home") : navigate("/user/login");
   }, [])
   return (
     <div className="App">
-      <Provider store={store} >
-        <Routes>
-          <Route path="user" element={<User />} >
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="setpassword/:email" element={<Otp />} />
-          </Route>
-          <Route path="home" element={<Home />} >
-            {/* <Route path="settings" element={<SettingContainer />} >
+
+      <Routes>
+        <Route path="user" element={<User />} >
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="setpassword/:email" element={<Otp />} />
+        </Route>
+        <Route path="home" element={<Home />} >
+          {/* <Route path="settings" element={<SettingContainer />} >
               <Route path="monthlyConfig" element={<MonthlyConfig />} >
               </Route>
               <Route path="dailyPerformance" element={<BrandHealth />} >
@@ -44,9 +65,9 @@ function App() {
               <Route path="powerBiDashboard" element={<PowerBiDashboardContainer />} >
               </Route>
             </Route> */}
-          </Route>
-        </Routes>
-      </Provider>
+        </Route>
+      </Routes>
+
 
 
     </div >

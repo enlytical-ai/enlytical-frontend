@@ -33,3 +33,26 @@ exports.getMonthAndYearArray = (past, future, inputDate) => {
     }
     return dateArray
 }
+
+exports.getFirstDayOfMonthAndYearArray = (past, future, inputDate) => {
+    const input = new Date(inputDate);
+    const pastDate = new Date(input);
+    const futureDate = new Date(input);
+    pastDate.setMonth(pastDate.getMonth() - past);
+    futureDate.setMonth(futureDate.getMonth() + future);
+    const dateArray = [];
+    for (let i = 0; i <= 6; i++) {
+        const date = new Date(pastDate);
+        date.setMonth(date.getMonth() + i);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        let finalMonth;
+        if (`${month}`.length < 2) {
+            finalMonth = `0${month}`
+        } else {
+            finalMonth = month;
+        }
+        dateArray.push(`${year}-${finalMonth}-01T00:00:00.000+00:00`);
+    }
+    return dateArray
+}

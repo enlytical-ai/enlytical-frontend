@@ -46,7 +46,7 @@ const GridComponent = (props) => {
                 <div className="table_header_container" style={{ width: sumOfAllColumnWidth }} >
                     {
                         headerArray.length > 0 && headerArray.map(header => {
-                            return (<div style={{ width: header.width, maxWidth: "100%" }} className="table_header_element" >
+                            return (<div key={header.headerName} style={{ width: header.width, maxWidth: "100%" }} className="table_header_element" >
                                 {header.headerName}
                                 {/* {header.headerName === "Asin" && <div onMouseEnter={onMouseEnter} id={header.headerName.replace(/ /g, '')} className="table_header_resizer" ></div>} */}
                             </div>)
@@ -59,7 +59,7 @@ const GridComponent = (props) => {
                             const dataObj = { ...row };
                             delete dataObj.cellComponent;
                             return (
-                                < div className="table_row" >
+                                < div className="table_row"  >
                                     {
                                         headerArray.length > 0 && headerArray.map(header => {
                                             return (
@@ -67,7 +67,6 @@ const GridComponent = (props) => {
                                                     {
                                                         header.cellComponent ? <header.cellComponent value={row[header.field]} data={dataObj} /> : row[header.field]
                                                     }
-
                                                 </div>
                                             )
                                         })
