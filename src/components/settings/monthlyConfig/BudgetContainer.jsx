@@ -40,6 +40,25 @@ const BudgetContainer = (props) => {
             });
     }, [searchDate])
 
+    //To get the height for grid
+    const [gridHeight, setGridHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - 168 - 10 - 10;
+        setGridHeight(netHeight)
+        //Header48,padding40,24,32,24
+        // console.log("====Height===>", el - 168)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - 168 - 10 - 10;
+        setGridHeight(netHeight)
+    });
+    //
+
+
+
+
     const searchDateFn = (e) => {
         console.log(e.target.value);
         setSearchDate(e.target.value);
@@ -220,7 +239,7 @@ const BudgetContainer = (props) => {
         {
             headerName: "Category",
             field: "category",
-            width: 360
+            width: 260
         },
         {
             headerName: "AD Sales Target",
@@ -238,19 +257,19 @@ const BudgetContainer = (props) => {
             headerName: "Target ACOS",
             field: "",
             cellComponent: acosComponent,
-            width: 180
+            width: 170
         },
         {
             headerName: "Current ACOS",
             field: "",
             cellComponent: acosComponent,
-            width: 180
+            width: 160
         },
         {
             headerName: "Date",
             field: "for_month",
             cellComponent: dateComponent,
-            width: 200
+            width: 180
         },
         // {
         //     headerName: "Edit",
@@ -282,7 +301,7 @@ const BudgetContainer = (props) => {
                 <GridComponent
                     headerArray={headerArray}
                     rowArray={state.category_wise_sales_and_spend_target}
-                    tableHeight={500}
+                    tableHeight={gridHeight}
                 />
 
                 <div className="nextButtonContainer" >

@@ -1,3 +1,5 @@
+
+
 .grid_component {
     display: flex;
     flex-direction: column;
@@ -28,7 +30,7 @@
 }
 
 .table_header_resizer {
-    position:relative;
+    position: relative;
     width: 6px;
     height: 16px;
     background-color: gray;

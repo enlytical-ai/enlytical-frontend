@@ -24,6 +24,23 @@ const SellerTable = (props) => {
                 console.log(error);
             });
     }, [])
+    //To get the height for grid
+    const [gridHeight, setGridHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - 168;
+        setGridHeight(netHeight)
+        //Header48,padding40,24,32,24
+        // console.log("====Height===>", el - 168)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - 168
+        setGridHeight(netHeight)
+    });
+    //
+
+
 
     const onRowSelected = (e, data) => {
         const token = localStorage.getItem("token");
@@ -130,7 +147,7 @@ const SellerTable = (props) => {
             <GridComponent
                 headerArray={headerArray}
                 rowArray={sellerDataArray}
-                tableHeight={510}
+                tableHeight={gridHeight}
             />
             <div className="nextButtonContainer" >
 
@@ -138,7 +155,7 @@ const SellerTable = (props) => {
                 <button style={{ marginLeft: 20 }} onClick={() => { props.changeOnBoardingEl("Budget") }} type="button" className="btn btn-primary btn-sm">Next</button>
 
             </div>
-            <NotificationContainer/>
+            <NotificationContainer />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import "./GridComponent.css";
 const GridComponent = (props) => {
-    const { headerArray, rowArray, tableHeight, internalHorizontalScrollWidth } = props;
+    const { headerArray, rowArray, tableHeight, tableMinHeight,tableMaxHeight,internalHorizontalScrollWidth } = props;
     // const [headerArray, setHeaderArray] = useState(props.headerArray);
     let sumOfAllColumnWidth = 0;
     headerArray.map(h => {
@@ -42,7 +42,7 @@ const GridComponent = (props) => {
 
     return (
         <div className="grid_component_container" >
-            <div className="grid_component" style={{ height: tableHeight }} >
+            <div className="grid_component" style={{ height: tableHeight, minHeight: tableMinHeight,maxHeight: tableMaxHeight }} >
                 <div className="table_header_container" style={{ width: sumOfAllColumnWidth }} >
                     {
                         headerArray.length > 0 && headerArray.map(header => {

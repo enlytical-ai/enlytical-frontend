@@ -10,6 +10,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 const ProductTable = (props) => {
     const [productDataArray, setProductDataArray] = useState([]);
+
     const [loading, setLoading] = useState(false)
     const defaultColDef = useMemo(() => ({ sortable: true }
     ), []);
@@ -32,7 +33,21 @@ const ProductTable = (props) => {
                 console.log(error.response.data.data.message);
             });
     }, []);
-
+    //To get the height for grid
+    const [gridHeight, setGridHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - 168;
+        setGridHeight(netHeight)
+        //Header48,padding40,24,32,24
+        // console.log("====Height===>", el - 168)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - 168
+        setGridHeight(netHeight)
+    });
+    //
     const onRowSelected = (e, data) => {
         const token = localStorage.getItem("token");
         const selected = e.target.checked;
@@ -145,8 +160,7 @@ const ProductTable = (props) => {
                 <GridComponent
                     headerArray={headerArray}
                     rowArray={productDataArray}
-                    tableHeight={510}
-                    internalHorizontalScrollWidth={1300}
+                    tableHeight={gridHeight}
                 />
                 {/* )
                 } */}
