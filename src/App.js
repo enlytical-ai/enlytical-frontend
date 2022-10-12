@@ -21,27 +21,27 @@ import PowerBiDashboardContainer from "./components/dashboards/powerBiDashboard/
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { saveUserData } from "./redux/user/userActions";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 function App() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-
-  axios.get('http://localhost:5000/user', {
-    headers: {
-      token
-    }
-  }).then(function (response) {
-    const { user } = response.data.data;
-    dispatch(saveUserData(user));
-
-  })
-    .catch(function (error) {
-      console.log(error);
-    });
   useEffect(() => {
-    token ? navigate("/home") : navigate("/user/login");
+    axios.get('http://localhost:5000/user', {
+      headers: {
+        token
+      }
+    }).then(function (response) {
+      const { user } = response.data.data;
+      dispatch(saveUserData(user));
+      navigate("/home")
+    }).catch(function (error) {
+      console.log(error);
+      NotificationManager.error(`${error.response.data.data.message} Please Login.`, 'Error', 2000);
+      navigate("/user/login")
+    });
+    // token ? navigate("/home") : navigate("/user/login");
   }, [])
   return (
     <div className="App">
@@ -67,9 +67,7 @@ function App() {
             </Route> */}
         </Route>
       </Routes>
-
-
-
+      <NotificationContainer />
     </div >
   );
 }

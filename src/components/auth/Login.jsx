@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useNavigate, Link } from "react-router-dom";
 import { saveUserData } from "../../redux/user/userActions";
 import axios from "axios";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "./Login.css"
 const Login = () => {
     let navigate = useNavigate();
@@ -29,12 +30,13 @@ const Login = () => {
             .then(function (response) {
                 console.log(response.data.data);
                 const { token, user } = response.data.data;
-                dispatch(saveUserData( user ));
+                dispatch(saveUserData(user));
                 localStorage.setItem("token", token);
                 navigate("/home");
             })
             .catch(function (error) {
                 console.log(error);
+                NotificationManager.error(error.response.data.data.message, 'Error', 3000);
             });
 
         e.preventDefault();
@@ -75,6 +77,8 @@ const Login = () => {
                 </div>
 
             </form>
+
+            <NotificationContainer />
         </div>
     )
 }

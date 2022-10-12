@@ -293,30 +293,30 @@ const BudgetContainer = (props) => {
 
             </div>
             {
-                popUp && (<div className="editPopUp"  >
-                    <form >
-                        <div className="form-group">
-                            <label for="inputCategory">Category</label>
-                            <input disabled type="text" value={popUpData.category} className="form-control" id="inputCategory" placeholder="Input Category"></input>
-                        </div>
-                        <div className="form-group">
-                            <label for="monthlyBudget">AD Sales Target</label>
-                            <input type="number" value={popUpData.ad_sales} name="ad_sales" onChange={onInputChange} className="form-control" id="monthlyBudget" placeholder="AD Sales Target"></input>
-                        </div>
-                        <div className="form-group">
-                            <label for="targetAcos">Spend Target</label>
-                            <input type="number" value={popUpData.spend} name="spend" onChange={onInputChange} className="form-control" id="targetAcos" placeholder="Spend Target"></input>
-                        </div>
-                    </form>
-                    <div className="editPopUpButtonsContainer" >
-                        <div className="editPopUpButtons" style={{ display: "flex" }} >
-                            <button style={{ marginRight: "20px" }} type="button" onClick={closePopUp} className="btn btn-warning btn-sm">Cancel</button>
-                        </div>
-                        <div className="editPopUpButtons" style={{ display: "flex" }} >
-                            <button type="button" onClick={onSave} className="btn btn-primary btn-sm">Save</button>
-                        </div>
-                    </div>
-                </div>)
+                // popUp && (<div className="editPopUp"  >
+                //     <form >
+                //         <div className="form-group">
+                //             <label for="inputCategory">Category</label>
+                //             <input disabled type="text" value={popUpData.category} className="form-control" id="inputCategory" placeholder="Input Category"></input>
+                //         </div>
+                //         <div className="form-group">
+                //             <label for="monthlyBudget">AD Sales Target</label>
+                //             <input type="number" value={popUpData.ad_sales} name="ad_sales" onChange={onInputChange} className="form-control" id="monthlyBudget" placeholder="AD Sales Target"></input>
+                //         </div>
+                //         <div className="form-group">
+                //             <label for="targetAcos">Spend Target</label>
+                //             <input type="number" value={popUpData.spend} name="spend" onChange={onInputChange} className="form-control" id="targetAcos" placeholder="Spend Target"></input>
+                //         </div>
+                //     </form>
+                //     <div className="editPopUpButtonsContainer" >
+                //         <div className="editPopUpButtons" style={{ display: "flex" }} >
+                //             <button style={{ marginRight: "20px" }} type="button" onClick={closePopUp} className="btn btn-warning btn-sm">Cancel</button>
+                //         </div>
+                //         <div className="editPopUpButtons" style={{ display: "flex" }} >
+                //             <button type="button" onClick={onSave} className="btn btn-primary btn-sm">Save</button>
+                //         </div>
+                //     </div>
+                // </div>)
             }
             <NotificationContainer />
         </div>
