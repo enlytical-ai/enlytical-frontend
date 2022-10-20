@@ -13,3 +13,16 @@
 .selectedSellerTypeElement {
     background-color: #00e676;
 }
+
+.sellerTableHeader {
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+.nextButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 24px;
+    height: 42px;
+}

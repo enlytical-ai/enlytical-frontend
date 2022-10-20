@@ -23,6 +23,7 @@ import axios from "axios";
 import { saveUserData } from "./redux/user/userActions";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { saveAppParamsData } from "./redux/appParams/appParamsActions";
 function App() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
@@ -35,6 +36,7 @@ function App() {
     }).then(function (response) {
       const { user } = response.data.data;
       dispatch(saveUserData(user));
+      dispatch(saveAppParamsData({ current_brand: user.brand_id[0] }))
       navigate("/home")
     }).catch(function (error) {
       console.log(error);
@@ -65,6 +67,7 @@ function App() {
               <Route path="powerBiDashboard" element={<PowerBiDashboardContainer />} >
               </Route>
             </Route> */}
+
         </Route>
       </Routes>
       <NotificationContainer />

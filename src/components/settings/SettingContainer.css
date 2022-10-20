@@ -9,13 +9,3 @@
     flex: 1;
 }
 
-.logoutButtonContainer {
-    display: flex;
-    flex-direction: column;
-    margin-right: 15px;
-    margin-bottom: 10px;
-}
-
-.logoutButtonContainer>button {
-    align-self: flex-end;
-}

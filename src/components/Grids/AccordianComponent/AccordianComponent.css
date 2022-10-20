@@ -1,0 +1,74 @@
+.accordian_container {
+    width: 100%;
+}
+
+.accordian_element {
+    border-bottom: 1px solid #9e9e9e;
+}
+
+.accordian_element:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.accordian_element_header {
+    position: relative;
+    align-items: center;
+    width: 100%;
+
+}
+
+
+.accordian_element_body {
+    width: 100%;
+    overflow: hidden;
+    height: 0px;
+
+}
+
+.accordian_element_body_open {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    animation-name: accordian_open;
+    animation-duration: 0.2s;
+    border-top: 1px solid #eeeeee;
+
+}
+
+.accordian_element_body_close {
+    width: 100%;
+    height: 0px;
+    overflow: hidden;
+    animation-name: accordian_close;
+    animation-duration: 0.2s;
+}
+
+@keyframes accordian_open {
+    0% {
+        height: 0px;
+    }
+
+    100% {
+        height: 100px;
+    }
+
+}
+
+@keyframes accordian_close {
+    0% {
+        height: 100px;
+    }
+
+    100% {
+        height: 0px;
+    }
+
+}
+
+.openCloseBtn {
+    position: absolute;
+    z-index: 1;
+    right: 6px;
+    top: 0px;
+    cursor: pointer;
+}

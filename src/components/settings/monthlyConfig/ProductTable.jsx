@@ -2,49 +2,51 @@
 
 import axios from "axios";
 import GridComponent from "../../Grids/GridComponent/GridComponent";
+import GridAccordianComponent from "../../Grids/GridAccordianComponent/GridAccordianComponent"
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import "./ProductTable.css"
 import Loader from "../../commonComponent/Loader/Loader";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-
+import { useSelector } from "react-redux";
+import { BASE_URL } from "../../../appConstants";
 
 const ProductTable = (props) => {
     const [productDataArray, setProductDataArray] = useState([]);
-
     const [loading, setLoading] = useState(false)
     const defaultColDef = useMemo(() => ({ sortable: true }
     ), []);
 
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
     useEffect(() => {
         setLoading(true)
         const token = localStorage.getItem("token");
-        axios.get('http://localhost:5000/clientProductDetail', {
+
+        axios.get(`${BASE_URL}clientProductDetail?brandId=${current_brand}`, {
             headers: {
                 token
             }
-        })
-            .then(function (response) {
-                console.log(response.data.data);
-                const { product_data_array } = response.data.data
-                setProductDataArray(product_data_array);
-                setLoading(false);
-            })
-            .catch(function (error) {
-                console.log(error.response.data.data.message);
-            });
-    }, []);
+        }).then(function (response) {
+            console.log("======>", response.data.data);
+            const { product_data_array } = response.data.data
+            setProductDataArray(product_data_array);
+            setLoading(false);
+        }).catch(function (error) {
+            console.log("======>", error.response.data.data.message);
+        });
+    }, [current_brand]);
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - 168;
+        const netHeight = height - (49 + 40 + 32 + 42 + 24);
         setGridHeight(netHeight)
         //Header48,padding40,24,32,24
         // console.log("====Height===>", el - 168)
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - 168
+        const netHeight = height - (49 + 40 + 32 + 42 + 24);
         setGridHeight(netHeight)
     });
     //
@@ -53,7 +55,7 @@ const ProductTable = (props) => {
         const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { selected }, {
+        axios.put(`http://localhost:5000/clientProductDetail/${_id}?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -79,8 +81,8 @@ const ProductTable = (props) => {
             priority = null;
         }
         const { _id } = data;
-        console.log(data)
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}`, { priority }, {
+
+        axios.put(`http://localhost:5000/clientProductDetail/${_id}?brandId=${current_brand}`, { priority }, {
             headers: {
                 token
             }
@@ -102,7 +104,7 @@ const ProductTable = (props) => {
     }
     const productNameComponent = (props) => {
         return (
-            <abbr title={props.value} style={{ overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none" }} >{props.value}</abbr>
+            <abbr title={props.value} style={{ overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}</abbr>
         )
     }
     const productCodeComponent = (props) => {
@@ -140,27 +142,41 @@ const ProductTable = (props) => {
         )
     }
     const headerArray = [
-        { headerName: "", field: "selected", width: 30, cellComponent: checkBoxComponent },
-        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 160 },
-        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 220 },
-        { headerName: "MRP", field: 'mrp', width: 80 },
-        { headerName: "Category", field: "category", width: 180 },
+        { headerName: "", field: "selected", minWidth: 30, maxWidth: 30, cellComponent: checkBoxComponent },
+        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, minWidth: 160, maxWidth: 160 },
+        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, minWidth: 300, maxWidth: 300 },
+        { headerName: "MRP", field: 'mrp', minWidth: 80, maxWidth: 80 },
+        { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, minWidth: 160, maxWidth: 160 },
+        { headerName: "Priority", field: "", cellComponent: priorityComponent, minWidth: 360, maxWidth: 360 },
+        // { headerName: "Portfolio", field: "category", minWidth: 180 },
+        // { headerName: "Category", field: "amazon_sub_cat", minWidth: 180 },
+        // { headerName: "Type", field: "type", minWidth: 120 },
+        // { headerName: "Platform", field: "platform", minWidth: 120 },
+    ]
+    const accordianBodyArray = [
+        { headerName: "Portfolio", field: "category", width: 180 },
+        { headerName: "Category", field: "amazon_sub_cat", width: 180 },
         { headerName: "Type", field: "type", width: 120 },
         { headerName: "Platform", field: "platform", width: 120 },
-        { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, width: 160 },
-        { headerName: "Priority", field: "", cellComponent: priorityComponent, width: 230 }
     ]
-
     return (
         <>
             <div className="productTableContainer" >
-                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
+                <div className="productTableContainerHeader" >
+                    <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
+                </div>
                 {/* {
                     productDataArray.length > 0 && ( */}
-                <GridComponent
+                {/* <GridComponent
                     headerArray={headerArray}
                     rowArray={productDataArray}
                     tableHeight={gridHeight}
+                /> */}
+                <GridAccordianComponent
+                    headerArray={headerArray}
+                    rowArray={productDataArray}
+                    tableHeight={gridHeight}
+                    accordianBodyArray={accordianBodyArray}
                 />
                 {/* )
                 } */}

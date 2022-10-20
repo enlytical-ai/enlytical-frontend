@@ -65,5 +65,11 @@
     justify-content: flex-end;
     align-items: center;
     margin-top: 24px;
+    height: 42px;
+}
+
+.productTableContainerHeader{
     height: 32px;
+    display: flex;
+    align-items: center;
 }

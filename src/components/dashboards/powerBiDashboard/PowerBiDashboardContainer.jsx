@@ -4,6 +4,7 @@ import { PowerBIEmbed } from 'powerbi-client-react';
 import Loader from "../../commonComponent/Loader/Loader";
 import { models } from "powerbi-client"
 import { useEffect, useState } from 'react';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import axios from "axios";
 const PowerBiDashboardContainer = (props) => {
     const { currentDashboard } = props;
@@ -22,7 +23,9 @@ const PowerBiDashboardContainer = (props) => {
             setState(response.data.data);
             setLoading(false);
         }).catch(function (error) {
-
+            setLoading(false);
+            console.log(error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }, [currentDashboard])
     return (
@@ -64,6 +67,7 @@ const PowerBiDashboardContainer = (props) => {
             {
                 loading && <Loader />
             }
+            <NotificationContainer />
         </div>
     )
 }

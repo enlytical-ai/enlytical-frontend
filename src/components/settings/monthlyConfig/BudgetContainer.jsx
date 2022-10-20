@@ -7,6 +7,8 @@ import { useMemo, useEffect, useState, useRef } from "react";
 import { getMonthAndYearArray, getFirstDayOfMonthAndYearArray } from "../../../utils/commonFunction";
 import { divTwoNum, roundOffToTwoDecimal } from "../../../commonFunction/commomFunction";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { useSelector } from "react-redux";
+import { BASE_URL } from "../../../appConstants";
 const BudgetContainer = (props) => {
     const [popUp, setPopUp] = useState(false);
     const [searchDate, setSearchDate] = useState(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-01T00:00:00.000+00:00`);
@@ -16,6 +18,9 @@ const BudgetContainer = (props) => {
         _id: "",
         category_wise_sales_and_spend_target: [],
     });
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
+
 
     useEffect(() => {
         const datesArray = getFirstDayOfMonthAndYearArray(3, 3, new Date());
@@ -23,40 +28,37 @@ const BudgetContainer = (props) => {
     }, [])
     useEffect(() => {
         const token = localStorage.getItem("token");
-        axios.post('http://localhost:5000/clientMonthlyConfig/monthlyBudget', {
+        axios.post(`${BASE_URL}clientMonthlyConfig/monthlyBudget?brandId=${current_brand}`, {
             time_stamp: searchDate
         },
             {
                 headers: { token }
             }
-
-        )
-            .then(function (response) {
-                const { category_wise_sales_and_spend_target, _id } = response.data.data.clientMonthlyConfig
-                setState({ _id, category_wise_sales_and_spend_target })
-            })
-            .catch(function (error) {
-                console.log(error);
+        ).then(function (response) {
+            const { category_wise_sales_and_spend_target, _id } = response.data.data.clientMonthlyConfig
+            setState({ _id, category_wise_sales_and_spend_target })
+        }).catch(function (error) {
+            NotificationManager.error(error.response.data.data.message, 'Error', 2000);
+            setState({
+                _id: "",
+                category_wise_sales_and_spend_target: [],
             });
-    }, [searchDate])
+        });
+    }, [searchDate, current_brand])
 
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - 168 - 10 - 10;
+        const netHeight = height - (49 + 40 + 32 + 42 + 24 + 10);
         setGridHeight(netHeight)
-        //Header48,padding40,24,32,24
-        // console.log("====Height===>", el - 168)
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - 168 - 10 - 10;
+        const netHeight = height - (49 + 40 + 32 + 42 + 24 + 10);
         setGridHeight(netHeight)
     });
     //
-
-
 
 
     const searchDateFn = (e) => {
@@ -76,10 +78,12 @@ const BudgetContainer = (props) => {
         setPopUp(false);
         setPopUpData({});
     }
+
     const onInputChange = (e) => {
         const { value, name } = e.target;
         setPopUpData((prevState) => ({ ...prevState, [name]: value * 1 }))
     }
+
     const onSave = () => {
         const token = localStorage.getItem("token");
         const arr = [...state.category_wise_sales_and_spend_target];
@@ -104,6 +108,7 @@ const BudgetContainer = (props) => {
                 NotificationManager.error(error.response.data.data.message, 'Error', 2000);
             })
     }
+
     const onRowElSave = (e) => {
         const token = localStorage.getItem("token");
         const arr = [...state.category_wise_sales_and_spend_target];
@@ -117,12 +122,11 @@ const BudgetContainer = (props) => {
         // setState({ _id: "", category_wise_sales_and_spend_target: [] });
         axios.put(`http://localhost:5000/clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target: arr }, {
             headers: { token }
+        }).then(function (response) {
+            const { category_wise_sales_and_spend_target, _id } = response.data.data.clientMonthlyConfig;
+            setState({ _id: _id, category_wise_sales_and_spend_target });
+            // closePopUp();
         })
-            .then(function (response) {
-                const { category_wise_sales_and_spend_target, _id } = response.data.data.clientMonthlyConfig;
-                setState({ _id: _id, category_wise_sales_and_spend_target });
-                // closePopUp();
-            })
             .catch(function (error) {
                 console.log(error.response.data.data.message);
                 NotificationManager.error(error.response.data.data.message, 'Error', 2000);
@@ -130,7 +134,7 @@ const BudgetContainer = (props) => {
     }
     const brandConfigEditToggle = () => {
         const token = localStorage.getItem("token");
-        axios.put(`http://localhost:5000/brand`, {}, {
+        axios.put(`${BASE_URL}brand?brandId=${current_brand}`, {}, {
             headers: { token }
         }).then(function (response) {
             NotificationManager.success(response.data.data.message, 'Success', 2000);
@@ -221,15 +225,12 @@ const BudgetContainer = (props) => {
         return (
             <div style={{ width: 100 }} onDoubleClick={() => onDoubleClick()}>
                 {
-                    inputToggle ?
-                        (
-                            <div className="adSalesTargetInputContainer">
-                                <input placeholder="Enter value" type="number" onChange={(e) => { setState(state => ({ ...state, spend: e.target.value * 1 })) }} className="adSalesTargetInput" value={state.spend} ></input >
-                                <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
-                            </div>
-                        )
-
-                        : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.spend
+                    inputToggle ? (
+                        <div className="adSalesTargetInputContainer">
+                            <input placeholder="Enter value" type="number" onChange={(e) => { setState(state => ({ ...state, spend: e.target.value * 1 })) }} className="adSalesTargetInput" value={state.spend} ></input >
+                            <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
+                        </div>
+                    ) : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.spend
                 }
             </div>
         )
@@ -281,36 +282,32 @@ const BudgetContainer = (props) => {
     ]
     return (
         <div className="salesSpendContainer" >
-            <div style={{ flex: 1 }} >
-                <div className="salesSpendContainerHeader" >
-                    <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Category wise Sales & Spend Target.</h3>
-                    <div className="salesSpendContainerDateContainer" >
-                        <select onChange={searchDateFn} className="form-select form-select-sm" aria-label=".form-select-sm example">
-                            {
-                                searchDateArray && searchDateArray.map((date, i) => {
-                                    return (
-                                        <option selected={searchDate === date ? true : false} key={i} value={date}>{date.split("T")[0]}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-
+            <div className="salesSpendContainerHeader" >
+                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Category wise Sales & Spend Target.</h3>
+                <div className="salesSpendContainerDateContainer" >
+                    <select onChange={searchDateFn} className="form-select form-select-sm" aria-label=".form-select-sm example">
+                        {
+                            searchDateArray && searchDateArray.map((date, i) => {
+                                return (
+                                    <option selected={searchDate === date ? true : false} key={i} value={date}>{date.split("T")[0]}</option>
+                                )
+                            })
+                        }
+                    </select>
                 </div>
-
-                <GridComponent
-                    headerArray={headerArray}
-                    rowArray={state.category_wise_sales_and_spend_target}
-                    tableHeight={gridHeight}
-                />
-
-                <div className="nextButtonContainer" >
-                    <button onClick={() => { props.changeOnBoardingEl("Seller") }} type="button" className="btn btn-secondary btn-sm">Back</button>
-                    <button style={{ marginLeft: 20 }} onClick={brandConfigEditToggle} type="button" className="btn btn-primary btn-sm">Save</button>
-
-                </div>
-
             </div>
+            <GridComponent
+                headerArray={headerArray}
+                rowArray={state.category_wise_sales_and_spend_target}
+                tableHeight={gridHeight}
+            />
+
+            <div className="nextButtonContainer" >
+                <button onClick={() => { props.changeOnBoardingEl("Seller") }} type="button" className="btn btn-secondary btn-sm">Back</button>
+                <button style={{ marginLeft: 20 }} onClick={brandConfigEditToggle} type="button" className="btn btn-primary btn-sm">Save</button>
+            </div>
+
+
             {
                 // popUp && (<div className="editPopUp"  >
                 //     <form >

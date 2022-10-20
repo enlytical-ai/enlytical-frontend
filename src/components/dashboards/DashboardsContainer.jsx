@@ -12,6 +12,7 @@ import { useSelector } from "react-redux/es/exports";
 import OnBoardingContainer from "./onBoarding/OnBoardingContainer";
 import { useDispatch } from "react-redux/es/exports";
 import { saveUserData } from "../../redux/user/userActions";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 const DashboardsContainer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,41 +24,49 @@ const DashboardsContainer = () => {
     const [currentDashboard, setCurrentDashboard] = useState("");
     const [currentReport, setCurrentReport] = useState("");
     const [container, setContainer] = useState("powerBiDashboard");
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
     useEffect(() => {
         const token = localStorage.getItem("token");
-        axios
-            .get(`${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard`, {
-                headers: {
-                    token
-                }
-            })
-            .then(function (response) {
-                console.log(response.data.data);
-                const { dashboard_menu_array } = response.data.data;
-                console.log(dashboard_menu_array)
+        axios.get(`${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard?brandId=${current_brand}`, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { dashboard_menu_array } = response.data.data;
+      
+            if (dashboard_menu_array.length > 0) {
                 setDashboardMenuArray(dashboard_menu_array);
                 setCurrentDashboard(dashboard_menu_array[0]._id)
+            } else {
+                setDashboardMenuArray([]);
+                setCurrentDashboard("")
 
-            }).catch(function (error) {
-                console.log(error);
-            })
-        axios
-            .get(`${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report`, {
-                headers: {
-                    token
-                }
-            })
-            .then(function (response) {
-                console.log(response.data.data);
-                const { dashboard_menu_array } = response.data.data;
-                console.log(dashboard_menu_array)
+            }
+        }).catch(function (error) {
+            console.log(error);
+        })
+        axios.get(`${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report?brandId=${current_brand}`, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { dashboard_menu_array } = response.data.data;
+         
+            if (dashboard_menu_array.length > 0) {
                 setReportsMenuArray(dashboard_menu_array);
                 setCurrentReport(dashboard_menu_array[0]._id)
+            } else {
+                setReportsMenuArray([]);
+                setCurrentReport("")
 
-            }).catch(function (error) {
-                console.log(error);
-            })
-    }, []);
+
+            }
+
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }, [current_brand]);
     const changeDashboard = (e) => {
         setCurrentDashboard(e);
     }
@@ -150,14 +159,15 @@ const DashboardsContainer = () => {
                 }
 
                 {/* <div className="dashboardsLinksContainer" >
-                    <Link to={"/home/dashboards/advertisingReport"} >Advertising Report</Link>
+                    <Link to={"/dashboards/advertisingReport"} >Advertising Report</Link>
                 </div> */}
             </DashboardsLeft>
             <DashboardsRight>
-                {container === "powerBiDashboard" && <PowerBiDashboardContainer currentDashboard={currentDashboard} />}
-                {container === "powerBiReports" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
+                {container === "powerBiDashboard" && currentDashboard !== "" && < PowerBiDashboardContainer currentDashboard={currentDashboard} />}
+                {container === "powerBiReports" && currentReport !== "" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
                 {container === "onBoarding" && <OnBoardingContainer changeOnBoardingEl={changeOnBoardingEl} currentOnBoardingEl={currentOnBoardingEl} />}
             </DashboardsRight>
+            <NotificationContainer />
         </div>
     )
 }

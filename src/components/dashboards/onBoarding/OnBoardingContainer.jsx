@@ -6,9 +6,11 @@ const OnBoardingContainer = (props) => {
     const { currentOnBoardingEl, changeOnBoardingEl } = props;
     return (
         <>
-            {currentOnBoardingEl === "Portfolio" && <ProductTable changeOnBoardingEl={changeOnBoardingEl} />}
-            {currentOnBoardingEl === "Seller" && <SellerTable changeOnBoardingEl={changeOnBoardingEl} />}
-            {currentOnBoardingEl === "Budget" && <BudgetContainer changeOnBoardingEl={changeOnBoardingEl} />}
+            <div>
+                {currentOnBoardingEl === "Portfolio" && <ProductTable changeOnBoardingEl={changeOnBoardingEl} />}
+                {currentOnBoardingEl === "Seller" && <SellerTable changeOnBoardingEl={changeOnBoardingEl} />}
+                {currentOnBoardingEl === "Budget" && <BudgetContainer changeOnBoardingEl={changeOnBoardingEl} />}
+            </div>
         </>
 
     )

@@ -4,38 +4,40 @@ import GridComponent from "../../Grids/GridComponent/GridComponent";
 import { useState } from "react";
 import { useEffect } from "react";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { useSelector } from "react-redux";
+import { BASE_URL } from "../../../appConstants";
 const SellerTable = (props) => {
 
     const [sellerDataArray, setSellerDataArray] = useState([]);
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
     useEffect(() => {
         const token = localStorage.getItem("token");
-        axios.get('http://localhost:5000/clientSellerDetail', {
+
+        axios.get(`${BASE_URL}clientSellerDetail?brandId=${current_brand}`, {
             headers: {
                 token
             }
-        })
-            .then(function (response) {
-                console.log(response.data.data);
-                const { seller_data_array } = response.data.data
-                setSellerDataArray(seller_data_array);
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }, [])
+        }).then(function (response) {
+            console.log(response.data.data);
+            const { seller_data_array } = response.data.data
+            setSellerDataArray(seller_data_array);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }, [current_brand])
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - 168;
+        const netHeight = height - (49 + 40 + 32 + 42 + 24);
         setGridHeight(netHeight)
         //Header48,padding40,24,32,24
         // console.log("====Height===>", el - 168)
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - 168
+        const netHeight = height - (49 + 40 + 32 + 42 + 24);
         setGridHeight(netHeight)
     });
     //
@@ -47,7 +49,7 @@ const SellerTable = (props) => {
         const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { selected }, {
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -74,7 +76,7 @@ const SellerTable = (props) => {
         }
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}`, { seller_type }, {
+        axios.put(`http://localhost:5000/clientSellerDetail/${_id}?brandId=${current_brand}`, { seller_type }, {
             headers: {
                 token
             }
@@ -128,22 +130,33 @@ const SellerTable = (props) => {
         {
             headerName: "Seller Name",
             field: "seller_name",
-            width: 520,
-            maxWidth: 720,
-            minWidth: 160
+            width: 260,
+
         },
         {
             headerName: "Seller Type",
             field: "seller_type",
             cellComponent: sellerType,
-            maxWidth: 720,
-            minWidth: 160
+            width: 320
+        },
+        {
+            headerName: "No. of ASIN",
+            field: "",
+            width: 260
+        },
+        {
+            headerName: "Seller Rating",
+            field: "",
+            width: 260
         }
     ]
 
     return (
         <div className="sellerTable" >
-            <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
+            <div className="sellerTableHeader" >
+                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
+
+            </div>
             <GridComponent
                 headerArray={headerArray}
                 rowArray={sellerDataArray}

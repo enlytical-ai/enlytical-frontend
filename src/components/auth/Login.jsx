@@ -5,6 +5,7 @@ import { saveUserData } from "../../redux/user/userActions";
 import axios from "axios";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "./Login.css"
+import { saveAppParamsData } from "../../redux/appParams/appParamsActions";
 const Login = () => {
     let navigate = useNavigate();
     const user = useSelector(state => state.user);
@@ -31,6 +32,7 @@ const Login = () => {
                 console.log(response.data.data);
                 const { token, user } = response.data.data;
                 dispatch(saveUserData(user));
+                dispatch(saveAppParamsData({ current_brand: user.brand_id[0] }))
                 localStorage.setItem("token", token);
                 navigate("/home");
             })
