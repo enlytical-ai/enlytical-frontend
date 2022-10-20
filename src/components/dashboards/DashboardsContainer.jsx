@@ -34,7 +34,7 @@ const DashboardsContainer = () => {
             }
         }).then(function (response) {
             const { dashboard_menu_array } = response.data.data;
-      
+
             if (dashboard_menu_array.length > 0) {
                 setDashboardMenuArray(dashboard_menu_array);
                 setCurrentDashboard(dashboard_menu_array[0]._id)
@@ -52,7 +52,7 @@ const DashboardsContainer = () => {
             }
         }).then(function (response) {
             const { dashboard_menu_array } = response.data.data;
-         
+
             if (dashboard_menu_array.length > 0) {
                 setReportsMenuArray(dashboard_menu_array);
                 setCurrentReport(dashboard_menu_array[0]._id)
@@ -163,9 +163,11 @@ const DashboardsContainer = () => {
                 </div> */}
             </DashboardsLeft>
             <DashboardsRight>
-                {container === "powerBiDashboard" && currentDashboard !== "" && < PowerBiDashboardContainer currentDashboard={currentDashboard} />}
-                {container === "powerBiReports" && currentReport !== "" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
-                {container === "onBoarding" && <OnBoardingContainer changeOnBoardingEl={changeOnBoardingEl} currentOnBoardingEl={currentOnBoardingEl} />}
+                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                    {container === "powerBiDashboard" && currentDashboard !== "" && < PowerBiDashboardContainer currentDashboard={currentDashboard} />}
+                    {container === "powerBiReports" && currentReport !== "" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
+                    {container === "onBoarding" && <OnBoardingContainer changeOnBoardingEl={changeOnBoardingEl} currentOnBoardingEl={currentOnBoardingEl} />}
+                </div>
             </DashboardsRight>
             <NotificationContainer />
         </div>

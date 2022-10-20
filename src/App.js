@@ -47,7 +47,6 @@ function App() {
   }, [])
   return (
     <div className="App">
-
       <Routes>
         <Route path="user" element={<User />} >
           <Route path="login" element={<Login />} />
@@ -67,7 +66,6 @@ function App() {
               <Route path="powerBiDashboard" element={<PowerBiDashboardContainer />} >
               </Route>
             </Route> */}
-
         </Route>
       </Routes>
       <NotificationContainer />
