@@ -90,7 +90,9 @@ const GridAccordianComponent = (props) => {
                     {
                         headerArray.length > 0 && headerArray.map(header => {
                             return (<div key={header.headerName} style={{ width: header.width, minWidth: header.minWidth }} className="table_header_element" >
-                                {header.headerName}
+                                {
+                                    header.headerComponent ? <header.headerComponent value={header.headerName} data={header} /> : header.headerName
+                                }
                             </div>)
                         })
                     }

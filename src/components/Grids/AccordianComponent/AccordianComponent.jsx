@@ -61,7 +61,7 @@ const AccordianComponent = (props) => {
                                 <div className="table_row_element" >
                                     {
                                         <>
-                                            <div style={{ marginRight: "4px", color: "#757575" }}  >{header.headerName}<span>{":"}</span></div>  <div>{header.cellComponent ? <header.cellComponent value={row[header.field]} data={dataObj} /> : row[header.field]}</div>
+                                            <div style={{ marginRight: "4px", fontWeight: "600" }}  >{header.headerName}<span>{":"}</span></div>  <div>{header.cellComponent ? <header.cellComponent value={row[header.field]} data={dataObj} /> : row[header.field]}</div>
                                         </>
                                     }
                                 </div>

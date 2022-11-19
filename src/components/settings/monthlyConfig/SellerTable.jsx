@@ -1,6 +1,7 @@
 import "./SellerTable.css";
 import axios from "axios";
 import GridComponent from "../../Grids/GridComponent/GridComponent";
+import Grid from "../../Grids/Grid/Grid";
 import { useState } from "react";
 import { useEffect } from "react";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -44,9 +45,9 @@ const SellerTable = (props) => {
 
 
 
-    const onRowSelected = (e, data) => {
+    const onRowSelected = (selected, data) => {
         const token = localStorage.getItem("token");
-        const selected = e.target.checked;
+        // const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
         axios.put(`http://localhost:5000/clientSellerDetail/${_id}?brandId=${current_brand}`, { selected }, {
@@ -68,6 +69,36 @@ const SellerTable = (props) => {
             NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }
+    const onSelectAll = (selected, data) => {
+        const token = localStorage.getItem("token");
+        // const selected = e.target.checked;
+        const { _id } = data;
+        console.log(data)
+        axios.put(`http://localhost:5000/clientSellerDetail/updateClientAllSellerDetail?brandId=${current_brand}`, { selected }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            const { selected } = response.data.data.updated;
+            const sellerArray = [...sellerDataArray];
+            sellerArray.forEach(el => {
+                el.selected = selected;
+            })
+            setSellerDataArray(sellerArray);
+        }).catch(function (error) {
+            console.log(error);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
+    }
+
+    const checkBoxClicked = (status, data) => {
+        if (data !== "all") {
+            onRowSelected(status, data);
+        } else {
+            onSelectAll(status, data)
+        }
+    }
+
     const onSellerTypeClicked = (e, data) => {
         const token = localStorage.getItem("token");
         let seller_type = e.target.id;
@@ -121,12 +152,7 @@ const SellerTable = (props) => {
     }
 
     const headerArray = [
-        {
-            headerName: "",
-            field: "selected",
-            cellComponent: checkBoxComponent,
-            width: 30
-        },
+
         {
             headerName: "Seller Name",
             field: "seller_name",
@@ -157,10 +183,14 @@ const SellerTable = (props) => {
                 <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
 
             </div>
-            <GridComponent
+            <Grid
                 headerArray={headerArray}
                 rowArray={sellerDataArray}
                 tableHeight={gridHeight}
+                checkBox={{
+                    field: "selected"
+                }}
+                checkBoxClicked={checkBoxClicked}
             />
             <div className="nextButtonContainer" >
 

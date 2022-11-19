@@ -87,7 +87,7 @@
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #9e9e9e;
-    padding-right: 16px;
+  
 
 }
 
@@ -135,6 +135,5 @@
 .table_row_element {
     display: flex;
     align-items: center;
-
     padding-left: 10px;
 }

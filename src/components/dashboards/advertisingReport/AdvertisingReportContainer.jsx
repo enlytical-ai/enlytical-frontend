@@ -6,6 +6,7 @@ import Grid from "../../Grids/Grid"
 import "./AdvertisingReportContainer.css"
 import LineGraphComponent from "./ARComponents/LineGraphComponent";
 import Tile from "./ARComponents/Tile";
+import CategoryTile from "./ARComponents/CategoryTile";
 import DateRangeSlider from "../../commonComponent/DateRangeSlider";
 const AdvertisingReportContainer = (props) => {
     const [filter, setFilter] = useState([
@@ -65,7 +66,7 @@ const AdvertisingReportContainer = (props) => {
             ]
         }).then(function (response) {
             const { category_table_data_array } = response.data.data;
-            console.log(category_table_data_array)
+
             setState(prevState => ({ ...prevState, category_table_data_array }))
         }).catch(function (error) {
             console.log(error);
@@ -86,7 +87,7 @@ const AdvertisingReportContainer = (props) => {
             ]
         }).then(function (response) {
             const { targets_table_data_array } = response.data.data;
-
+            console.log(targets_table_data_array)
             setState(prevState => ({ ...prevState, targets_table_data_array }))
         }).catch(function (error) {
             console.log(error);
@@ -178,8 +179,8 @@ const AdvertisingReportContainer = (props) => {
                 </div>
                 <div>
                     <DateRangeSlider
-                        startDate={"2022-07-01T00:00:00.000+00:00"}
-                        endDate={"2022-07-31T00:00:00.000+00:00"}
+                        startDate={"2022-06-20T00:00:00.000+00:00"}
+                        endDate={"2022-10-22T00:00:00.000+00:00"}
                         getSelectedStartEndDate={getSelectedStartEndDate}
                     />
                 </div>
@@ -231,6 +232,13 @@ const AdvertisingReportContainer = (props) => {
                     dateFilter={dateFilter}
                 />
             </div>
+            <div className="advertisingReportContainerRow_8" >
+                <h3>Yesterdays Sales Category Wise.</h3>
+                <div>
+                    <CategoryTile />
+                </div>
+            </div>
+
             {/* Grid */}
             <div className="advertisingReportContainerRow_6" >
                 <CategoryTableComponent category_table_data_array={state.category_table_data_array} />

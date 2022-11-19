@@ -132,13 +132,6 @@ const GridComponent = (props) => {
                                             )
                                         })
                                     }
-                                    {/* <AccordianComponent
-                                        headerArray={headerArray}
-                                        row={row}
-                                        dataObj={dataObj}
-                                        accordianBodyArray={accordianBodyArray}
-                        
-                                    /> */}
                                 </div>
                             )
                         })

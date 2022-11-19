@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import GridComponent from "../../Grids/GridComponent/GridComponent";
+import Grid from "../../Grids/Grid/Grid";
 import GridAccordianComponent from "../../Grids/GridAccordianComponent/GridAccordianComponent"
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import "./ProductTable.css"
@@ -50,11 +51,10 @@ const ProductTable = (props) => {
         setGridHeight(netHeight)
     });
     //
-    const onRowSelected = (e, data) => {
+    const onRowSelected = (selected, data) => {
         const token = localStorage.getItem("token");
-        const selected = e.target.checked;
+        // const selected = e.target.checked;
         const { _id } = data;
-        console.log(data)
         axios.put(`http://localhost:5000/clientProductDetail/${_id}?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
@@ -74,6 +74,31 @@ const ProductTable = (props) => {
             NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }
+
+    const onSelectAll = (selected) => {
+        const token = localStorage.getItem("token");
+        // const selected = e.target.checked;
+
+        axios.put(`http://localhost:5000/clientProductDetail/updateClientAllProductDetail?brandId=${current_brand}`, { selected }, {
+            headers: {
+                token
+            }
+        }).then(function (response) {
+            console.log(response.data.data)
+            const { selected } = response.data.data.updated;
+            const productArray = [...productDataArray];
+            productArray.forEach(el => {
+                    el.selected = selected;
+            })
+            setProductDataArray(productArray);
+        }).catch(function (error) {
+            console.log(error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
+        });
+    }
+
+
+
     const onPriorityClicked = (e, data) => {
         const token = localStorage.getItem("token");
         let priority = e.target.id;
@@ -112,6 +137,14 @@ const ProductTable = (props) => {
             <abbr title={props.value} style={{ overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none" }} >{props.value}</abbr>
         )
     }
+
+    const checkBoxClicked = (status, data) => {
+        if (data !== "all") {
+            onRowSelected(status, data);
+        } else {
+            onSelectAll(status, data)
+        }
+    }
     const checkBoxComponent = (props) => {
         return (
             <>
@@ -119,6 +152,15 @@ const ProductTable = (props) => {
             </>
         )
     }
+    const selectAllCheckBoxComponent = (props) => {
+        return (
+            <>
+
+                <input onChange={(e) => onSelectAll(e)} className="form-check-input" type="checkbox" ></input>
+            </>
+        )
+    }
+
     const priorityComponent = (props) => {
         const priorityElementArray = ["Launch", "Growth", "ROI"];
         const { priority } = props.data;
@@ -142,16 +184,16 @@ const ProductTable = (props) => {
         )
     }
     const headerArray = [
-        { headerName: "", field: "selected", minWidth: 30, maxWidth: 30, cellComponent: checkBoxComponent },
-        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, minWidth: 160, maxWidth: 160 },
-        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, minWidth: 300, maxWidth: 300 },
-        { headerName: "MRP", field: 'mrp', minWidth: 80, maxWidth: 80 },
-        { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, minWidth: 160, maxWidth: 160 },
-        { headerName: "Priority", field: "", cellComponent: priorityComponent, minWidth: 360, maxWidth: 360 },
-        // { headerName: "Portfolio", field: "category", minWidth: 180 },
-        // { headerName: "Category", field: "amazon_sub_cat", minWidth: 180 },
-        // { headerName: "Type", field: "type", minWidth: 120 },
-        // { headerName: "Platform", field: "platform", minWidth: 120 },
+        // { headerName: "", field: "selected", minWidth: 30, maxWidth: 30, headerComponent: selectAllCheckBoxComponent, cellComponent: checkBoxComponent },
+        { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 160 },
+        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 300 },
+        { headerName: "MRP", field: 'mrp', width: 80 },
+        { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, width: 160 },
+        { headerName: "Priority", field: "", cellComponent: priorityComponent, width: 260 },
+        { headerName: "Portfolio", field: "category", width: 180 },
+        { headerName: "Category", field: "amazon_sub_cat", width: 180 },
+        { headerName: "Type", field: "type", width: 120 },
+        { headerName: "Platform", field: "platform", width: 120 },
     ]
     const accordianBodyArray = [
         { headerName: "Portfolio", field: "category", width: 180 },
@@ -160,37 +202,44 @@ const ProductTable = (props) => {
         { headerName: "Platform", field: "platform", width: 120 },
     ]
     return (
-        <>
-            <div className="productTableContainer" >
-                <div className="productTableContainerHeader" >
-                    <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
-                </div>
-                {/* {
+
+        <div className="productTableContainer" >
+            <div className="productTableContainerHeader" >
+                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
+            </div>
+            {/* {
                     productDataArray.length > 0 && ( */}
-                {/* <GridComponent
+            {/* <GridComponent
                     headerArray={headerArray}
                     rowArray={productDataArray}
                     tableHeight={gridHeight}
                 /> */}
-                <GridAccordianComponent
-                    headerArray={headerArray}
-                    rowArray={productDataArray}
-                    tableHeight={gridHeight}
-                    accordianBodyArray={accordianBodyArray}
-                />
-                {/* )
+
+            <Grid
+                headerArray={headerArray}
+                rowArray={productDataArray}
+                tableHeight={gridHeight}
+                checkBox={{
+                    field: "selected"
+                }}
+                checkBoxClicked={checkBoxClicked}
+            // accordianBodyArray={accordianBodyArray}
+            />
+
+
+            {/* )
                 } */}
-                {/* {
+            {/* {
                     loading && <Loader />
                 } */}
-                <div className="nextButtonContainer" >
-                    <button onClick={() => {
-                        props.changeOnBoardingEl("Seller")
-                    }} type="button" className="btn btn-primary btn-sm">Next</button>
-                </div>
-                <NotificationContainer />
+            <div className="nextButtonContainer" >
+                <button onClick={() => {
+                    props.changeOnBoardingEl("Seller")
+                }} type="button" className="btn btn-primary btn-sm">Next</button>
             </div>
-        </>
+            <NotificationContainer />
+        </div>
+
     )
 }
 export default ProductTable;

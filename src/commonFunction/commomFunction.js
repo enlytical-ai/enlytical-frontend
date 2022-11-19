@@ -76,3 +76,16 @@ exports.getDaysInMonth = (time_stamp) => {
     //console.log(year, month)
     return new Date(year, month, 0).getDate()
 }
+
+
+exports.getFlowColor = (flow) => {
+    let color;
+    if (flow === "positive") {
+        color = "green";
+    } else if (flow === "negative") {
+        color = "red";
+    } else if (flow === "zero") {
+        color = "gray"
+    }
+    return color;
+}

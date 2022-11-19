@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-a {
+/* a {
   text-decoration: none;
   padding: 0px 8px;
   color: #757575;
@@ -26,5 +26,5 @@ a {
 a:hover {
   background-color: #EEEEEE;
   color: #757575;
-}
+} */
 

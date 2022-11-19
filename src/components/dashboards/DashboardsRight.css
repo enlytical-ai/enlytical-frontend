@@ -1,6 +1,7 @@
 .dashboardsRight {
     height: 100%;
-    width: 86%;
+    flex: 1;
     padding: 20px;
+    width: 80%;
     /* background-color: #EEEEEE; */
 }

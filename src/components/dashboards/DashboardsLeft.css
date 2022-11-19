@@ -1,9 +1,8 @@
 .dashboardsLeft {
     height: 100%;
-    width: 14%;
     display: flex;
+    width: fit-content;
     flex-direction: column;
     border-right: 1px solid #bdbdbd;
     overflow-y: auto;
-   
 }

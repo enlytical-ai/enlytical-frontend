@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-
-    height: calc(100vh - 48px - 40px);
+   
 }
 
 .advertisingReportContainer::-webkit-scrollbar {
@@ -86,10 +85,20 @@
     color: #e53935;
 
 }
-.advertisingReportContainerRow_7{
+
+.advertisingReportContainerRow_7 {
     margin-top: 16px;
 }
+
 .advertisingReportContainerRow_7>h3 {
+    font-size: 18px;
+    color: #757575;
+}
+.advertisingReportContainerRow_8 {
+    margin-top: 16px;
+}
+
+.advertisingReportContainerRow_8>h3 {
     font-size: 18px;
     color: #757575;
 }

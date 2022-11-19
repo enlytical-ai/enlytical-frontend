@@ -53,7 +53,8 @@
     outline: none;
     border-bottom: 1px solid gray;
 }
-.adSalesTargetInputContainer{
+
+.adSalesTargetInputContainer {
     display: flex;
     align-items: center;
 }
@@ -64,4 +65,22 @@
     align-items: center;
     margin-top: 24px;
     height: 42px;
+}
+
+.budgetAccordianContainer {
+    overflow-y: auto;
+
+}
+
+.budgetAccordianContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.budget-accordion-body {
+    padding: 0px;
+    padding: 5px;
+}
+
+.accordianElementContainer{
+    margin-bottom: 5px;
 }

@@ -1,5 +1,6 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./DashboardsContainer.css";
+import "./sidebar/Sidebar.css"
 import DashboardsRight from "./DashboardsRight";
 import DashboardsLeft from "./DashboardsLeft";
 import LineGraph from "./../graphs/LineGraph";
@@ -13,6 +14,7 @@ import OnBoardingContainer from "./onBoarding/OnBoardingContainer";
 import { useDispatch } from "react-redux/es/exports";
 import { saveUserData } from "../../redux/user/userActions";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import AdvertisingReportContainer from "./advertisingReport/AdvertisingReportContainer";
 const DashboardsContainer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,7 +25,8 @@ const DashboardsContainer = () => {
     const [currentOnBoardingEl, setCurrentOnBoardingEl] = useState("Portfolio");
     const [currentDashboard, setCurrentDashboard] = useState("");
     const [currentReport, setCurrentReport] = useState("");
-    const [container, setContainer] = useState("powerBiDashboard");
+    const [container, setContainer] = useState("onBoarding");
+    const [sideberRightToggle, setSideberRightToggle] = useState(true)
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
     useEffect(() => {
@@ -73,100 +76,212 @@ const DashboardsContainer = () => {
     const changeOnBoardingEl = (e) => {
         setCurrentOnBoardingEl(e)
     }
+
+    //To get the height for grid
+    const [containerHeight, setContainerHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - (49);
+        setContainerHeight(netHeight)
+        //Header48,padding40,24,32,24
+        // console.log("====Height===>", el - 168)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - (49);
+        setContainerHeight(netHeight)
+    });
+    //
+
+    const sideberRightToggleFn = () => {
+
+    }
+
+
     const { access } = user;
     return (
 
-        <div className="dashboardsContainer" >
+        <div className="dashboardsContainer" style={{ height: containerHeight }}   >
             <DashboardsLeft>
                 {
-                    access && (
-                        <div className="accordion" id="accordionExample">
-                            {
-                                access.includes("home_onbording") && (<div className="accordion-item">
-                                    <h2 onClick={() => setContainer("onBoarding")} className="accordion-header" id="headingTwo">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Onbording
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div className="accordion-body">
-                                            {
-                                                onBordingMenu.length > 0 && onBordingMenu.map((e) => {
-                                                    return (
-                                                        <div key={e} onClick={() => changeOnBoardingEl(e)} className={`menuElement ${currentOnBoardingEl === e ? "menuElementClicked" : ""}`} >
-                                                            {e}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                </div>)
-                            }
-                            {
-                                access.includes("home_dashboards") && (
-                                    <div className="accordion-item">
-                                        <h2 onClick={() => setContainer("powerBiDashboard")} className="accordion-header" id="headingOne">
-                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Dashboards
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                            <div className="accordion-body">
-                                                {
-                                                    dashboardMenuArray.length > 0 && dashboardMenuArray.map((e) => {
-                                                        return (
-                                                            <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
-                                                                {e.dashboard_name}
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
+                    // access && (
+                    //     <div className="accordion" id="accordionExample">
+                    //         {
+                    //             access.includes("home_onbording") && (<div className="accordion-item">
+                    //                 <h2 onClick={() => setContainer("onBoarding")} className="accordion-header" id="headingTwo">
+                    //                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    //                         Onbording
+                    //                     </button>
+                    //                 </h2>
+                    //                 <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    //                     <div className="accordion-body">
+                    //                         {
+                    //                             onBordingMenu.length > 0 && onBordingMenu.map((e) => {
+                    //                                 return (
+                    //                                     <div key={e} onClick={() => changeOnBoardingEl(e)} className={`menuElement ${currentOnBoardingEl === e ? "menuElementClicked" : ""}`} >
+                    //                                         {e}
+                    //                                     </div>
+                    //                                 )
+                    //                             })
+                    //                         }
+                    //                     </div>
+                    //                 </div>
+                    //             </div>)
+                    //         }
+                    //         {
+                    //             access.includes("home_dashboards") && (
+                    //                 <div className="accordion-item">
+                    //                     <h2 onClick={() => setContainer("powerBiDashboard")} className="accordion-header" id="headingOne">
+                    //                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    //                             Dashboards
+                    //                         </button>
+                    //                     </h2>
+                    //                     <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    //                         <div className="accordion-body">
+                    //                             {
+                    //                                 dashboardMenuArray.length > 0 && dashboardMenuArray.map((e) => {
+                    //                                     return (
+                    //                                         <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
+                    //                                             {e.dashboard_name}
+                    //                                         </div>
+                    //                                     )
+                    //                                 })
+                    //                             }
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
+                    //                         </div>
+                    //                     </div>
+                    //                 </div>
+                    //             )
+                    //         }
 
-                            {
-                                access.includes("home_reports") && (
-                                    <div className="accordion-item">
-                                        <h2 onClick={() => setContainer("powerBiReports")} className="accordion-header" id="headingThree">
-                                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Reports
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div className="accordion-body">
-                                                {
-                                                    reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
-                                                        return (
-                                                            <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
-                                                                {e.dashboard_name}
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
-                        </div>
-                    )
+                    //         {
+                    //             access.includes("home_reports") && (
+                    //                 <div className="accordion-item">
+                    //                     <h2 onClick={() => setContainer("powerBiReports")} className="accordion-header" id="headingThree">
+                    //                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    //                             Reports
+                    //                         </button>
+                    //                     </h2>
+                    //                     <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    //                         <div className="accordion-body">
+                    //                             {
+                    //                                 reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
+                    //                                     return (
+                    //                                         <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
+                    //                                             {e.dashboard_name}
+                    //                                         </div>
+                    //                                     )
+                    //                                 })
+                    //                             }
+                    //                         </div>
+                    //                     </div>
+                    //                 </div>
+                    //             )
+                    //         }
+                    //         <div className="accordion-item">
+                    //             <h2 onClick={() => setContainer("advertisingReport")} className="accordion-header" id="headingFour">
+                    //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    //                     Web Dashboards
+                    //                 </button>
+                    //             </h2>
+                    //             <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    //                 <div className="accordion-body">
+                    //                     {/* {
+                    //                         reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
+                    //                             return (
+                    //                                 <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
+                    //                                     {e.dashboard_name}
+                    //                                 </div>
+                    //                             )
+                    //                         })
+                    //                     } */}
+                    //                 </div>
+                    //             </div>
+                    //         </div>
+                    //     </div>
+                    // )
                 }
 
                 {/* <div className="dashboardsLinksContainer" >
                     <Link to={"/dashboards/advertisingReport"} >Advertising Report</Link>
                 </div> */}
+                <div className="sidebarComponent" >
+                    <div className="sidebarLeft" >
+                        <div onClick={() => setContainer("onBoarding")} className={`sidebarIconsContainer ${container === "onBoarding" ? "clicked" : "unClicked"}`} >
+                            <i class="bi bi-plus-square sidebarIcons"></i>
+                            <div className="sidebarIconsName" >Onboarding</div>
+                        </div>
+                        <div onClick={() => setContainer("powerBiDashboard")} className={`sidebarIconsContainer ${container === "powerBiDashboard" ? "clicked" : "unClicked"}`} >
+                            <i class="bi bi-bar-chart-line sidebarIcons "></i>
+                            <div className="sidebarIconsName" >Dashboards</div>
+                        </div>
+                        <div onClick={() => setContainer("powerBiReports")} className={`sidebarIconsContainer ${container === "powerBiReports" ? "clicked" : "unClicked"}`}>
+                            <i class="bi bi-layout-text-sidebar-reverse sidebarIcons"></i>
+                            <div className="sidebarIconsName" >Reports</div>
+                        </div>
+                        <div onClick={() => setContainer("advertisingReport")} className={`sidebarIconsContainer ${container === "advertisingReport" ? "clicked" : "unClicked"}`}>
+                          
+                            <i class="bi bi-layout-text-window-reverse sidebarIcons"></i>
+                            <div className="sidebarIconsName" >Web Reports</div>
+                        </div>
+                    </div>
+                    {
+                        container === "onBoarding" && (
+                            <div className={`sideberRight`} >
+                                {
+                                    onBordingMenu.length > 0 && onBordingMenu.map((e) => {
+                                        return (
+                                            <div key={e} onClick={() => changeOnBoardingEl(e)} className={`sideberRightEl ${currentOnBoardingEl === e ? "sideberRightElClicked" : ""}`} >
+                                                {e}
+                                            </div>
+                                        )
+                                    })
+                                }
+                                
+                            </div>
+                        )
+                    }
+                    {
+                        container === "powerBiDashboard" && (
+                            <div className="sideberRight" >
+                                {
+                                    dashboardMenuArray.length > 0 && dashboardMenuArray.map((e) => {
+                                        return (
+                                            <div key={e._id} onClick={() => changeDashboard(e._id)} className={`sideberRightEl ${currentDashboard === e._id ? "sideberRightElClicked" : ""}`} >
+                                                {e.dashboard_name}
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                            </div>
+                        )
+                    }
+                    {
+                        container === "powerBiReports" && (
+                            <div className="sideberRight" >
+                                {
+                                    reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
+                                        return (
+                                            <div key={e._id} onClick={() => setCurrentReport(e._id)} className={`sideberRightEl ${currentReport === e._id ? "sideberRightElClicked" : ""}`} >
+                                                {e.dashboard_name}
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                            </div>
+                        )
+                    }
+
+                </div>
             </DashboardsLeft>
             <DashboardsRight>
                 <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                     {container === "powerBiDashboard" && currentDashboard !== "" && < PowerBiDashboardContainer currentDashboard={currentDashboard} />}
                     {container === "powerBiReports" && currentReport !== "" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
                     {container === "onBoarding" && <OnBoardingContainer changeOnBoardingEl={changeOnBoardingEl} currentOnBoardingEl={currentOnBoardingEl} />}
+                    {container === "advertisingReport" && <AdvertisingReportContainer />}
                 </div>
             </DashboardsRight>
             <NotificationContainer />
