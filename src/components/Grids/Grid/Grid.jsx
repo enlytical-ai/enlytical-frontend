@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./Grid.css"
 const Grid = props => {
     const {
-        headerArray,
+        //headerArray,
         rowArray,
         tableHeight,
         headerHeight,
@@ -19,6 +19,10 @@ const Grid = props => {
         gridRowElementHoverColour,
         gridRowSelectedColour
     } = props;
+    const [headerArray, setHeaderArray] = useState([]);
+
+
+
     useEffect(() => {
         let rootEl = document.querySelector(":root");
         if (gridHeaderBackgroundColour) rootEl.style.setProperty("--gbysp_grid_header_background_colour", gridHeaderBackgroundColour);
@@ -27,6 +31,16 @@ const Grid = props => {
         if (gridRowHoverColour) rootEl.style.setProperty("--gbysp_grid_row_hover_colour", gridRowHoverColour);
         if (gridRowElementHoverColour) rootEl.style.setProperty("--gbysp_grid_row_element_hover_colour", gridRowElementHoverColour);
         if (gridRowSelectedColour) rootEl.style.setProperty("--gbysp_grid_row_selected_colour", gridRowSelectedColour);
+        const { headerArray } = props;
+        if (headerArray) {
+            const arr = headerArray.map((h, i) => {
+                return {
+                    ...h,
+                    id: i
+                }
+            });
+            setHeaderArray(arr);
+        }
     }, [])
     let s = true;
     if (checkBox && checkBox.field) {
@@ -55,6 +69,32 @@ const Grid = props => {
         row.scrollTo(el.scrollLeft, 0);
     }
 
+    const reSizeHeaderElement = (e, id) => {
+        const el = document.getElementsByClassName(`gbysp_grid_header_and_row_with_${id}`);
+        const hEl = document.getElementById(`gbysp_grid_header_with_${id}`)
+        document.addEventListener("mousemove", mousemove);
+        document.addEventListener("mouseup", mouseup);
+        var prevX = e.clientX;
+        var prevL = hEl.getBoundingClientRect().width;
+        function mousemove(e) {
+            var newX = e.clientX - prevX;
+            var totalL = newX + prevL - 10;
+            if (totalL > 50) {
+                for (let i = 0; i < el.length; i++) {
+                    el[i].style.setProperty("width", `${totalL}px`);
+                }
+                // el.style.setProperty("width", `${totalL}px`)
+            }
+
+
+        }
+
+        function mouseup(e) {
+            document.removeEventListener("mousemove", mousemove);
+            document.removeEventListener("mouseup", mouseup);
+        }
+    }
+
     return (
         <div className="gbysp_grid_container" style={{ height: tableHeight ? tableHeight - 2 : 400 }} >
             <div className="gbysp_grid_header_body" id="gbysp_grid_header_body" style={{ height: headerHeight ? headerHeight - 1 : 29 }} onScroll={(e) => scrollHeader(e)} >
@@ -69,8 +109,13 @@ const Grid = props => {
                     {
                         headerArray.length > 0 && headerArray.map((header, i) => {
                             return (
-                                <div key={i + 1} style={{ width: header.width }} className="gbysp_grid_header_element" >
-                                    {header.headerName}
+                                <div key={i + 1} style={{ width: header.width }} id={`gbysp_grid_header_with_${header.id}`} className={`gbysp_grid_header_element gbysp_grid_header_and_row_with_${header.id}`} >
+                                    <div className="gbysp_grid_header_element_one">
+                                        {header.headerName}
+                                    </div>
+                                    <div onMouseDown={(e) => reSizeHeaderElement(e, header.id)} className="gbysp_grid_header_element_two" >
+
+                                    </div>
                                 </div>
                             )
                         })
@@ -100,7 +145,7 @@ const Grid = props => {
                                 {
                                     headerArray.length > 0 && headerArray.map((header, i) => {
                                         return (
-                                            <div key={i} style={{ width: header.width }} className="gbysp_grid_row_element" >
+                                            <div key={i} style={{ width: header.width }} className={`gbysp_grid_row_element gbysp_grid_header_and_row_with_${header.id}`} >
                                                 {
                                                     header.cellComponent ? <header.cellComponent value={row[header.field]} data={dataObj} /> : row[header.field]
                                                 }

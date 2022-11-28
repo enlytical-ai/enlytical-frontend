@@ -45,6 +45,23 @@
 .gbysp_grid_header_element {
     font-weight: 600;
     padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.gbysp_grid_header_element_one{
+    flex: 1;
+}
+.gbysp_grid_header_element_two{
+    background-color: #9e9e9e;
+    border-radius: 2px;
+    height: 14px;
+    width: 4px;
+
+}
+
+.gbysp_grid_header_element_two:hover{
+    cursor: e-resize;
 }
 
 /* -----Row Style----- */
