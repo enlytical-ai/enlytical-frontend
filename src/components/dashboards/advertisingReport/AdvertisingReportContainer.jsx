@@ -45,7 +45,7 @@ const AdvertisingReportContainer = (props) => {
             campaign_type_array
         }).then(function (response) {
             const { tile_array } = response.data.data;
-
+            console.log("tile_array=>", tile_array)
             setState(prevState => ({ ...prevState, tile_array }))
         }).catch(function (error) {
             console.log(error);
@@ -67,7 +67,7 @@ const AdvertisingReportContainer = (props) => {
             ]
         }).then(function (response) {
             const { category_table_data_array } = response.data.data;
-
+            console.log("category_table_data_array=>", category_table_data_array)
             setState(prevState => ({ ...prevState, category_table_data_array }))
         }).catch(function (error) {
             console.log(error);
@@ -88,7 +88,7 @@ const AdvertisingReportContainer = (props) => {
             ]
         }).then(function (response) {
             const { targets_table_data_array } = response.data.data;
-            console.log(targets_table_data_array)
+            console.log("targets_table_data_array=>",targets_table_data_array)
             setState(prevState => ({ ...prevState, targets_table_data_array }))
         }).catch(function (error) {
             console.log(error);
@@ -186,7 +186,7 @@ const AdvertisingReportContainer = (props) => {
                     />
                 </div>
             </div>
-            <div className="advertisingReportContainerRow_3" >
+            {/* <div className="advertisingReportContainerRow_3" >
                 {
                     state.tile_array && state.tile_array.map(tile => {
                         let obj
@@ -202,9 +202,9 @@ const AdvertisingReportContainer = (props) => {
                     })
                 }
 
-            </div>
+            </div> */}
             {/* Graph */}
-            <div className="advertisingReportContainerRow_4" >
+            {/* <div className="advertisingReportContainerRow_4" >
                 <div className="row_4Filter" >
                     {
                         filter1.map((e) => {
@@ -220,8 +220,8 @@ const AdvertisingReportContainer = (props) => {
                     }
 
                 </div>
-            </div>
-            <div className="advertisingReportContainerRow_5" >
+            </div> */}
+            {/* <div className="advertisingReportContainerRow_5" >
                 {
                     lineGraphErrorToggle && <div className="lineGraphComponentError"  >   <p>You cannot select more than two data sets.</p></div>
                 }
@@ -232,23 +232,23 @@ const AdvertisingReportContainer = (props) => {
                     tileGraphIconClicked={tileGraphIconClicked}
                     dateFilter={dateFilter}
                 />
-            </div>
-            <div className="advertisingReportContainerRow_8" >
+            </div> */}
+            {/* <div className="advertisingReportContainerRow_8" >
                 <h3>Yesterdays Sales Category Wise.</h3>
                 <div>
                     <CategoryTile />
                 </div>
-            </div>
+            </div> */}
 
             {/* Grid */}
-            <div className="advertisingReportContainerRow_6" >
+            {/* <div className="advertisingReportContainerRow_6" >
                 <CategoryTableComponent category_table_data_array={state.category_table_data_array} />
 
             </div>
             <div className="advertisingReportContainerRow_7" >
                 <h3>Targets</h3>
                 <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
-            </div>
+            </div> */}
 
         </div>
     )
