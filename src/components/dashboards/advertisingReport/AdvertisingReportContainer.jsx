@@ -26,7 +26,12 @@ const AdvertisingReportContainer = (props) => {
         end_date: null
     })
     const [graphDataType, setGraphDataType] = useState("daily");
-    const [state, setState] = useState({})
+    const [state, setState] = useState({
+        tile_array: [],
+        category_table_data_array: [],
+        targets_table_data_array: []
+
+    })
     const [clickedTile, setClickedTile] = useState(["sales"]);
     const [tileGraphIconClicked, setTileGraphIconClicked] = useState();
     const [lineGraphErrorToggle, setLineGraphErrorToggle] = useState(false);
@@ -88,7 +93,7 @@ const AdvertisingReportContainer = (props) => {
             ]
         }).then(function (response) {
             const { targets_table_data_array } = response.data.data;
-            console.log("targets_table_data_array=>",targets_table_data_array)
+            console.log("targets_table_data_array=>", targets_table_data_array)
             setState(prevState => ({ ...prevState, targets_table_data_array }))
         }).catch(function (error) {
             console.log(error);
@@ -186,9 +191,9 @@ const AdvertisingReportContainer = (props) => {
                     />
                 </div>
             </div>
-            {/* <div className="advertisingReportContainerRow_3" >
+            <div className="advertisingReportContainerRow_3" >
                 {
-                    state.tile_array && state.tile_array.map(tile => {
+                    state.tile_array.length && state.tile_array.map(tile => {
                         let obj
                         const status = clickedTile.includes(tile.name);
                         return <Tile
@@ -202,7 +207,7 @@ const AdvertisingReportContainer = (props) => {
                     })
                 }
 
-            </div> */}
+            </div>
             {/* Graph */}
             {/* <div className="advertisingReportContainerRow_4" >
                 <div className="row_4Filter" >
@@ -241,14 +246,17 @@ const AdvertisingReportContainer = (props) => {
             </div> */}
 
             {/* Grid */}
-            {/* <div className="advertisingReportContainerRow_6" >
-                <CategoryTableComponent category_table_data_array={state.category_table_data_array} />
-
+            <div className="advertisingReportContainerRow_6" >
+                {
+                    state.category_table_data_array.length && <CategoryTableComponent category_table_data_array={state.category_table_data_array} />
+                }
             </div>
             <div className="advertisingReportContainerRow_7" >
                 <h3>Targets</h3>
-                <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
-            </div> */}
+                {
+                    state.targets_table_data_array.length && <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
+                }
+            </div>
 
         </div>
     )
