@@ -34,7 +34,6 @@ const LineGraphComponent = (props) => {
             graph_data_type: graphDataType
         }).then(function (response) {
             const { graph_data_array, graph_data_type } = response.data.data;
-
             const labelsArray = [];
             const salesArray = [];
             const costArray = [];
@@ -265,15 +264,22 @@ const LineGraphComponent = (props) => {
             yAxesArrayIndex += 1;
         }
     })
-    return <LineGraph
-        data={{
-            labels: state.labels,
-            datasets: data_sets,
+    return (
+        <>
+            {
+                (state.labels.length && data_sets.length) && (< LineGraph
+                    data={{
+                        labels: state.labels,
+                        datasets: data_sets,
+                    }}
+                    yAxesColor={yAxesArray[0].color}
+                    y1AxesColor={yAxesArray[1].color}
+                    graphDataType={graphDataType}
+                />)
 
-        }}
-        yAxesColor={yAxesArray[0].color}
-        y1AxesColor={yAxesArray[1].color}
-        graphDataType={graphDataType}
-    />
+            }
+        </>
+
+    )
 }
 export default LineGraphComponent

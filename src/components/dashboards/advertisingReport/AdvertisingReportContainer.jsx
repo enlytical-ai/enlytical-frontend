@@ -209,7 +209,7 @@ const AdvertisingReportContainer = (props) => {
 
             </div>
             {/* Graph */}
-            {/* <div className="advertisingReportContainerRow_4" >
+            <div className="advertisingReportContainerRow_4" >
                 <div className="row_4Filter" >
                     {
                         filter1.map((e) => {
@@ -225,8 +225,8 @@ const AdvertisingReportContainer = (props) => {
                     }
 
                 </div>
-            </div> */}
-            {/* <div className="advertisingReportContainerRow_5" >
+            </div>
+            <div className="advertisingReportContainerRow_5" >
                 {
                     lineGraphErrorToggle && <div className="lineGraphComponentError"  >   <p>You cannot select more than two data sets.</p></div>
                 }
@@ -237,7 +237,7 @@ const AdvertisingReportContainer = (props) => {
                     tileGraphIconClicked={tileGraphIconClicked}
                     dateFilter={dateFilter}
                 />
-            </div> */}
+            </div>
             {/* <div className="advertisingReportContainerRow_8" >
                 <h3>Yesterdays Sales Category Wise.</h3>
                 <div>
