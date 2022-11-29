@@ -1,4 +1,4 @@
-import { Chart, Line, Bar } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,19 +9,10 @@ import {
     Title,
     Tooltip,
     Legend,
-
+    registerables
 } from 'chart.js';
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-
-
+    ...registerables
 );
 const LineGraph = (props) => {
     const { data, graphDataType, yAxesColor, y1AxesColor } = props;
@@ -72,7 +63,7 @@ const LineGraph = (props) => {
                             y: {
                                 grid: {
                                     display: false,
-                                    borderColor: yAxesColor?yAxesColor: "#e0e0e0" ,
+                                    borderColor: yAxesColor ? yAxesColor : "#e0e0e0",
                                     borderWidth: 2
                                 }
                             },
