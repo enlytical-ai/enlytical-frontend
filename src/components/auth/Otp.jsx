@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { saveUserData } from "../../redux/user/userActions";
+import { BASE_URL } from "../../appConstants";
 import axios from "axios";
 import "./Otp.css"
 const Otp = () => {
@@ -23,7 +24,7 @@ const Otp = () => {
     }
 
     const handleSubmit = (e) => {
-        axios.post('http://localhost:5000/auth/setpassword', state)
+        axios.post(`${BASE_URL}auth/setpassword`, state)
             .then(function (response) {
                 console.log(response.data.data);
                 navigate("/user/login");

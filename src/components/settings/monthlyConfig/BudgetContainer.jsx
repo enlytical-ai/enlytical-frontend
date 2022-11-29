@@ -90,7 +90,7 @@ const BudgetContainer = (props) => {
             }
         })
         // setState({ _id: "", category_wise_sales_and_spend_target: [] });
-        axios.put(`http://localhost:5000/clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_deal_days: arr }, {
+        axios.put(`${BASE_URL}clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_deal_days: arr }, {
             headers: { token }
         }).then(function (response) {
             const { category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual, _id } = response.data.data.clientMonthlyConfig;
@@ -114,7 +114,7 @@ const BudgetContainer = (props) => {
             }
         })
         // setState({ _id: "", category_wise_sales_and_spend_target: [] });
-        axios.put(`http://localhost:5000/clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_business_as_usual: arr }, {
+        axios.put(`${BASE_URL}clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_business_as_usual: arr }, {
             headers: { token }
         }).then(function (response) {
             const { category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual, _id } = response.data.data.clientMonthlyConfig;

@@ -8,6 +8,7 @@ import LineGraphComponent from "./ARComponents/LineGraphComponent";
 import Tile from "./ARComponents/Tile";
 import CategoryTile from "./ARComponents/CategoryTile";
 import DateRangeSlider from "../../commonComponent/DateRangeSlider";
+import { BASE_URL } from "../../../appConstants";
 const AdvertisingReportContainer = (props) => {
     const [filter, setFilter] = useState([
         { name: "SB", status: false },
@@ -39,7 +40,7 @@ const AdvertisingReportContainer = (props) => {
         if (campaign_type_array.length === 0) {
             campaign_type_array = ["SB", "SBVC", "SD", "SP"]
         }
-        axios.post('http://localhost:5000/dashboard/advertisingReport/getTileData', {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData`, {
             time_stamp: "2022-07-30T00:00:00.000+00:00",
             campaign_type_array
         }).then(function (response) {
@@ -50,7 +51,7 @@ const AdvertisingReportContainer = (props) => {
             console.log(error);
         });
 
-        axios.post('http://localhost:5000/dashboard/advertisingReport/getCategoryTableData', {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryTableData`, {
             time_stamp: "2022-07-31T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
@@ -71,7 +72,7 @@ const AdvertisingReportContainer = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
-        axios.post('http://localhost:5000/dashboard/advertisingReport/getTargetsTableData', {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTargetsTableData`, {
             time_stamp: "2022-07-31T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [

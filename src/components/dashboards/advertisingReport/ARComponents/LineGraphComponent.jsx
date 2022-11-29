@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import LineGraph from "../../../graphs/LineGraph"
 import { useState } from "react"
-
+import { BASE_URL } from "../../../../appConstants"
 const LineGraphComponent = (props) => {
     const { filter, graphDataType, tileGraphIconClicked, clickedTile, dateFilter } = props;
     const [state, setState] = useState({
@@ -27,7 +27,7 @@ const LineGraphComponent = (props) => {
         if (campaign_type_array.length === 0) {
             campaign_type_array = ["SB", "SBVC", "SD", "SP"]
         }
-        axios.post('http://localhost:5000/dashboard/advertisingReport/getGraphData', {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData`, {
             start_date,
             end_date,
             campaign_type_array,

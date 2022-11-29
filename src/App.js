@@ -24,12 +24,13 @@ import { saveUserData } from "./redux/user/userActions";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { saveAppParamsData } from "./redux/appParams/appParamsActions";
+import { BASE_URL } from "./appConstants";
 function App() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get('http://localhost:5000/user', {
+    axios.get(`${BASE_URL}user`, {
       headers: {
         token
       }

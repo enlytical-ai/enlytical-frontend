@@ -4,6 +4,7 @@ import Loader from "../../../commonComponent/Loader/Loader";
 import { models } from "powerbi-client"
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import { BASE_URL } from "../../../../appConstants";
 const DailyPerformance = (props) => {
     const { currentDashboard } = props;
     const [error, setError] = useState(null);
@@ -12,7 +13,7 @@ const DailyPerformance = (props) => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         setLoading(true)
-        axios.get(`http://localhost:5000/powerBi/getEmbedInfo/${currentDashboard}`, {
+        axios.get(`${BASE_URL}powerBi/getEmbedInfo/${currentDashboard}`, {
             headers: {
                 token
             }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../appConstants";
 import "./Signup.css"
 const Signup = () => {
     let navigate = useNavigate();
@@ -22,7 +23,7 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         console.log(state)
-        axios.post('http://localhost:5000/user/adminSignUp', state)
+        axios.post(`${BASE_URL}user/adminSignUp`, state)
             .then(function (response) {
                 console.log(response.data.user);
                 const { email } = response.data.user;

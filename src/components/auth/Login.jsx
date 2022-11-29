@@ -6,6 +6,7 @@ import axios from "axios";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import "./Login.css"
 import { saveAppParamsData } from "../../redux/appParams/appParamsActions";
+import { BASE_URL } from "../../appConstants";
 const Login = () => {
     let navigate = useNavigate();
     const user = useSelector(state => state.user);
@@ -27,7 +28,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
 
-        axios.post('http://localhost:5000/auth/login', state)
+        axios.post(`${BASE_URL}auth/login`, state)
             .then(function (response) {
                 console.log(response.data.data);
                 const { token, user } = response.data.data;

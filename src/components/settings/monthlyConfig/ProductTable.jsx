@@ -55,7 +55,7 @@ const ProductTable = (props) => {
         const token = localStorage.getItem("token");
         // const selected = e.target.checked;
         const { _id } = data;
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -79,7 +79,7 @@ const ProductTable = (props) => {
         const token = localStorage.getItem("token");
         // const selected = e.target.checked;
 
-        axios.put(`http://localhost:5000/clientProductDetail/updateClientAllProductDetail?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientProductDetail/updateClientAllProductDetail?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -107,7 +107,7 @@ const ProductTable = (props) => {
         }
         const { _id } = data;
 
-        axios.put(`http://localhost:5000/clientProductDetail/${_id}?brandId=${current_brand}`, { priority }, {
+        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand}`, { priority }, {
             headers: {
                 token
             }

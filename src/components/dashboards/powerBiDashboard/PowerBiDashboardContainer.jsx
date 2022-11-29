@@ -6,6 +6,7 @@ import { models } from "powerbi-client"
 import { useEffect, useState } from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import axios from "axios";
+import { BASE_URL } from "../../../appConstants";
 const PowerBiDashboardContainer = (props) => {
     const { currentDashboard } = props;
     const [error, setError] = useState(null);
@@ -15,7 +16,7 @@ const PowerBiDashboardContainer = (props) => {
         const token = localStorage.getItem("token");
         setLoading(true)
         setState(null);
-        axios.get(`http://localhost:5000/powerBi/getEmbedInfo/${currentDashboard}`, {
+        axios.get(`${BASE_URL}powerBi/getEmbedInfo/${currentDashboard}`, {
             headers: {
                 token
             }

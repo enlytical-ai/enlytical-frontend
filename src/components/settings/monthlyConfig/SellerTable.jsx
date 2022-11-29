@@ -50,7 +50,7 @@ const SellerTable = (props) => {
         // const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientSellerDetail/${_id}?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -74,7 +74,7 @@ const SellerTable = (props) => {
         // const selected = e.target.checked;
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/updateClientAllSellerDetail?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientSellerDetail/updateClientAllSellerDetail?brandId=${current_brand}`, { selected }, {
             headers: {
                 token
             }
@@ -107,7 +107,7 @@ const SellerTable = (props) => {
         }
         const { _id } = data;
         console.log(data)
-        axios.put(`http://localhost:5000/clientSellerDetail/${_id}?brandId=${current_brand}`, { seller_type }, {
+        axios.put(`${BASE_URL}clientSellerDetail/${_id}?brandId=${current_brand}`, { seller_type }, {
             headers: {
                 token
             }
