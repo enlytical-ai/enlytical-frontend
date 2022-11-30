@@ -7,14 +7,15 @@ import { useEffect } from "react";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
+import Loader from "../../commonComponent/Loader/Loader";
 const SellerTable = (props) => {
-
+    const [loading, setLoading] = useState(false)
     const [sellerDataArray, setSellerDataArray] = useState([]);
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
     useEffect(() => {
         const token = localStorage.getItem("token");
-
+        setLoading(true);
         axios.get(`${BASE_URL}clientSellerDetail?brandId=${current_brand}`, {
             headers: {
                 token
@@ -23,8 +24,10 @@ const SellerTable = (props) => {
             console.log(response.data.data);
             const { seller_data_array } = response.data.data
             setSellerDataArray(seller_data_array);
+            setLoading(false);
         }).catch(function (error) {
             console.log(error);
+            setLoading(false);
         });
     }, [current_brand])
     //To get the height for grid
@@ -183,15 +186,20 @@ const SellerTable = (props) => {
                 <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
 
             </div>
-            <Grid
-                headerArray={headerArray}
-                rowArray={sellerDataArray}
-                tableHeight={gridHeight}
-                checkBox={{
-                    field: "selected"
-                }}
-                checkBoxClicked={checkBoxClicked}
-            />
+            {
+                loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
+                    <Grid
+                        headerArray={headerArray}
+                        rowArray={sellerDataArray}
+                        tableHeight={gridHeight}
+                        checkBox={{
+                            field: "selected"
+                        }}
+                        checkBoxClicked={checkBoxClicked}
+                    />
+                )
+            }
+
             <div className="nextButtonContainer" >
 
                 <button onClick={() => { props.changeOnBoardingEl("Portfolio") }} type="button" className="btn btn-secondary btn-sm">Back</button>

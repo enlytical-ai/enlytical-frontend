@@ -267,7 +267,7 @@ const LineGraphComponent = (props) => {
     return (
         <>
             {
-                (state.labels.length && data_sets.length) && (< LineGraph
+                (state.labels.length && data_sets.length) ? (< LineGraph
                     data={{
                         labels: state.labels,
                         datasets: data_sets,
@@ -275,7 +275,7 @@ const LineGraphComponent = (props) => {
                     yAxesColor={yAxesArray[0].color}
                     y1AxesColor={yAxesArray[1].color}
                     graphDataType={graphDataType}
-                />)
+                />):<p>Loading...</p>
 
             }
         </>

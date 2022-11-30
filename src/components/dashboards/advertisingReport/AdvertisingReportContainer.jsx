@@ -193,7 +193,7 @@ const AdvertisingReportContainer = (props) => {
             </div>
             <div className="advertisingReportContainerRow_3" >
                 {
-                    state.tile_array.length && state.tile_array.map(tile => {
+                    state.tile_array.length ? state.tile_array.map(tile => {
                         let obj
                         const status = clickedTile.includes(tile.name);
                         return <Tile
@@ -204,7 +204,7 @@ const AdvertisingReportContainer = (props) => {
                             key={tile.name}
                             tile={tile}
                         />
-                    })
+                    }) : <p>Loading...</p>
                 }
 
             </div>
@@ -248,13 +248,16 @@ const AdvertisingReportContainer = (props) => {
             {/* Grid */}
             <div className="advertisingReportContainerRow_6" >
                 {
-                    state.category_table_data_array.length && <CategoryTableComponent category_table_data_array={state.category_table_data_array} />
+                    state.category_table_data_array.length ? <CategoryTableComponent category_table_data_array={state.category_table_data_array} /> : <p>Loading...</p>
                 }
             </div>
             <div className="advertisingReportContainerRow_7" >
-                <h3>Targets</h3>
+
                 {
-                    state.targets_table_data_array.length && <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
+                    state.targets_table_data_array.length ? <>
+                        <h3>Targets</h3>
+                        <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
+                    </> : <p>Loading...</p>
                 }
             </div>
 

@@ -11,6 +11,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 
+
 const ProductTable = (props) => {
     const [productDataArray, setProductDataArray] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -22,7 +23,6 @@ const ProductTable = (props) => {
     useEffect(() => {
         setLoading(true)
         const token = localStorage.getItem("token");
-
         axios.get(`${BASE_URL}clientProductDetail?brandId=${current_brand}`, {
             headers: {
                 token
@@ -33,6 +33,7 @@ const ProductTable = (props) => {
             setProductDataArray(product_data_array);
             setLoading(false);
         }).catch(function (error) {
+            setLoading(false);
             console.log("======>", error.response.data.data.message);
         });
     }, [current_brand]);
@@ -88,7 +89,7 @@ const ProductTable = (props) => {
             const { selected } = response.data.data.updated;
             const productArray = [...productDataArray];
             productArray.forEach(el => {
-                    el.selected = selected;
+                el.selected = selected;
             })
             setProductDataArray(productArray);
         }).catch(function (error) {
@@ -207,31 +208,20 @@ const ProductTable = (props) => {
             <div className="productTableContainerHeader" >
                 <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
             </div>
-            {/* {
-                    productDataArray.length > 0 && ( */}
-            {/* <GridComponent
-                    headerArray={headerArray}
-                    rowArray={productDataArray}
-                    tableHeight={gridHeight}
-                /> */}
-
-            <Grid
-                headerArray={headerArray}
-                rowArray={productDataArray}
-                tableHeight={gridHeight}
-                checkBox={{
-                    field: "selected"
-                }}
-                checkBoxClicked={checkBoxClicked}
-            // accordianBodyArray={accordianBodyArray}
-            />
-
-
-            {/* )
-                } */}
-            {/* {
-                    loading && <Loader />
-                } */}
+            {
+                loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
+                    <Grid
+                        headerArray={headerArray}
+                        rowArray={productDataArray}
+                        tableHeight={gridHeight}
+                        checkBox={{
+                            field: "selected"
+                        }}
+                        checkBoxClicked={checkBoxClicked}
+                    // accordianBodyArray={accordianBodyArray}
+                    />
+                )
+            }
             <div className="nextButtonContainer" >
                 <button onClick={() => {
                     props.changeOnBoardingEl("Seller")
