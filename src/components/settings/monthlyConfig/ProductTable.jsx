@@ -1,7 +1,7 @@
 
 
 import axios from "axios";
-import GridComponent from "../../Grids/GridComponent/GridComponent";
+
 import Grid from "../../Grids/Grid/Grid";
 import GridAccordianComponent from "../../Grids/GridAccordianComponent/GridAccordianComponent"
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
@@ -163,7 +163,7 @@ const ProductTable = (props) => {
     }
 
     const priorityComponent = (props) => {
-        const priorityElementArray = ["Launch", "Growth", "ROI"];
+        const priorityElementArray = ["Launch", "Growth", "ROI","BOOST"];
         const { priority } = props.data;
         return (
             <div style={{ display: "flex" }} >

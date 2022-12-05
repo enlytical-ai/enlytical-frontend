@@ -1,6 +1,6 @@
 import "./SellerTable.css";
 import axios from "axios";
-import GridComponent from "../../Grids/GridComponent/GridComponent";
+
 import Grid from "../../Grids/Grid/Grid";
 import { useState } from "react";
 import { useEffect } from "react";

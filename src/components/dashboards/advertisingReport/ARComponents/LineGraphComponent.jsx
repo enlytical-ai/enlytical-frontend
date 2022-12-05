@@ -3,7 +3,10 @@ import axios from "axios"
 import LineGraph from "../../../graphs/LineGraph"
 import { useState } from "react"
 import { BASE_URL } from "../../../../appConstants"
+import { useSelector } from "react-redux";
 const LineGraphComponent = (props) => {
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
     const { filter, graphDataType, tileGraphIconClicked, clickedTile, dateFilter } = props;
     const [state, setState] = useState({
         labels: [],
@@ -25,9 +28,9 @@ const LineGraphComponent = (props) => {
             }
         })
         if (campaign_type_array.length === 0) {
-            campaign_type_array = ["SB", "SBVC", "SD", "SP"]
+            campaign_type_array = ["sb", "sbvc", "sd", "sp"]
         }
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData?brandId=${current_brand}`, {
             start_date,
             end_date,
             campaign_type_array,
@@ -265,21 +268,15 @@ const LineGraphComponent = (props) => {
         }
     })
     return (
-        <>
-            {
-                (state.labels.length && data_sets.length) ? (< LineGraph
-                    data={{
-                        labels: state.labels,
-                        datasets: data_sets,
-                    }}
-                    yAxesColor={yAxesArray[0].color}
-                    y1AxesColor={yAxesArray[1].color}
-                    graphDataType={graphDataType}
-                />):<p>Loading...</p>
-
-            }
-        </>
-
+        < LineGraph
+            data={{
+                labels: state.labels,
+                datasets: data_sets,
+            }}
+            yAxesColor={yAxesArray[0].color}
+            y1AxesColor={yAxesArray[1].color}
+            graphDataType={graphDataType}
+        />
     )
 }
 export default LineGraphComponent

@@ -15,7 +15,7 @@ import SettingContainer from "./components/settings/SettingContainer";
 import DashboardsContainer from "./components/dashboards/DashboardsContainer"
 import AdvertisingReportContainer from "./components/dashboards/advertisingReport/AdvertisingReportContainer";
 import MonthlyConfig from "./components/settings/monthlyConfig/MonthlyConfig";
-import GridComponent from "./components/Grids/GridComponent/GridComponent";
+
 import BrandHealth from "./components/dashboards/powerBiDashboard/powerBiDashboards/BrandHealth";
 import PowerBiDashboardContainer from "./components/dashboards/powerBiDashboard/PowerBiDashboardContainer";
 import { useDispatch } from "react-redux";

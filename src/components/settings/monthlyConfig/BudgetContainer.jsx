@@ -2,7 +2,7 @@ import "./BudgetContainer.css";
 
 import axios from "axios"
 
-import GridComponent from "../../Grids/GridComponent/GridComponent";
+
 import Grid from "./../../Grids/Grid/Grid";
 import Accordian from "../../accordian/Accordian";
 // import { Accordian } from "accordianjs";
@@ -412,11 +412,7 @@ const BudgetContainer = (props) => {
                     </select>
                 </div>
             </div>
-            {/* <GridComponent
-                headerArray={headerArray}
-                rowArray={state.category_wise_sales_and_spend_target}
-                tableHeight={gridHeight}
-            /> */}
+         
             <div className="budgetAccordianContainer" style={{ height: gridHeight }} >
                 {/* <div class="accordion" id="accordionExample">
                     <div class="accordion-item">

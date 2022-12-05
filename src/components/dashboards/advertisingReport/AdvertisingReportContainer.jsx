@@ -8,13 +8,16 @@ import LineGraphComponent from "./ARComponents/LineGraphComponent";
 import Tile from "./ARComponents/Tile";
 import CategoryTile from "./ARComponents/CategoryTile";
 import DateRangeSlider from "../../commonComponent/DateRangeSlider";
+import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 const AdvertisingReportContainer = (props) => {
+    const appParams = useSelector(state => state.appParams);
+    const { current_brand } = appParams;
     const [filter, setFilter] = useState([
-        { name: "SB", status: false },
-        { name: "SBVC", status: false },
-        { name: "SD", status: false },
-        { name: "SP", status: false }
+        { name: "sb", status: false },
+        { name: "sbvc", status: false },
+        { name: "sd", status: false },
+        { name: "sp", status: false }
     ]);
     const [filter1, setFilter1] = useState([
         { name: "Daily", status: true },
@@ -43,10 +46,10 @@ const AdvertisingReportContainer = (props) => {
             }
         })
         if (campaign_type_array.length === 0) {
-            campaign_type_array = ["SB", "SBVC", "SD", "SP"]
+            campaign_type_array = ["sb", "sbvc", "sd", "sp"]
         }
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData`, {
-            time_stamp: "2022-07-30T00:00:00.000+00:00",
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData?brandId=${current_brand}`, {
+            time_stamp: "2022-11-20T00:00:00.000+00:00",
             campaign_type_array
         }).then(function (response) {
             const { tile_array } = response.data.data;
@@ -56,8 +59,8 @@ const AdvertisingReportContainer = (props) => {
             console.log(error);
         });
 
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryTableData`, {
-            time_stamp: "2022-07-31T00:00:00.000+00:00",
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryTableData?brandId=${current_brand}`, {
+            time_stamp: "2022-11-20T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
                 "Coffee Maker",
@@ -77,7 +80,7 @@ const AdvertisingReportContainer = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getTargetsTableData`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTargetsTableData?brandId=${current_brand}`, {
             time_stamp: "2022-07-31T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
@@ -185,8 +188,8 @@ const AdvertisingReportContainer = (props) => {
                 </div>
                 <div>
                     <DateRangeSlider
-                        startDate={"2022-06-20T00:00:00.000+00:00"}
-                        endDate={"2022-10-22T00:00:00.000+00:00"}
+                        startDate={"2022-11-05T00:00:00.000+00:00"}
+                        endDate={"2022-11-25T00:00:00.000+00:00"}
                         getSelectedStartEndDate={getSelectedStartEndDate}
                     />
                 </div>
