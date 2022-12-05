@@ -3,7 +3,8 @@
 import axios from "axios";
 
 import Grid from "../../Grids/Grid/Grid";
-import GridAccordianComponent from "../../Grids/GridAccordianComponent/GridAccordianComponent"
+import AccordianGrid from "../../Grids/AccordianGrid/AccordianGrid";
+
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import "./ProductTable.css"
 import Loader from "../../commonComponent/Loader/Loader";
@@ -163,7 +164,7 @@ const ProductTable = (props) => {
     }
 
     const priorityComponent = (props) => {
-        const priorityElementArray = ["Launch", "Growth", "ROI","BOOST"];
+        const priorityElementArray = ["Launch", "Growth", "ROI", "BOOST"];
         const { priority } = props.data;
         return (
             <div style={{ display: "flex" }} >
@@ -187,20 +188,21 @@ const ProductTable = (props) => {
     const headerArray = [
         // { headerName: "", field: "selected", minWidth: 30, maxWidth: 30, headerComponent: selectAllCheckBoxComponent, cellComponent: checkBoxComponent },
         { headerName: "Asin", field: 'platform_code', cellComponent: asinComponent, width: 160 },
-        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 300 },
+        { headerName: "Product Name", field: 'product_name', cellComponent: productNameComponent, width: 200 },
         { headerName: "MRP", field: 'mrp', width: 80 },
         { headerName: "Product Code", field: "product_code", cellComponent: productCodeComponent, width: 160 },
-        { headerName: "Priority", field: "", cellComponent: priorityComponent, width: 260 },
-        { headerName: "Portfolio", field: "category", width: 180 },
-        { headerName: "Category", field: "amazon_sub_cat", width: 180 },
-        { headerName: "Type", field: "type", width: 120 },
-        { headerName: "Platform", field: "platform", width: 120 },
+        { headerName: "Priority", field: "", cellComponent: priorityComponent, width: 300 },
+        // { headerName: "Portfolio", field: "category", width: 180 },
+        // { headerName: "Category", field: "amazon_sub_cat", width: 180 },
+        // { headerName: "Type", field: "type", width: 120 },
+        // { headerName: "Platform", field: "platform", width: 120 },
     ]
     const accordianBodyArray = [
-        { headerName: "Portfolio", field: "category", width: 180 },
-        { headerName: "Category", field: "amazon_sub_cat", width: 180 },
-        { headerName: "Type", field: "type", width: 120 },
-        { headerName: "Platform", field: "platform", width: 120 },
+        { headerName: "Portfolio", field: "category" },
+        { headerName: "Category", field: "amazon_sub_cat" },
+        { headerName: "Type", field: "type" },
+        { headerName: "Platform", field: "platform" },
+        { headerName: "Product Name", field: 'product_name' },
     ]
     return (
 
@@ -210,7 +212,8 @@ const ProductTable = (props) => {
             </div>
             {
                 loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
-                    <Grid
+                    <AccordianGrid
+                        accordianBodyHeight={230}
                         headerArray={headerArray}
                         rowArray={productDataArray}
                         tableHeight={gridHeight}
@@ -218,7 +221,7 @@ const ProductTable = (props) => {
                             field: "selected"
                         }}
                         checkBoxClicked={checkBoxClicked}
-                    // accordianBodyArray={accordianBodyArray}
+                        accordianBodyArray={accordianBodyArray}
                     />
                 )
             }

@@ -1,0 +1,90 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* -----Root Style----- */
+:root {
+    --cofmgbysp_grid_header_background_colour: white;
+    --cofmgbysp_border_colour: #9e9e9e;
+    --cofmgbysp_row_border_bottom_colour: #e0e0e0;
+    --cofmgbysp_grid_row_hover_colour: #bbdefb;
+    --cofmgbysp_grid_row_element_hover_colour: #81d4fa;
+    --cofmgbysp_grid_row_selected_colour: #bbdefb;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+/* -----Grid Cintainer Style----- */
+.cofmgbysp_grid_container {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid var(--cofmgbysp_border_colour);
+}
+
+/* -----Header Style----- */
+.cofmgbysp_grid_header_body {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--cofmgbysp_grid_header_background_colour);
+    border-bottom: 1px solid var(--cofmgbysp_border_colour);
+}
+
+.cofmgbysp_grid_header_body::-webkit-scrollbar {
+    display: none;
+}
+
+.cofmgbysp_grid_header {
+    background-color: var(--cofmgbysp_grid_header_background_colour);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+
+}
+
+.cofmgbysp_grid_header_element {
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+/* -----Row Style----- */
+.cofmgbysp_grid_row_body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.cofmgbysp_grid_row {
+    height: 29px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    border-bottom: 1px solid var(--cofmgbysp_row_border_bottom_colour);
+}
+
+.cofmgbysp_grid_row:hover {
+    background-color: var(--cofmgbysp_grid_row_hover_colour);
+}
+
+.cofmgbysp_grid_row_element {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 10px;
+    height: 100%;
+}
+
+.cofmgbysp_grid_row_element:hover {
+    background-color: var(--cofmgbysp_grid_row_element_hover_colour);
+}
+
+/* Checkbox Style */
+.cofmgbysp_checkbox_container {
+    padding-left: 10px;
+}
+
+.cofmgbysp_grid_row_selected {
+    background-color: var(--cofmgbysp_grid_row_selected);
+}
+
+/* ------------------------------------------------------------------------------------------------ */

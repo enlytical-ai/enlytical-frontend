@@ -1,0 +1,112 @@
+:root {
+    --cofag-abysp_accordian_body_heigh: 199px;
+    --cofag-abysp_opening_animation_duration: 0.4s;
+    --cofag-abysp_closing_animation_duration: 0.4s;
+    --cofag-abysp_accordian_border_colour: #e0e0e0;
+    --cofag-abysp_accordian_border_radius: 0px;
+    --cofag-abysp_accordian_header_background_color: white;
+    --cofag-abysp_accordian_hover_header_background_color: #bbdefb;
+    --cofag-abysp_accordian_body_background_color: white;
+}
+
+
+.cofag-abysp_accordian_container{
+    width: fit-content;
+}
+#cofag-abysp_accordian_header {
+    border-bottom: 1px solid var(--cofag-abysp_accordian_border_colour);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#cofag-abysp_accordian_header:hover {
+    background-color: var(--cofag-abysp_accordian_hover_header_background_color);
+}
+
+.cofag-abysp_accordian_header_open {
+    border-top-left-radius: var(--cofag-abysp_accordian_border_radius);
+    border-top-right-radius: var(--cofag-abysp_accordian_border_radius);
+    background-color: var(--cofag-abysp_accordian_hover_header_background_color);
+}
+
+.cofag-abysp_accordian_header_close {
+    background-color: var(--cofag-abysp_accordian_header_background_color);
+    border-top-left-radius: var(--cofag-abysp_accordian_border_radius);
+    border-top-right-radius: var(--cofag-abysp_accordian_border_radius);
+    border-bottom-left-radius: var(--cofag-abysp_accordian_border_radius);
+    border-bottom-right-radius: var(--cofag-abysp_accordian_border_radius);
+}
+
+.cofag-abysp_accordian_header_icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 26px;
+}
+
+.cofag-abysp_accordian_body {
+    height: 0px;
+    overflow: hidden;
+}
+
+#cofag-abysp_accordian_body_constants {
+    background-color: var(--cofag-abysp_accordian_body_background_color);
+}
+
+.cofag-abysp_accordian_body_open {
+    animation-name: cofag-abysp_accordian_open;
+    animation-duration: var(--cofag-abysp_opening_animation_duration);
+    border-bottom: 1px solid var(--cofag-abysp_accordian_border_colour);
+    border-bottom-left-radius: var(--cofag-abysp_accordian_border_radius);
+    border-bottom-right-radius: var(--cofag-abysp_accordian_border_radius);
+    overflow: hidden;
+    height: var(--cofag-abysp_accordian_body_heigh);
+}
+
+.cofag-abysp_accordian_body_default_open {
+    animation-duration: var(--cofag-abysp_opening_animation_duration);
+    border-bottom: 1px solid var(--cofag-abysp_accordian_border_colour);
+
+    border-bottom-left-radius: var(--cofag-abysp_accordian_border_radius);
+    border-bottom-right-radius: var(--cofag-abysp_accordian_border_radius);
+    overflow: hidden;
+    height: var(--cofag-abysp_accordian_body_heigh);
+}
+
+.cofag-abysp_accordian_body_close {
+    animation-name: cofag-abysp_accordian_close;
+  
+    animation-duration: var(--cofag-abysp_closing_animation_duration);
+    overflow: hidden;
+    height: 0px;
+}
+
+@keyframes cofag-abysp_accordian_open {
+    0% {
+        height: 0px;
+    }
+
+    100% {
+        height: var(--cofag-abysp_accordian_body_heigh);
+    }
+
+}
+
+@keyframes cofag-abysp_accordian_close {
+    0% {
+        height: var(--cofag-abysp_accordian_body_heigh);
+        border-bottom: 1px solid var(--cofag-abysp_accordian_border_colour);
+    }
+
+    90% {
+        border-bottom: 1px solid var(--cofag-abysp_accordian_border_colour);
+    }
+
+    100% {
+        height: 0px;
+    }
+
+}

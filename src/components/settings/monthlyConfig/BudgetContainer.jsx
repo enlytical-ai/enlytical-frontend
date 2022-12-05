@@ -195,7 +195,7 @@ const BudgetContainer = (props) => {
                                 <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
                             </div>
                         )
-                        : state.ad_sales === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.ad_sales
+                        : state.ad_sales === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : <i class="bi bi-lock"></i> : state.ad_sales
                 }
             </div>
         )
@@ -225,7 +225,7 @@ const BudgetContainer = (props) => {
                             <input placeholder="Enter value" type="number" onChange={(e) => { setState(state => ({ ...state, spend: e.target.value * 1 })) }} className="adSalesTargetInput" value={state.spend} ></input >
                             <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
                         </div>
-                    ) : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.spend
+                    ) : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : <i class="bi bi-lock"></i> : state.spend
                 }
             </div>
         )
@@ -295,7 +295,7 @@ const BudgetContainer = (props) => {
                                 <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
                             </div>
                         )
-                        : state.ad_sales === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.ad_sales
+                        : state.ad_sales === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : <i class="bi bi-lock"></i> : state.ad_sales
                 }
             </div>
         )
@@ -325,7 +325,7 @@ const BudgetContainer = (props) => {
                             <input placeholder="Enter value" type="number" onChange={(e) => { setState(state => ({ ...state, spend: e.target.value * 1 })) }} className="adSalesTargetInput" value={state.spend} ></input >
                             <i onClick={() => onSaveFn()} class="bi bi-check-circle"></i>
                         </div>
-                    ) : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : "" : state.spend
+                    ) : state.spend === "" ? addIconStatus ? <i onClick={() => onDoubleClick()} class="bi bi-plus-circle"></i> : <i class="bi bi-lock"></i> : state.spend
                 }
             </div>
         )
@@ -412,7 +412,7 @@ const BudgetContainer = (props) => {
                     </select>
                 </div>
             </div>
-         
+
             <div className="budgetAccordianContainer" style={{ height: gridHeight }} >
                 {/* <div class="accordion" id="accordionExample">
                     <div class="accordion-item">

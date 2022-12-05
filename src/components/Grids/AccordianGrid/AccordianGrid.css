@@ -8,7 +8,6 @@
     --agbysp_grid_row_element_hover_colour: #81d4fa;
     --agbysp_grid_row_selected_colour: #bbdefb;
 }
-
 /* ------------------------------------------------------------------------------------------------ */
 
 /* -----Grid Cintainer Style----- */
@@ -45,23 +44,6 @@
 .agbysp_grid_header_element {
     font-weight: 600;
     padding-left: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.agbysp_grid_header_element_one{
-    flex: 1;
-}
-.agbysp_grid_header_element_two{
-    background-color: #9e9e9e;
-    border-radius: 2px;
-    height: 14px;
-    width: 4px;
-
-}
-
-.agbysp_grid_header_element_two:hover{
-    cursor: e-resize;
 }
 
 /* -----Row Style----- */
@@ -100,8 +82,8 @@
     padding-left: 10px;
 }
 
-.agbysp_grid_row_selected_colour {
-    background-color: var(--agbysp_grid_row_selected_colour);
+.agbysp_grid_row_selected {
+    background-color: var(--agbysp_grid_row_selected);
 }
 
 /* ------------------------------------------------------------------------------------------------ */
