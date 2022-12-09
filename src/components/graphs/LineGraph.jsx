@@ -15,6 +15,8 @@ const LineGraph = (props) => {
     const chartRef = useRef();
     const [startXAxisDateArray, setStartXAxisDateArray] = useState([]);
     const [endXAxisDateArray, setEndXAxisDateArray] = useState([]);
+    const [mouseDownValue, setMouseDownValue] = useState(null);
+
     const [lineStartEndPoints, setLineStartEndPoints] = useState([]);
 
     // {
@@ -36,14 +38,16 @@ const LineGraph = (props) => {
         })
     }, [startXAxisDateArray, endXAxisDateArray]);
 
+
     const onMouseDown = function (e) {
         // window.addEventListener("mousemove",onMouseMove)
+        setMouseDownValue(null);
         const el = getElementsAtEvent(chartRef.current, e)[0];
         if (el) {
             if (startXAxisDateArray.length < 2 && endXAxisDateArray.length < 2) {
                 const index = el.index;
+                setMouseDownValue(xAxisDataArray[index]);
                 console.log("onMouseDow", xAxisDataArray[index]);
-                setStartXAxisDateArray(prevState => ([...prevState, xAxisDataArray[index]]));
             } else {
                 NotificationManager.error("You cannot select more than two areas.", 'Warning', 3000);
             }
@@ -53,16 +57,13 @@ const LineGraph = (props) => {
     const onMouseUp = function (e) {
         //window.removeEventListener("mousemove",onMouseMove);
         const el = getElementsAtEvent(chartRef.current, e)[0];
-        if (el) {
+        if (el && mouseDownValue) {
             const index = getElementsAtEvent(chartRef.current, e)[0].index;
             console.log("onMouseUp", xAxisDataArray[index]);
             setEndXAxisDateArray(prevState => ([...prevState, xAxisDataArray[index]]));
-        } else {
-            let arr = [...startXAxisDateArray];
-            arr.pop();
-            setStartXAxisDateArray(arr);
+            setStartXAxisDateArray(prevState => ([...prevState, mouseDownValue]));
         }
-
+        setMouseDownValue(null);
     }
 
     const onMouseMove = function (e) {

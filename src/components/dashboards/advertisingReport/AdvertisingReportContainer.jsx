@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import CategoryTableComponent from "./ARComponents/CategoryTableComponent";
 import CategoryAndASINOfTwoRangeTableComponent from "./ARComponents/CategoryAndASINOfTwoRangeTableComponent";
@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 import Loader from "./../../commonComponent/Loader/Loader";
 const AdvertisingReportContainer = (props) => {
+    const scollToRef = useRef();
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
     const [filter, setFilter] = useState([
@@ -232,6 +233,10 @@ const AdvertisingReportContainer = (props) => {
                 console.log("category_and_ASIN_of_two_range=>", category_and_ASIN_of_two_range);
                 setState(prevState => ({ ...prevState, category_and_ASIN_of_two_range }));
                 setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
+
+
+            
+
             }).catch(function (error) {
                 console.log(error);
                 setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
@@ -351,7 +356,7 @@ const AdvertisingReportContainer = (props) => {
 
                 </div>
             </div> */}
-            <div className="advertisingReportContainerRow_6" >
+            <div  className="advertisingReportContainerRow_6" >
                 <h1>Percentage Difference</h1>
                 {
                     // state.category_table_data_array.length ? <CategoryTableComponent filter2={filter2} category_table_data_array={state.category_table_data_array} /> : <p>Loading...</p>
@@ -361,13 +366,13 @@ const AdvertisingReportContainer = (props) => {
 
             </div>
 
-            <div className="advertisingReportContainerRow_7" >
-                {
+            <div  className="advertisingReportContainerRow_7" >
+                {/* {
                     state.targets_table_data_array.length ? <>
                         <h3>Targets</h3>
                         <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
                     </> : <p>Loading...</p>
-                }
+                } */}
             </div>
 
         </div>
