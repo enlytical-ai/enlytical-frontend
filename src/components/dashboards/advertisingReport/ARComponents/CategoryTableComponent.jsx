@@ -5,10 +5,11 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useMemo } from "react";
 import { getFlowColor } from "../../../../commonFunction/commomFunction";
 import Grid from "../../../Grids/newGrid/MasterGrid";
+import { useEffect } from "react";
 const CategoryTableComponent = (props) => {
-    const { category_table_data_array } = props;
-    const defaultColDef = useMemo(() => ({ sortable: true }
-    ), [])
+    const { category_table_data_array, filter2 } = props;
+
+
 
     //Table Cell Component
     const SalesCellComponent = (props) => {
@@ -64,14 +65,31 @@ const CategoryTableComponent = (props) => {
         )
     }
 
-    const headerArray = [
-        { headerName: "Category", field: 'category', width: 200, resizable: true },
+    const MHeaderArray = [
+
         { headerName: "Sales", field: 'yesterdays_sales', cellComponent: SalesCellComponent, width: 100, resizable: true },
-        { headerName: "L7D sales", field: 'from_day_before_yesterday_pre_seven_days_avg_sales', width: 100, resizable: true },
+        { headerName: "L7D Sales", field: 'from_day_before_yesterday_pre_seven_days_avg_sales', width: 100, resizable: true },
         { headerName: "ACOS", field: "yesterdays_acos", cellComponent: AcosCellComponent, width: 80, resizable: true },
         { headerName: "L7D ACOS", field: "from_day_before_yesterday_pre_seven_days_avg_acos", width: 100, resizable: true },
         { headerName: "Cost", field: "yesterdays_cost", cellComponent: CostCellComponent, width: 100, resizable: true },
-        { headerName: "L7D cost", field: "from_day_before_yesterday_pre_seven_days_avg_cost", width: 120, resizable: true },
+        { headerName: "L7D Cost", field: "from_day_before_yesterday_pre_seven_days_avg_cost", width: 120, resizable: true },
+        { headerName: "Imp.", field: "yesterdays_impressions", cellComponent: ImpressionsCellComponent, width: 80, resizable: true },
+        { headerName: "L7D Imp.", field: "from_day_before_yesterday_pre_seven_days_avg_impressions", width: 100, resizable: true },
+        { headerName: "CPC", field: "yesterdays_cpc", cellComponent: CPCCellComponent, width: 80, resizable: true },
+        { headerName: "L7D CPC", field: "from_day_before_yesterday_pre_seven_days_avg_cpc", width: 100, resizable: true },
+        { headerName: "CTR", field: "yesterdays_ctr", cellComponent: CTRCellComponent, width: 80, resizable: true },
+        { headerName: "L7D CTR", field: "from_day_before_yesterday_pre_seven_days_avg_ctr", width: 100, resizable: true },
+        { headerName: "Clicks", field: "yesterdays_clicks", cellComponent: ClicksCellComponent, width: 100, resizable: true },
+        { headerName: "L7D Clicks", field: "from_day_before_yesterday_pre_seven_days_avg_clicks", width: 120, resizable: true },
+    ]
+    const FCHeaderArray = [
+
+        { headerName: "Sales", field: 'yesterdays_sales', cellComponent: SalesCellComponent, width: 100, resizable: true },
+        { headerName: "L7D Sales", field: 'from_day_before_yesterday_pre_seven_days_avg_sales', width: 100, resizable: true },
+        { headerName: "ACOS", field: "yesterdays_acos", cellComponent: AcosCellComponent, width: 80, resizable: true },
+        { headerName: "L7D ACOS", field: "from_day_before_yesterday_pre_seven_days_avg_acos", width: 100, resizable: true },
+        { headerName: "Cost", field: "yesterdays_cost", cellComponent: CostCellComponent, width: 100, resizable: true },
+        { headerName: "L7D Cost", field: "from_day_before_yesterday_pre_seven_days_avg_cost", width: 120, resizable: true },
         { headerName: "Imp.", field: "yesterdays_impressions", cellComponent: ImpressionsCellComponent, width: 80, resizable: true },
         { headerName: "L7D Imp.", field: "from_day_before_yesterday_pre_seven_days_avg_impressions", width: 100, resizable: true },
         { headerName: "CPC", field: "yesterdays_cpc", cellComponent: CPCCellComponent, width: 80, resizable: true },
@@ -81,50 +99,36 @@ const CategoryTableComponent = (props) => {
         { headerName: "Clicks", field: "yesterdays_clicks", cellComponent: ClicksCellComponent, width: 100, resizable: true },
         { headerName: "L7D Clicks", field: "from_day_before_yesterday_pre_seven_days_avg_clicks", width: 120, resizable: true },
 
-        // { field: "L7DImp" },
-        // { field: "CPC" },
-        // { field: "L7Dcpc" },
-        // { field: "CTR" },
-        // { field: "L7Dctr" },
-        // { field: "Clicks" },
-        // { field: "L7Dclic" }
-    ]
-    const firstChildHeaderArray = [
-        { headerName: "ASIN", field: 'ad_asin', width: 200, resizable: true },
-        { headerName: "Sales", field: 'yesterdays_sales', cellComponent: SalesCellComponent, width: 100, resizable: true },
-        { headerName: "L7D sales", field: 'from_day_before_yesterday_pre_seven_days_avg_sales', width: 100, resizable: true },
-        { headerName: "ACOS", field: "yesterdays_acos", cellComponent: AcosCellComponent, width: 80, resizable: true },
-        { headerName: "L7D ACOS", field: "from_day_before_yesterday_pre_seven_days_avg_acos", width: 100, resizable: true },
-        { headerName: "Cost", field: "yesterdays_cost", cellComponent: CostCellComponent, width: 100, resizable: true },
-        { headerName: "L7D cost", field: "from_day_before_yesterday_pre_seven_days_avg_cost", width: 120, resizable: true },
-        { headerName: "Imp.", field: "yesterdays_impressions", cellComponent: ImpressionsCellComponent, width: 80, resizable: true },
-        { headerName: "L7D Imp.", field: "from_day_before_yesterday_pre_seven_days_avg_impressions", width: 100, resizable: true },
-        { headerName: "CPC", field: "yesterdays_cpc", cellComponent: CPCCellComponent, width: 80, resizable: true },
-        { headerName: "L7D CPC", field: "from_day_before_yesterday_pre_seven_days_avg_cpc", width: 100, resizable: true },
-        { headerName: "CTR", field: "yesterdays_ctr", cellComponent: CTRCellComponent, width: 80, resizable: true },
-        { headerName: "L7D CTR", field: "from_day_before_yesterday_pre_seven_days_avg_ctr", width: 100, resizable: true },
-        { headerName: "Clicks", field: "yesterdays_clicks", cellComponent: ClicksCellComponent, width: 100, resizable: true },
-        { headerName: "L7D Clicks", field: "from_day_before_yesterday_pre_seven_days_avg_clicks", width: 120, resizable: true },
 
-        // { field: "L7DImp" },
-        // { field: "CPC" },
-        // { field: "L7Dcpc" },
-        // { field: "CTR" },
-        // { field: "L7Dctr" },
-        // { field: "Clicks" },
-        // { field: "L7Dclic" }
     ]
+    const firstChildHeaderArray = [{ headerName: "ASIN", field: 'ad_asin', width: 200 }]
+    const masterHeaderArray = [{ headerName: "Category", field: 'category', width: 200 }];
+    filter2.forEach(selectedField => {
+        if (selectedField.status) {
+            const [MHeader] = MHeaderArray.filter(h => h.headerName === selectedField.name);
+            const [FCHeader] = FCHeaderArray.filter(h => h.headerName === selectedField.name);
+            if (MHeader) {
+                masterHeaderArray.push(MHeader);
+            }
+            if (FCHeader) {
+                firstChildHeaderArray.push(FCHeader);
+            }
+        }
+    })
+
+
 
     return (
 
         <Grid
             accordianBodyHeight={280}
             rowArray={category_table_data_array}
-            headerArray={headerArray}
+            headerArray={masterHeaderArray}
             rowHeight={30}
             headerHeight={30}
+            tableHeight={440}
             firstChileConfig={{
-                accordianBodyHeight: 200,
+                accordianBodyHeight: 240,
                 headerArray: firstChildHeaderArray,
                 field: "asin",
             }}

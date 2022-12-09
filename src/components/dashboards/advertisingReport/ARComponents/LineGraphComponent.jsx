@@ -267,6 +267,11 @@ const LineGraphComponent = (props) => {
             yAxesArrayIndex += 1;
         }
     })
+
+
+    const graphAreaSelectFn = (e) => {
+        props.graphAreaSelectFn(e);
+    }
     return (
         < LineGraph
             data={{
@@ -276,6 +281,7 @@ const LineGraphComponent = (props) => {
             yAxesColor={yAxesArray[0].color}
             y1AxesColor={yAxesArray[1].color}
             graphDataType={graphDataType}
+            graphAreaSelectFn={graphAreaSelectFn}
         />
     )
 }

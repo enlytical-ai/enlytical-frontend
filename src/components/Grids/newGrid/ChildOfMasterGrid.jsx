@@ -23,6 +23,7 @@ const Grid = props => {
         secondChileConfig,
         firstChileConfig
     } = props;
+    const [accordianWidth, setAccordianWidth] = useState();
     useEffect(() => {
         let rootEl = document.querySelector(":root");
         if (gridHeaderBackgroundColour) rootEl.style.setProperty("--cofmgbysp_grid_header_background_colour", gridHeaderBackgroundColour);
@@ -31,7 +32,14 @@ const Grid = props => {
         if (gridRowHoverColour) rootEl.style.setProperty("--cofmgbysp_grid_row_hover_colour", gridRowHoverColour);
         if (gridRowElementHoverColour) rootEl.style.setProperty("--cofmgbysp_grid_row_element_hover_colour", gridRowElementHoverColour);
         if (gridRowSelectedColour) rootEl.style.setProperty("--cofmgbysp_grid_row_selected_colour", gridRowSelectedColour);
-    },[])
+        if (headerArray) {
+            let width = 26;
+            for (let el of headerArray) {
+                width += el.width
+            }
+            setAccordianWidth(width);
+        }
+    }, [headerArray])
     let s = true;
     if (checkBox && checkBox.field) {
         for (let obj of rowArray) {
@@ -92,6 +100,7 @@ const Grid = props => {
                         delete dataObj.cellComponent;
                         return (
                             <Accordian2
+                                accordianWidth={accordianWidth}
                                 key={i}
                                 accordianBodyHeight={firstChileConfig.accordianBodyHeight ? firstChileConfig.accordianBodyHeight : 400}
                                 accordianHeaderComponent={() =>
@@ -123,7 +132,7 @@ const Grid = props => {
                                 accordianBodyComponent={() => {
                                     return (
                                         <div style={{ margin: 5 }} >
-                                         
+
                                         </div>
                                     )
                                 }}

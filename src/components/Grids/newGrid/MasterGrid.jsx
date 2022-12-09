@@ -40,7 +40,7 @@ const Grid = props => {
             }
             setAccordianWidth(width);
         }
-    }, [])
+    }, [headerArray])
     let s = true;
     if (checkBox && checkBox.field) {
         for (let obj of rowArray) {
@@ -132,11 +132,11 @@ const Grid = props => {
                                 }
                                 accordianBodyComponent={() => {
                                     return (
-                                        <div style={{ margin: 10 }} >
+                                        <div style={{ padding: 10,backgroundColor:"#bbdefb" }} >
                                             {
                                                 row[firstChileConfig.field] ? (
                                                     <ChildOfMasterGrid
-                                                        tableHeight={accordianBodyHeight ? (accordianBodyHeight - 20) : 380}
+                                                        tableHeight={ accordianBodyHeight ? (accordianBodyHeight - 20) : 380}
                                                         headerArray={firstChileConfig.headerArray}
                                                         rowArray={row[firstChileConfig.field]}
                                                         firstChileConfig={firstChileConfig}

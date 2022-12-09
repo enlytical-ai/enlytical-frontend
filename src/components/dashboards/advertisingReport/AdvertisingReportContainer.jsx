@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoryTableComponent from "./ARComponents/CategoryTableComponent";
+import CategoryAndASINOfTwoRangeTableComponent from "./ARComponents/CategoryAndASINOfTwoRangeTableComponent";
 import TargetsTableComponent from "./ARComponents/TargetsTableComponent"
 import Grid from "../../Grids/Grid"
 import "./AdvertisingReportContainer.css"
@@ -10,6 +11,7 @@ import CategoryTile from "./ARComponents/CategoryTile";
 import DateRangeSlider from "../../commonComponent/DateRangeSlider";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
+import Loader from "./../../commonComponent/Loader/Loader";
 const AdvertisingReportContainer = (props) => {
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
@@ -24,6 +26,27 @@ const AdvertisingReportContainer = (props) => {
         { name: "Weekly", status: false },
         { name: "Monthly", status: false },
     ]);
+    const [filter2, setFilter2] = useState([
+
+        { name: "Sales", status: true },
+        { name: "L7D Sales", status: true },
+        { name: "ACOS", status: true },
+        { name: "L7D ACOS", status: true },
+        { name: "Cost", status: true },
+        { name: "L7D Cost", status: true },
+        { name: "Imp.", status: true },
+        { name: "L7D Imp.", status: true },
+        { name: "CPC", status: false },
+        { name: "L7D CPC", status: false },
+        { name: "CTR", status: false },
+        { name: "L7D CTR", status: false },
+        { name: "Clicks", status: false },
+        { name: "L7D Clicks", status: false }
+    ]);
+
+    const [loader, setLoader] = useState({
+        getTwoAreaDataToggle: false,
+    })
     const [dateFilter, setDateFilter] = useState({
         start_date: null,
         end_date: null
@@ -32,7 +55,8 @@ const AdvertisingReportContainer = (props) => {
     const [state, setState] = useState({
         tile_array: [],
         category_table_data_array: [],
-        targets_table_data_array: []
+        targets_table_data_array: [],
+        category_and_ASIN_of_two_range: []
 
     })
     const [clickedTile, setClickedTile] = useState(["sales"]);
@@ -127,6 +151,17 @@ const AdvertisingReportContainer = (props) => {
         setFilter1(newFilter);
         setGraphDataType(`${id}`.toLowerCase())
     }
+    const filterClicked2 = (e) => {
+        const id = e.target.id;
+        const newFilter = filter2.map(el => {
+            return {
+                name: el.name,
+                status: id === el.name ? !el.status : el.status,
+            }
+        })
+        setFilter2(newFilter);
+        // setGraphDataType(`${id}`.toLowerCase())
+    }
 
 
     const tileClickedFn = (id) => {
@@ -163,6 +198,47 @@ const AdvertisingReportContainer = (props) => {
                 end_date: endDate
             })
         }, 1000)
+    }
+
+    const graphAreaSelectFn = (e) => {
+        const { startDateArray, endDateArray } = e;
+        if (startDateArray.length === 2 && endDateArray.length === 2) {
+            setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: true }));
+            let campaign_type_array = [];
+            filter.forEach(e => {
+                if (e.status) {
+                    campaign_type_array.push(e.name);
+                }
+            })
+            if (campaign_type_array.length === 0) {
+                campaign_type_array = ["sb", "sbvc", "sd", "sp"]
+            }
+
+            axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryAndASINOfTwoRange?brandId=${current_brand}`, {
+                time_range_one: {
+                    "start_time": `${startDateArray[0]}T00:00:00.000+00:00`,
+                    "end_time": `${endDateArray[0]}T00:00:00.000+00:00`
+                },
+                time_range_two: {
+                    "start_time": `${startDateArray[1]}T00:00:00.000+00:00`,
+                    "end_time": `${endDateArray[1]}T00:00:00.000+00:00`
+                },
+                campaign_type_array,
+                category_array: [
+
+                ]
+            }).then(function (response) {
+                const { category_and_ASIN_of_two_range } = response.data.data;
+                console.log("category_and_ASIN_of_two_range=>", category_and_ASIN_of_two_range);
+                setState(prevState => ({ ...prevState, category_and_ASIN_of_two_range }));
+                setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
+            }).catch(function (error) {
+                console.log(error);
+                setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
+            });
+        } else {
+            setState(prevState => ({ ...prevState, category_and_ASIN_of_two_range: [] }));
+        }
     }
 
     return (
@@ -209,7 +285,6 @@ const AdvertisingReportContainer = (props) => {
                         />
                     }) : <p>Loading...</p>
                 }
-
             </div>
             {/* Graph */}
             <div className="advertisingReportContainerRow_4" >
@@ -233,12 +308,21 @@ const AdvertisingReportContainer = (props) => {
                 {
                     lineGraphErrorToggle && <div className="lineGraphComponentError"  >   <p>You cannot select more than two data sets.</p></div>
                 }
+                {
+                    loader.getTwoAreaDataToggle && (
+                        <div style={{ position: "absolute", display: "flex", width: "100%", justifyContent: "center", top: "30%" }} >
+                            <Loader />
+                        </div>
+                    )
+
+                }
                 <LineGraphComponent
                     clickedTile={clickedTile}
                     filter={filter}
                     graphDataType={graphDataType}
                     tileGraphIconClicked={tileGraphIconClicked}
                     dateFilter={dateFilter}
+                    graphAreaSelectFn={graphAreaSelectFn}
                 />
             </div>
             {/* <div className="advertisingReportContainerRow_8" >
@@ -249,13 +333,35 @@ const AdvertisingReportContainer = (props) => {
             </div> */}
 
             {/* Grid */}
-            <div className="advertisingReportContainerRow_6" >
-                {
-                    state.category_table_data_array.length ? <CategoryTableComponent category_table_data_array={state.category_table_data_array} /> : <p>Loading...</p>
-                }
-            </div>
-            <div className="advertisingReportContainerRow_7" >
+            {/* <div className="advertisingReportContainerRow_8" >
+                <div className="row_8Filter" >
+                    {
+                        filter2.map((e) => {
+                            return (
+                                <p
+                                    className={e.status ? "filterClicked2 filter2" : "filter2"}
+                                    style={{ width: "60px", fontSize: "12px" }}
+                                    key={e.name}
+                                    id={e.name}
+                                    onClick={filterClicked2}
+                                >{e.name}</p>
+                            )
+                        })
+                    }
 
+                </div>
+            </div> */}
+            <div className="advertisingReportContainerRow_6" >
+                <h1>Percentage Difference</h1>
+                {
+                    // state.category_table_data_array.length ? <CategoryTableComponent filter2={filter2} category_table_data_array={state.category_table_data_array} /> : <p>Loading...</p>
+                    (state.category_and_ASIN_of_two_range.length > 0) && <CategoryAndASINOfTwoRangeTableComponent category_and_ASIN_of_two_range={state.category_and_ASIN_of_two_range} />
+
+                }
+
+            </div>
+
+            <div className="advertisingReportContainerRow_7" >
                 {
                     state.targets_table_data_array.length ? <>
                         <h3>Targets</h3>
