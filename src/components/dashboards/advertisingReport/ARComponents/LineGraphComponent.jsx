@@ -30,6 +30,7 @@ const LineGraphComponent = (props) => {
         if (campaign_type_array.length === 0) {
             campaign_type_array = ["sb", "sbvc", "sd", "sp"]
         }
+        props.setLoader(prevState => ({ ...prevState, graphLoader: true }));
         axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData?brandId=${current_brand}`, {
             start_date,
             end_date,
@@ -82,8 +83,10 @@ const LineGraphComponent = (props) => {
                 impressions: impressionsArray,
                 ctr: ctrArray
             }))
+            props.setLoader(prevState => ({ ...prevState, graphLoader: false }));
         }).catch(function (error) {
             console.log(error);
+            props.setLoader(prevState => ({ ...prevState, graphLoader: false }));
         });
     }, [filter, graphDataType, dateFilter])
 

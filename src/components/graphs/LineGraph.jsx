@@ -17,6 +17,9 @@ const LineGraph = (props) => {
     const [endXAxisDateArray, setEndXAxisDateArray] = useState([]);
     const [mouseDownValue, setMouseDownValue] = useState(null);
 
+    const [startLine, setStartLine] = useState([]);
+    const [endLine, setEndLine] = useState([]);
+
     const [lineStartEndPoints, setLineStartEndPoints] = useState([]);
 
     // {
@@ -40,13 +43,22 @@ const LineGraph = (props) => {
 
 
     const onMouseDown = function (e) {
-        // window.addEventListener("mousemove",onMouseMove)
+        //  window.addEventListener("mousemove", onMouseMove)
+
         setMouseDownValue(null);
         const el = getElementsAtEvent(chartRef.current, e)[0];
+
         if (el) {
             if (startXAxisDateArray.length < 2 && endXAxisDateArray.length < 2) {
                 const index = el.index;
                 setMouseDownValue(xAxisDataArray[index]);
+                const { x, y } = el.element;
+                setStartLine([{
+                    x, y
+                }]);
+                setEndLine([{
+                    x, y
+                }])
                 console.log("onMouseDow", xAxisDataArray[index]);
             } else {
                 NotificationManager.error("You cannot select more than two areas.", 'Warning', 3000);
@@ -55,7 +67,9 @@ const LineGraph = (props) => {
         }
     }
     const onMouseUp = function (e) {
-        //window.removeEventListener("mousemove",onMouseMove);
+        // window.removeEventListener("mousemove", onMouseMove);
+        setEndLine([]);
+        setStartLine([]);
         const el = getElementsAtEvent(chartRef.current, e)[0];
         if (el && mouseDownValue) {
             const index = getElementsAtEvent(chartRef.current, e)[0].index;
@@ -67,8 +81,19 @@ const LineGraph = (props) => {
     }
 
     const onMouseMove = function (e) {
-        console.log(e.clientX);
+        // const el = (chartRef.current, e)[0];
+        // console.log(el);   
+        //console.log(chartRef.current)   
+
+        const { layerX, layerY } = e.nativeEvent
+        // console.log(layerX, layerY);
+        setEndLine([{
+            x: layerX,
+            y: layerY - 28
+        }])
     }
+
+    console.log(startLine, endLine)
     const reset = () => {
         setStartXAxisDateArray([]);
         setEndXAxisDateArray([]);
@@ -81,6 +106,14 @@ const LineGraph = (props) => {
             const angle = Math.PI / 180;
             ctx.save();
             const { top, left, bottom, right, width, height } = chart.chartArea
+
+            for (let i = 0; i < pluginOptions.startLine.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(pluginOptions.startLine[i].x, pluginOptions.startLine[i].y);
+                ctx.lineTo(pluginOptions.endLine[i].x, pluginOptions.endLine[i].y);
+                ctx.stroke();
+            }
+
             for (let i = 0; i < pluginOptions.startDate.length; i++) {
                 const startDate = pluginOptions.startDate[i];
                 const endDate = pluginOptions.endDate[i];
@@ -114,7 +147,7 @@ const LineGraph = (props) => {
                     //onMouseDow={onMouseDow}
                     onMouseDownCapture={onMouseDown}
                     onMouseUp={onMouseUp}
-                    // onMouseMove={onMouseMove}
+                    onMouseMove={onMouseMove}
                     ref={chartRef}
                     plugins={[dateHighlighter]}
                     options={
@@ -180,7 +213,9 @@ const LineGraph = (props) => {
                                 dateHighlighter: {
                                     startDate: startXAxisDateArray,
                                     endDate: endXAxisDateArray,
-                                    label: []
+                                    label: [],
+                                    startLine: startLine,
+                                    endLine: endLine
                                 }
                             }
                             // onClick: (e) => {
