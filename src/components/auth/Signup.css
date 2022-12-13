@@ -1,13 +1,36 @@
+.mainSignupPage {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.leftSignupPage {
+  flex: 2;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.rightSignupPage {
+  flex: 1;
+  align-self: center;
+  padding-right: 30px;
+}
+.boxShadow {
+  box-shadow: var(--darker-shadow);
+}
+
 .signupContainer {
-    border: 1px solid black;
-    width: 200px;
-    height: 220px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+  border: 1px solid #9d9d9d;
+  padding: 30px;
+  /* width: 200px;
+  height: 220px;
+  display: flex;
+  flex-direction: column; */
+  /* justify-content: center;
+  align-items: center; */
+  border-radius: 7px;
 }
 .signupContainer > input {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
