@@ -16,21 +16,21 @@ const CategoryTableComponent = (props) => {
         const { sales_flow, range_one_sales, range_two_sales } = props.data
         //  console.log(props.data)
         return (
-            <abbr title={`${range_one_sales} - ${range_two_sales}`} style={{ color: getFlowColor(sales_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 Sales ${range_one_sales} - T2 Sales ${range_two_sales}`} style={{ color: getFlowColor(sales_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
         )
     }
 
     const AcosCellComponent = (props) => {
         const { acos_flow, range_one_acos, range_two_acos } = props.data
         return (
-            <abbr title={`${range_one_acos} - ${range_two_acos}`} style={{ color: getFlowColor(acos_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 ACOS ${range_one_acos} - T2 ACOS ${range_two_acos}`} style={{ color: getFlowColor(acos_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
         )
     }
     const CostCellComponent = (props) => {
         const { cost_flow, range_one_cost, range_two_cost } = props.data
 
         return (
-            <abbr title={`${range_one_cost} - ${range_two_cost}`} style={{ color: getFlowColor(cost_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 Cost ${range_one_cost} - T2 Cost ${range_two_cost}`} style={{ color: getFlowColor(cost_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
 
         )
     }
@@ -38,9 +38,7 @@ const CategoryTableComponent = (props) => {
         const { impressions_flow, range_one_impressions, range_two_impressions } = props.data
 
         return (
-
-            <abbr title={`${range_one_impressions} - ${range_two_impressions}`} style={{ color: getFlowColor(impressions_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
-
+            <abbr title={`T1 Impressions${range_one_impressions} - T2 Impressions${range_two_impressions}`} style={{ color: getFlowColor(impressions_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
         )
     }
     const CPCCellComponent = (props) => {
@@ -51,7 +49,7 @@ const CategoryTableComponent = (props) => {
         //  console.log(props.data)
         return (
 
-            <abbr title={`${range_one_cpc} - ${range_one_cpc}`} style={{ color: getFlowColor(cpc_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 CPC ${range_one_cpc} - T2 CPC ${range_one_cpc}`} style={{ color: getFlowColor(cpc_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
 
         )
     }
@@ -60,7 +58,7 @@ const CategoryTableComponent = (props) => {
         const { ctr_flow, range_one_ctr, range_two_ctr } = props.data
         //  console.log(props.data)
         return (
-            <abbr title={`${range_one_ctr} - ${range_two_ctr}`} style={{ color: getFlowColor(ctr_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 CTR ${range_one_ctr} - T2 CTR${range_two_ctr}`} style={{ color: getFlowColor(ctr_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
 
         )
     }
@@ -69,7 +67,7 @@ const CategoryTableComponent = (props) => {
         const { clicks_flow, range_one_clicks, range_two_clicks } = props.data
         //  console.log(props.data)
         return (
-            <abbr title={`${range_one_clicks} - ${range_two_clicks}`} style={{ color: getFlowColor(clicks_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
+            <abbr title={`T1 Clicks ${range_one_clicks} - T2 Clicks${range_two_clicks}`} style={{ color: getFlowColor(clicks_flow), overflow: "hidden", whiteSpace: "nowrap", textDecoration: "none", width: "100%" }} >{props.value}%</abbr>
 
         )
     }

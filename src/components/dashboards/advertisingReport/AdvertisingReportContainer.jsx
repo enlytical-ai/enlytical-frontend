@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 import Loader from "./../../commonComponent/Loader/Loader";
 const AdvertisingReportContainer = (props) => {
-    const scollToRef = useRef();
+    const scollToRef = useRef(null);
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
     const [filter, setFilter] = useState([
@@ -46,7 +46,7 @@ const AdvertisingReportContainer = (props) => {
     ]);
 
     const [loader, setLoader] = useState({
-        getTwoAreaDataToggle: false,
+        graphLoader: false,
     })
     const [dateFilter, setDateFilter] = useState({
         start_date: null,
@@ -204,7 +204,7 @@ const AdvertisingReportContainer = (props) => {
     const graphAreaSelectFn = (e) => {
         const { startDateArray, endDateArray } = e;
         if (startDateArray.length === 2 && endDateArray.length === 2) {
-            setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: true }));
+            setLoader(prevState => ({ ...prevState, graphLoader: true }));
             let campaign_type_array = [];
             filter.forEach(e => {
                 if (e.status) {
@@ -232,18 +232,21 @@ const AdvertisingReportContainer = (props) => {
                 const { category_and_ASIN_of_two_range } = response.data.data;
                 console.log("category_and_ASIN_of_two_range=>", category_and_ASIN_of_two_range);
                 setState(prevState => ({ ...prevState, category_and_ASIN_of_two_range }));
-                setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
-
-
-            
-
+                setLoader(prevState => ({ ...prevState, graphLoader: false }));
+                scrollToSection("advertisingReportContainerRow_6");
             }).catch(function (error) {
                 console.log(error);
-                setLoader(prevState => ({ ...prevState, getTwoAreaDataToggle: false }));
+                setLoader(prevState => ({ ...prevState, graphLoader: false }));
             });
         } else {
             setState(prevState => ({ ...prevState, category_and_ASIN_of_two_range: [] }));
         }
+    }
+
+
+    const scrollToSection = (id) => {
+        let el = document.getElementById(id);
+        el.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
 
     return (
@@ -314,7 +317,7 @@ const AdvertisingReportContainer = (props) => {
                     lineGraphErrorToggle && <div className="lineGraphComponentError"  >   <p>You cannot select more than two data sets.</p></div>
                 }
                 {
-                    loader.getTwoAreaDataToggle && (
+                    loader.graphLoader && (
                         <div style={{ position: "absolute", display: "flex", width: "100%", justifyContent: "center", top: "30%" }} >
                             <Loader />
                         </div>
@@ -328,6 +331,7 @@ const AdvertisingReportContainer = (props) => {
                     tileGraphIconClicked={tileGraphIconClicked}
                     dateFilter={dateFilter}
                     graphAreaSelectFn={graphAreaSelectFn}
+                    setLoader={setLoader}
                 />
             </div>
             {/* <div className="advertisingReportContainerRow_8" >
@@ -356,17 +360,16 @@ const AdvertisingReportContainer = (props) => {
 
                 </div>
             </div> */}
-            <div  className="advertisingReportContainerRow_6" >
+            <div id="advertisingReportContainerRow_6" className="advertisingReportContainerRow_6" >
                 <h1>Percentage Difference</h1>
-                {
+                {/* {
                     // state.category_table_data_array.length ? <CategoryTableComponent filter2={filter2} category_table_data_array={state.category_table_data_array} /> : <p>Loading...</p>
                     (state.category_and_ASIN_of_two_range.length > 0) && <CategoryAndASINOfTwoRangeTableComponent category_and_ASIN_of_two_range={state.category_and_ASIN_of_two_range} />
 
-                }
-
+                } */}
+                <CategoryAndASINOfTwoRangeTableComponent category_and_ASIN_of_two_range={state.category_and_ASIN_of_two_range} />
             </div>
-
-            <div  className="advertisingReportContainerRow_7" >
+            <div className="advertisingReportContainerRow_7" >
                 {/* {
                     state.targets_table_data_array.length ? <>
                         <h3>Targets</h3>
