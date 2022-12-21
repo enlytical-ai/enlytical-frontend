@@ -45,10 +45,12 @@ const Home = () => {
     dispatch(saveAppParamsData({ current_brand: e.target.value }));
   };
   return (
-    <Body className={sidebarOpen ? "toggle-sidebar" : null}>
+    <Body
+    // className={sidebarOpen ? "toggle-sidebar" : null}
+    >
       <Header
         id="header"
-        className="header fixed-top d-flex align-items-center"
+        className="headerNew fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center">
           <a className="logo d-flex align-items-center">
@@ -57,10 +59,10 @@ const Home = () => {
 
           {/* <button onClick={handleClick}>toggle</button> */}
 
-          <i
+          {/* <i
             className="bi bi-list toggle-sidebar-btn"
             onClick={handleClick}
-          ></i>
+          ></i> */}
         </div>
 
         <nav className="header-nav ms-auto">
@@ -124,12 +126,12 @@ const Home = () => {
           </ul>
         </nav>
       </Header>
-      <Content className="authContent">
+      {/* <Content className="authContent">
         <DashboardsContainer sidebarOpen={sidebarOpen} />
-      </Content>
-      {/* <div className="mainContainerNew">
+      </Content> */}
+      <div className="mainContainerNew">
         <DashboardsContainer sidebarOpen={sidebarOpen} />
-      </div> */}
+      </div>
     </Body>
   );
 };

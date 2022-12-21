@@ -126,10 +126,10 @@ const DashboardsContainer = ({ sidebarOpen }) => {
     <div className="dashboardsContainer">
       <DashboardsLeft>
         <aside
-          id="sidebar"
-          className="sidebar"
-          // className="sidebarNew"
-          // style={{ width: sidebarOpen ? "0px" : "300px" }}
+          // id="sidebar"
+          // className="sidebar"
+          className="sidebarNew"
+          style={{ width: sidebarOpen ? "0px" : "300px" }}
         >
           <ul className="sidebar-nav" id="sidebar-nav">
             <li className="nav-item">
@@ -401,7 +401,7 @@ const DashboardsContainer = ({ sidebarOpen }) => {
         </div> */}
       </DashboardsLeft>
       <DashboardsRight>
-        <main id="main" className="main">
+        {/* <main id="main" className="main">
           {container === "powerBiDashboard" && currentDashboard !== "" && (
             <PowerBiDashboardContainer currentDashboard={currentDashboard} />
           )}
@@ -415,8 +415,8 @@ const DashboardsContainer = ({ sidebarOpen }) => {
             />
           )}
           {container === "advertisingReport" && <AdvertisingReportContainer />}
-        </main>
-        {/* <div className="contentNew">
+        </main> */}
+        <div className="contentNew">
           {container === "powerBiDashboard" && currentDashboard !== "" && (
             <PowerBiDashboardContainer currentDashboard={currentDashboard} />
           )}
@@ -430,7 +430,7 @@ const DashboardsContainer = ({ sidebarOpen }) => {
             />
           )}
           {container === "advertisingReport" && <AdvertisingReportContainer />}
-        </div> */}
+        </div>
       </DashboardsRight>
       <NotificationContainer />
     </div>
