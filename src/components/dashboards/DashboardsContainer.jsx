@@ -220,7 +220,7 @@ const DashboardsContainer = () => {
                             <div className="sidebarIconsName" >Reports</div>
                         </div>
                         <div onClick={() => setContainer("advertisingReport")} className={`sidebarIconsContainer ${container === "advertisingReport" ? "clicked" : "unClicked"}`}>
-                          
+
                             <i class="bi bi-layout-text-window-reverse sidebarIcons"></i>
                             <div className="sidebarIconsName" >Web Reports</div>
                         </div>
@@ -237,7 +237,6 @@ const DashboardsContainer = () => {
                                         )
                                     })
                                 }
-                                
                             </div>
                         )
                     }

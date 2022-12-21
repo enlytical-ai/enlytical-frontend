@@ -6,6 +6,7 @@ import {
 } from 'chart.js';
 
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { getMontheInText } from '../../commonFunction/commomFunction';
 ChartJS.register(
     ...registerables
 );
@@ -89,15 +90,29 @@ const LineGraph = (props) => {
         // console.log(layerX, layerY);
         setEndLine([{
             x: layerX,
-            y: layerY - 28
+            y: layerY
         }])
     }
 
-    console.log(startLine, endLine)
-    const reset = () => {
-        setStartXAxisDateArray([]);
-        setEndXAxisDateArray([]);
+    const onDoubleClick = () => {
+        const startXAxisArray = [...startXAxisDateArray];
+        const endXAxisArray = [...endXAxisDateArray];
+        startXAxisArray.pop();
+        endXAxisArray.pop();
+        setStartXAxisDateArray(startXAxisArray);
+        setEndXAxisDateArray(endXAxisArray);
     }
+
+    const getSelectedAreaDate = (startDate, endDate) => {
+        const startArray = startDate.split("-");
+        if (startDate === endDate) {
+            return `${startArray[2]} ${getMontheInText(startArray[1])}`
+        } else {
+            const endArray = endDate.split("-");
+            return `${startArray[2]} ${getMontheInText(startArray[1])} - ${endArray[2]} ${getMontheInText(endArray[1])}`
+        }
+    }
+
     const dateHighlighter = {
         id: "dateHighlighter",
         afterDatasetDraw(chart, args, pluginOptions) {
@@ -119,6 +134,7 @@ const LineGraph = (props) => {
                 const endDate = pluginOptions.endDate[i];
                 ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
                 ctx.fillRect(x.getPixelForValue(startDate), top, x.getPixelForValue(endDate) - x.getPixelForValue(startDate), height);
+
             }
             ctx.rotate(90 * angle)
             for (let j = 0; j < pluginOptions.startDate.length; j++) {
@@ -129,7 +145,7 @@ const LineGraph = (props) => {
                 ctx.fillStyle = "#666";
                 ctx.textAlign = "center";
                 ctx.font = "bold 12px sans-serif";
-                ctx.fillText(`${startDate} - ${endDate}`, height / 2 + top, (x.getPixelForValue(startDate) + diff) * -1);
+                ctx.fillText(getSelectedAreaDate(startDate, endDate), height / 2 + top, (x.getPixelForValue(startDate) + diff) * -1);
             }
             ctx.restore();
         }
@@ -137,14 +153,12 @@ const LineGraph = (props) => {
     return (
         <div>
             <div>
-                <button onClick={reset} >Reset</button>
-            </div>
-            <div>
                 <  Chart
                     data={data}
                     height={300}
                     //  onClick={onClick}
                     //onMouseDow={onMouseDow}
+                    onDoubleClick={onDoubleClick}
                     onMouseDownCapture={onMouseDown}
                     onMouseUp={onMouseUp}
                     onMouseMove={onMouseMove}

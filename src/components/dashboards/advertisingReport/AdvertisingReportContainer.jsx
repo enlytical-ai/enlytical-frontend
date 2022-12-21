@@ -12,6 +12,7 @@ import DateRangeSlider from "../../commonComponent/DateRangeSlider";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 import Loader from "./../../commonComponent/Loader/Loader";
+import CustomMasterGrid from "../../Grids/CustomMasterGrid/CustomMasterGrid";
 const AdvertisingReportContainer = (props) => {
     const scollToRef = useRef(null);
     const appParams = useSelector(state => state.appParams);
@@ -376,6 +377,11 @@ const AdvertisingReportContainer = (props) => {
                         <TargetsTableComponent targets_table_data_array={state.targets_table_data_array} />
                     </> : <p>Loading...</p>
                 } */}
+            </div>
+            <div className="advertisingReportContainerRow_9" >
+                <CustomMasterGrid
+                    campaign_type_array={["sb", "sbvc", "sd", "sp"]}
+                />
             </div>
 
         </div>
