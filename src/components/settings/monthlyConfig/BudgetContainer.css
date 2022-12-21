@@ -1,86 +1,86 @@
 .form-group {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .editIcon {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.editIcon>i:hover {
-    color: #00e676;
+.editIcon > i:hover {
+  color: #00e676;
 }
 
 .salesSpendContainer {
-    /* position: relative;
+  /* position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center; */
 }
 
 .editPopUp {
-    position: absolute;
-    border: 1px solid #bdbdbd;
-    height: 300px;
-    width: 500px;
-    border-radius: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-color: white;
-    align-self: center;
-    justify-self: center;
+  position: absolute;
+  border: 1px solid #bdbdbd;
+  height: 300px;
+  width: 500px;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  align-self: center;
+  justify-self: center;
 }
 
 .editPopUpButtonsContainer {
-    display: flex;
-    justify-content: end;
-    margin-top: 10px;
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
 }
 
 .salesSpendContainerHeader {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    height: 32px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  height: 32px;
 }
 
 .adSalesTargetInput {
-    height: 16px;
-    width: 100px;
-    border: 0px;
+  height: 16px;
+  width: 100px;
+  border: 0px;
 }
 
 .adSalesTargetInput:focus {
-    outline: none;
-    border-bottom: 1px solid gray;
+  outline: none;
+  border-bottom: 1px solid gray;
 }
 
 .adSalesTargetInputContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .nextButtonContainer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 24px;
-    height: 42px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24px;
+  height: 42px;
 }
 
 .budgetAccordianContainer {
-    overflow-y: auto;
-
+  overflow-y: auto;
+  width: 1000px;
 }
 
 .budgetAccordianContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .budget-accordion-body {
-    padding: 0px;
-    padding: 5px;
+  padding: 0px;
+  padding: 5px;
 }
 
-.accordianElementContainer{
-    margin-bottom: 5px;
+.accordianElementContainer {
+  margin-bottom: 5px;
 }

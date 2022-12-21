@@ -1,7 +1,12 @@
+/* .dashboardsRight {
+  height: 100%;
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+} */
+/* .dashboardsRight {
+  padding-top: 20px;
+} */
 .dashboardsRight {
-    height: 100%;
-    flex: 1;
-    padding: 20px;
-    width: 80%;
-    /* background-color: #EEEEEE; */
+  width: 100%;
 }

@@ -1,145 +1,140 @@
 .advertisingReportContainer {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-   
+  position: relative;
+  left: 110px;
+  width: 82%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .advertisingReportContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-.advertisingReportContainerRow_1>h1 {
-    font-size: 18px;
-    color: #757575;
+.advertisingReportContainerRow_1 > h1 {
+  font-size: 18px;
+  color: #757575;
 }
 
 .advertisingReportContainerRow_2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    align-items: center;
-    border-bottom: 1px solid #bdbdbd;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  border-bottom: 1px solid #bdbdbd;
 }
 
 .advertisingReportContainerRow_4 {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
 }
 
 .advertisingReportContainerRow_8 {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 }
 
-
 .row_2Filter {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .row_4Filter {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .row_8Filter {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .filter {
-    color: #757575;
-    font-size: 16px;
-    margin: 5px;
-    border-bottom: 2px solid white;
-    border-radius: 3px;
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: #757575;
+  font-size: 16px;
+  margin: 5px;
+  border-bottom: 2px solid white;
+  border-radius: 3px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .filterClicked {
-    border-bottom: 2px solid #00e676;
+  border-bottom: 2px solid #00e676;
 }
 
 .filter2 {
-    color: #757575;
-    font-size: 16px;
-    margin: 5px;
-    border: 2px solid #e0e0e0;
-    border-radius: 3px;
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: #757575;
+  font-size: 16px;
+  margin: 5px;
+  border: 2px solid #e0e0e0;
+  border-radius: 3px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .filterClicked2 {
-    border: 2px solid #00e676;
+  border: 2px solid #00e676;
 }
 
-
-
-
 .advertisingReportContainerRow_3 {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .advertisingReportContainerRow_4 {
-    margin-top: 10px;
-
+  margin-top: 10px;
 }
 
 .advertisingReportContainerRow_5 {
-    position: relative;
- 
+  position: relative;
 }
 
 .lineGraphComponentError {
-    width: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
 }
 
-.lineGraphComponentError>p {
-    color: #e53935;
-
+.lineGraphComponentError > p {
+  color: #e53935;
 }
 
 .advertisingReportContainerRow_7 {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
-.advertisingReportContainerRow_7>h3 {
-    font-size: 18px;
-    color: #757575;
+.advertisingReportContainerRow_7 > h3 {
+  font-size: 18px;
+  color: #757575;
 }
 .advertisingReportContainerRow_8 {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
-.advertisingReportContainerRow_8>h3 {
-    font-size: 18px;
-    color: #757575;
+.advertisingReportContainerRow_8 > h3 {
+  font-size: 18px;
+  color: #757575;
 }
 
-.advertisingReportContainerRow_6{
-    margin-top: 20px;
+.advertisingReportContainerRow_6 {
+  margin-top: 20px;
 }
 
-.advertisingReportContainerRow_6>h1 {
-    font-size: 18px;
-    color: #757575;
+.advertisingReportContainerRow_6 > h1 {
+  font-size: 18px;
+  color: #757575;
 }
