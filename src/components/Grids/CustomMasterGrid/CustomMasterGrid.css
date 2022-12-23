@@ -1,0 +1,97 @@
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    display: flex;
+}
+
+
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.accordion:hover {
+    background-color: #81d4fa;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    display: none;
+    overflow: hidden;
+}
+
+.table-body {}
+
+.table-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+}
+
+.table-header-el {
+    flex: 1;
+    font-size: medium;
+}
+
+.accordian-body {}
+
+.accordion-el {
+    flex: 1;
+    font-size: small;
+    border-bottom: 1px solid gray;
+}
+
+.accordion-el-as-icon-container {
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.bg-gray {
+    /* background-color: lightgray; */
+}
+
+.table-data-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid gray;
+}
+
+.table-data-loading>p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.accordian-category-color {
+    background-color: #81d4fa;
+}
+
+.accordian-asin-color {
+    background-color: #e1bee7;
+}
+
+.accordian-adtype-color {
+    background-color: #f48fb1;
+}
+
+.accordian-two-open-color {
+    background-color: #e1bee7;
+}
+
+.accordian-three-open-color {
+    background-color: #f48fb1;
+}
+
+.accordian-four-open-color {
+    background-color: #d7ccc8;
+}
+
+
+.accordian-column-for-data {
+    min-width: 80px;
+    max-width: 80px;
+}

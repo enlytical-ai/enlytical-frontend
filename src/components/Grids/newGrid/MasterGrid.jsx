@@ -36,7 +36,7 @@ const Grid = props => {
         if (headerArray) {
             let width = 26;
             for (let el of headerArray) {
-                width += el.width 
+                width += el.width
             }
             setAccordianWidth(width);
         }
@@ -102,7 +102,7 @@ const Grid = props => {
                         return (
                             <Accordian
                                 accordianWidth={accordianWidth}
-                                accordianBodyHeight={accordianBodyHeight ?accordianBodyHeight : 400}
+                                accordianBodyHeight={accordianBodyHeight ? accordianBodyHeight : 400}
                                 key={i}
                                 accordianHeaderComponent={() =>
                                     <div
@@ -132,16 +132,16 @@ const Grid = props => {
                                 }
                                 accordianBodyComponent={() => {
                                     return (
-                                        <div style={{ padding: 10,backgroundColor:"#bbdefb" }} >
+                                        <div style={{ padding: 10, backgroundColor: "#bbdefb" }} >
                                             {
                                                 row[firstChileConfig.field] ? (
                                                     <ChildOfMasterGrid
-                                                        tableHeight={ accordianBodyHeight ? (accordianBodyHeight - 20) : 380}
+                                                        tableHeight={accordianBodyHeight ? (accordianBodyHeight - 20) : 380}
                                                         headerArray={firstChileConfig.headerArray}
                                                         rowArray={row[firstChileConfig.field]}
                                                         firstChileConfig={firstChileConfig}
                                                     />
-                                                ) :<div>There is no data available.</div>
+                                                ) : <div>There is no data available.</div>
                                             }
                                         </div>
                                     )
@@ -149,6 +149,13 @@ const Grid = props => {
                             />
                         )
                     })
+                }
+                {
+                    rowArray.length === 0 && (
+                        <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }} >
+                            <p>Please Select Data In Graph.</p>
+                        </div>
+                    )
                 }
             </div>
         </div>
