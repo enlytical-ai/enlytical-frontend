@@ -516,7 +516,7 @@ const BudgetContainer = (props) => {
   return (
     <div className="salesSpendContainer">
       <div className="salesSpendContainerHeader">
-        <h3 style={{ fontSize: "18px", color: "#1565C0" }}>
+        <h3 style={{ fontSize: "20px", color: "#012970" }}>
           Category wise Sales & Spend Target.
         </h3>
         <div className="salesSpendContainerDateContainer">

@@ -230,7 +230,7 @@ const SellerTable = (props) => {
   return (
     <div className="sellerTable">
       <div className="sellerTableHeader">
-        <h3 style={{ fontSize: "18px", color: "#1565C0" }}>
+        <h3 style={{ fontSize: "20px", color: "#012970" }}>
           Please select you Sellers
         </h3>
       </div>

@@ -301,7 +301,7 @@ const ProductTable = (props) => {
   return (
     <div className="productTableContainer">
       <div className="productTableContainerHeader">
-        <h3 style={{ fontSize: "18px", color: "#1565C0" }}>
+        <h3 style={{ fontSize: "20px", color: "#012970" }}>
           Please select your ASIN
         </h3>
       </div>

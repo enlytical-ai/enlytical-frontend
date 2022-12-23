@@ -16,50 +16,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.headerNew {
-  height: 60px;
-  background-color: #18d26e;
-  /* transition: all 0.5s;
-  z-index: 997;
-  height: 60px;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
-  padding-left: 20px; */
-}
-.mainContainerNew {
-  margin-top: 60px;
-  display: flex;
-  height: 500px;
-  /* background-color: aquamarine; */
-}
-.sidebarNew {
-  width: 300px;
-  background-color: green;
-  height: 100%;
-  transition: all 0.3s;
-  /* position: fixed;
-  top: 60px;
-  left: 0;
-  bottom: 0;
-  width: 300px;
-  z-index: 996;
-  transition: all 0.3s;
-  padding: 20px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #aab7cf transparent;
-  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: blue; */
-}
-.contentNew {
-  background-color: yellow;
-  height: 100%;
-  flex: 1;
-  /* margin-top: 50px; */
-  /* padding: 20px 20px; */
-  /* transition: all 0.3s; */
-}
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -96,8 +52,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 50px;
-  padding: 20px 20px;
+  margin-top: 20px;
+  padding: 15px 20px 5px 20px;
   transition: all 0.3s;
 }
 

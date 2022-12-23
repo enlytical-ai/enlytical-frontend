@@ -19,7 +19,8 @@ import {
 } from "react-notifications";
 import AdvertisingReportContainer from "./advertisingReport/AdvertisingReportContainer";
 
-const DashboardsContainer = ({ sidebarOpen }) => {
+const DashboardsContainer = (props) => {
+  const { sidebarOpen } = props;
   const user = useSelector((state) => state.user);
   const [dashboardMenuArray, setDashboardMenuArray] = useState([]);
   const [reportsMenuArray, setReportsMenuArray] = useState([]);
@@ -35,21 +36,10 @@ const DashboardsContainer = ({ sidebarOpen }) => {
   const appParams = useSelector((state) => state.appParams);
   const { current_brand } = appParams;
 
-  const [toggle, setToggle] = useState({
-    btn1: false,
-    btn2: false,
-    btn3: false,
-  });
+  const [toggle, setToggle] = useState(false);
 
-  // console.log(onBordingMenu);
-  // let listClick = () => {setOnBoardingMenu(onBordingMenu)};
-  // let listCheck = onBordingMenu ? "active" : "";
-
-  let handleClick = (btn) => {
-    setToggle((prevState) => ({
-      ...prevState,
-      [btn]: !prevState[btn],
-    }));
+  let handleClickSidebar = () => {
+    setToggle((prevState) => !prevState);
   };
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -123,14 +113,9 @@ const DashboardsContainer = ({ sidebarOpen }) => {
   });
 
   return (
-    <div className="dashboardsContainer">
+    <div className="dashboardsContainer" style={{ width: "100%" }}>
       <DashboardsLeft>
-        <aside
-          // id="sidebar"
-          // className="sidebar"
-          className="sidebarNew"
-          style={{ width: sidebarOpen ? "0px" : "300px" }}
-        >
+        <aside id="sidebar" className="sidebar">
           <ul className="sidebar-nav" id="sidebar-nav">
             <li className="nav-item">
               <a
@@ -138,14 +123,7 @@ const DashboardsContainer = ({ sidebarOpen }) => {
                 onClick={() => setContainer("powerBiDashboard")}
               >
                 <i className="bi bi-grid"></i>
-                <div
-
-                // className={` ${
-                //   container === "powerBiDashboard" ? "clicked" : "unClicked"
-                // }`}
-                >
-                  Dashboards
-                </div>
+                <div>Dashboards</div>
               </a>
             </li>
             {/* <ul>
@@ -175,27 +153,21 @@ const DashboardsContainer = ({ sidebarOpen }) => {
 
             <li className="nav-item">
               <a
-                className={`nav-link ${!toggle.btn1 && "collapsed"}`}
+                className={`nav-link ${!toggle && "collapsed"}`}
                 data-bs-target="#components-nav"
                 data-bs-toggle="collapse"
                 onClick={() => setContainer("onBoarding")}
               >
                 <i className="bi bi-menu-button-wide"></i>
-                <div
-                // className={` ${
-                //   container === "onBoarding" ? "clicked" : "unClicked"
-                // }`}
-                >
-                  Onboarding
-                </div>
+                <div>Onboarding</div>
                 <i
                   className="bi bi-chevron-down ms-auto"
-                  onClick={() => handleClick("btn1")}
+                  onClick={() => handleClickSidebar()}
                 ></i>
               </a>
               <ul
                 id="components-nav"
-                className={`nav-content collapse ${toggle.btn1 && "show"}`}
+                className={`nav-content collapse ${toggle && "show"}`}
                 data-bs-parent="#sidebar-nav"
               >
                 <li>
@@ -214,13 +186,7 @@ const DashboardsContainer = ({ sidebarOpen }) => {
                               key={e}
                               onClick={() => changeOnBoardingEl(e)}
                             >
-                              <a
-                              // className={`${
-                              //   onBordingMenu === [...onBordingMenu]
-                              //     ? "active"
-                              //     : ""
-                              // }`}
-                              >
+                              <a>
                                 <i className="bi bi-circle"></i>
                                 <span>{e}</span>
                               </a>
@@ -241,15 +207,8 @@ const DashboardsContainer = ({ sidebarOpen }) => {
                 onClick={() => setContainer("powerBiReports")}
               >
                 <i className="bi bi-journal-text"></i>
-                <div
-
-                // className={`sidebarIconsContainer ${
-                //   container === "powerBiReports" ? "clicked" : "unClicked"
-                // }`}
-                >
-                  Reports
-                </div>
-                <i onClick={() => handleClick("btn2")}></i>
+                <div>Reports</div>
+                {/* <i onClick={() => handleClickSidebar("btn2")}></i> */}
               </a>
               <ul
                 id="forms-nav"
@@ -284,15 +243,8 @@ const DashboardsContainer = ({ sidebarOpen }) => {
                 onClick={() => setContainer("advertisingReport")}
               >
                 <i className="bi bi-layout-text-window-reverse"></i>
-                <div
-
-                // className={` ${
-                //   container === "advertisingReport" ? "clicked" : "unClicked"
-                // }`}
-                >
-                  Web Reports
-                </div>
-                <i onClick={() => handleClick("btn3")}></i>
+                <div>Web Reports</div>
+                {/* <i onClick={() => handleClickSidebar("btn3")}></i> */}
               </a>
               <ul
                 id="tables-nav"
@@ -401,7 +353,19 @@ const DashboardsContainer = ({ sidebarOpen }) => {
         </div> */}
       </DashboardsLeft>
       <DashboardsRight>
-        {/* <main id="main" className="main">
+        <main
+          id="main"
+          className="main"
+          style={{ width: sidebarOpen ? "1299px" : "999px" }}
+        >
+          <span className="sideBar-toggle-btn">
+            <i
+              className={`bi bi-chevron-${
+                sidebarOpen ? "right" : "left"
+              } ms-auto toggle-sidebar-btn`}
+              onClick={() => props.click()}
+            ></i>
+          </span>
           {container === "powerBiDashboard" && currentDashboard !== "" && (
             <PowerBiDashboardContainer currentDashboard={currentDashboard} />
           )}
@@ -415,22 +379,7 @@ const DashboardsContainer = ({ sidebarOpen }) => {
             />
           )}
           {container === "advertisingReport" && <AdvertisingReportContainer />}
-        </main> */}
-        <div className="contentNew">
-          {container === "powerBiDashboard" && currentDashboard !== "" && (
-            <PowerBiDashboardContainer currentDashboard={currentDashboard} />
-          )}
-          {container === "powerBiReports" && currentReport !== "" && (
-            <PowerBiDashboardContainer currentDashboard={currentReport} />
-          )}
-          {container === "onBoarding" && (
-            <OnBoardingContainer
-              changeOnBoardingEl={changeOnBoardingEl}
-              currentOnBoardingEl={currentOnBoardingEl}
-            />
-          )}
-          {container === "advertisingReport" && <AdvertisingReportContainer />}
-        </div>
+        </main>
       </DashboardsRight>
       <NotificationContainer />
     </div>

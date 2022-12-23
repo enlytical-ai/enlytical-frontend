@@ -42,3 +42,16 @@
   padding: 0px;
   margin: 0px;
 }
+
+.sideBar-toggle-btn {
+  position: sticky;
+  top: 60px;
+  font-size: 30px;
+  padding: 11px 0px 10px 0px;
+  color: #012970;
+  margin-top: 60px;
+  margin-left: -55px;
+  background-color: #f6f9ff;
+  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+  cursor: pointer;
+}

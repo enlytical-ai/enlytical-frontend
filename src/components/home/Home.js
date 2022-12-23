@@ -12,6 +12,11 @@ import axios from "axios";
 import { BASE_URL } from "../../appConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAppParamsData } from "../../redux/appParams/appParamsActions";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Avatar from "@mui/material/Avatar";
+import { Button } from "bootstrap";
+
 const Home = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,10 +26,24 @@ const Home = () => {
   const [brands, setBrands] = useState([]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const handleClick = () => {
+  const [anchorEl, setAnchorEl] = useState("");
+  const open = Boolean(anchorEl);
+  // const [notification, setNotification] = useState(false);
+
+  // const handleNotification = () => {
+  //   setNotification(!notification);
+  // };
+
+  const handleClickSide = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  // console.log(sidebarOpen);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl("");
+  };
 
   useEffect(() => {
     axios
@@ -45,39 +64,39 @@ const Home = () => {
     dispatch(saveAppParamsData({ current_brand: e.target.value }));
   };
   return (
-    <Body
-    // className={sidebarOpen ? "toggle-sidebar" : null}
-    >
+    <Body className={sidebarOpen ? "toggle-sidebar" : ""}>
       <Header
         id="header"
-        className="headerNew fixed-top d-flex align-items-center"
+        className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center">
           <a className="logo d-flex align-items-center">
             <img src={EnlyticalLogo} alt="" height={"45px"} />
           </a>
-
-          {/* <button onClick={handleClick}>toggle</button> */}
-
+          {/* toggle button for sidebar */}
           {/* <i
-            className="bi bi-list toggle-sidebar-btn"
+            className={`bi bi-chevron-${
+              sidebarOpen ? "right" : "left"
+            } ms-auto toggle-sidebar-btn`}
             onClick={handleClick}
           ></i> */}
         </div>
 
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
+            <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i className="bi bi-bell"></i>
+              <span className="badge bg-primary badge-number">4</span>
+            </a>
+            <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i className="bi bi-chat-left-text"></i>
+              <span className="badge bg-success badge-number">3</span>
+            </a>
             <li className="nav-item dropdown pe-3">
               <a
                 className="nav-link nav-profile d-flex align-items-center pe-0"
                 data-bs-toggle="dropdown"
               >
-                {/* <img
-                  src="/img/profile-img.jpg"
-                  alt="Profile"
-                  className="rounded-circle"
-                /> */}
-
                 <select
                   onChange={onBrandChange}
                   className="form-select form-select-m d-none d-md-block dropdown-toggle ps-2"
@@ -101,6 +120,47 @@ const Home = () => {
               </a>
             </li>
             <div
+              style={{
+                padding: "20px",
+                marginRight: "20px",
+                display: "flex",
+                cursor: "pointer",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center" }}
+                onClick={handleClick}
+              >
+                <Avatar alt="" src="/static/images/avatar/1.jpg" />
+                <span className="d-none d-md-block dropdown-toggle ps-2">
+                  {user.first_name}
+                </span>
+              </div>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>My account</MenuItem>
+                <MenuItem>My Brands</MenuItem>
+                <MenuItem>
+                  <span
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      navigate("/user/login");
+                    }}
+                  >
+                    Logout
+                  </span>
+                </MenuItem>
+              </Menu>
+            </div>
+            {/* <div
               className="logoutButtonContainer"
               style={{
                 marginLeft: "20px",
@@ -108,10 +168,6 @@ const Home = () => {
                 display: "flex",
               }}
             >
-              <span className="d-none d-md-block dropdown-toggle ps-2">
-                <i>Hi,</i>
-                <i style={{ fontWeight: "bolder" }}>{user.first_name}</i>
-              </span>
               <button
                 onClick={() => {
                   localStorage.removeItem("token");
@@ -122,16 +178,16 @@ const Home = () => {
               >
                 Logout
               </button>
-            </div>
+            </div> */}
           </ul>
         </nav>
       </Header>
-      {/* <Content className="authContent">
-        <DashboardsContainer sidebarOpen={sidebarOpen} />
-      </Content> */}
-      <div className="mainContainerNew">
-        <DashboardsContainer sidebarOpen={sidebarOpen} />
-      </div>
+      <Content className="authContent">
+        <DashboardsContainer
+          sidebarOpen={sidebarOpen}
+          click={handleClickSide}
+        />
+      </Content>
     </Body>
   );
 };

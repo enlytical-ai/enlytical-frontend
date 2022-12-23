@@ -63,8 +63,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 24px;
-  height: 42px;
+  margin-top: 15px;
+  /* height: 42px; */
 }
 
 .productTableContainerHeader {
