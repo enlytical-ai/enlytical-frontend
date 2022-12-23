@@ -51,7 +51,7 @@
 }
 
 .bg-gray {
-    background-color: lightgray;
+    /* background-color: lightgray; */
 }
 
 .table-data-loading {
@@ -64,4 +64,34 @@
 .table-data-loading>p {
     padding: 0px;
     margin: 0px;
+}
+
+.accordian-category-color {
+    background-color: #81d4fa;
+}
+
+.accordian-asin-color {
+    background-color: #e1bee7;
+}
+
+.accordian-adtype-color {
+    background-color: #f48fb1;
+}
+
+.accordian-two-open-color {
+    background-color: #e1bee7;
+}
+
+.accordian-three-open-color {
+    background-color: #f48fb1;
+}
+
+.accordian-four-open-color {
+    background-color: #d7ccc8;
+}
+
+
+.accordian-column-for-data {
+    min-width: 80px;
+    max-width: 80px;
 }

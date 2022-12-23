@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-   
+
 }
 
 .advertisingReportContainer::-webkit-scrollbar {
@@ -44,6 +44,7 @@
     display: flex;
     flex-direction: row;
 }
+
 .row_8Filter {
     display: flex;
     flex-direction: row;
@@ -103,7 +104,7 @@
 
 .advertisingReportContainerRow_5 {
     position: relative;
- 
+
 }
 
 .lineGraphComponentError {
@@ -126,6 +127,7 @@
     font-size: 18px;
     color: #757575;
 }
+
 .advertisingReportContainerRow_8 {
     margin-top: 16px;
 }
@@ -135,7 +137,7 @@
     color: #757575;
 }
 
-.advertisingReportContainerRow_6{
+.advertisingReportContainerRow_6 {
     margin-top: 20px;
 }
 

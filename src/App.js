@@ -25,19 +25,23 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import { saveAppParamsData } from "./redux/appParams/appParamsActions";
 import { BASE_URL } from "./appConstants";
+import { useSelector } from "react-redux";
+import Loader from "./components/commonComponent/Loader/Loader";
 function App() {
+  const user = useSelector(state => state.user);
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
+    navigate("loading");
     axios.get(`${BASE_URL}user`, {
       headers: {
         token
       }
     }).then(function (response) {
-      const { user } = response.data.data;
-      dispatch(saveUserData(user));
-      dispatch(saveAppParamsData({ current_brand: user.brand_id[0] }))
+      const resUser = response.data.data.user;
+      dispatch(saveUserData(resUser));
+      dispatch(saveAppParamsData({ current_brand: resUser.brand_id[0] }))
       navigate("/home")
     }).catch(function (error) {
       console.log(error);
@@ -67,6 +71,9 @@ function App() {
               <Route path="powerBiDashboard" element={<PowerBiDashboardContainer />} >
               </Route>
             </Route> */}
+        </Route>
+        <Route path="loading" element={<Loader />}  >
+
         </Route>
       </Routes>
       <NotificationContainer />

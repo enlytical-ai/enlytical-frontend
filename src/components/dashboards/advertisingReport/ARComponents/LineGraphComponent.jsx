@@ -5,6 +5,7 @@ import { useState } from "react"
 import { BASE_URL } from "../../../../appConstants"
 import { useSelector } from "react-redux";
 const LineGraphComponent = (props) => {
+    const token = localStorage.getItem("token");
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
     const { filter, graphDataType, tileGraphIconClicked, clickedTile, dateFilter } = props;
@@ -36,6 +37,10 @@ const LineGraphComponent = (props) => {
             end_date,
             campaign_type_array,
             graph_data_type: graphDataType
+        }, {
+            headers: {
+                token
+            }
         }).then(function (response) {
             const { graph_data_array, graph_data_type } = response.data.data;
             const labelsArray = [];

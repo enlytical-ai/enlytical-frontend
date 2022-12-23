@@ -14,6 +14,7 @@ import { BASE_URL } from "../../../appConstants";
 import Loader from "./../../commonComponent/Loader/Loader";
 import CustomMasterGrid from "../../Grids/CustomMasterGrid/CustomMasterGrid";
 const AdvertisingReportContainer = (props) => {
+    const token = localStorage.getItem("token");
     const scollToRef = useRef(null);
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
@@ -77,6 +78,10 @@ const AdvertisingReportContainer = (props) => {
         axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData?brandId=${current_brand}`, {
             time_stamp: "2022-11-20T00:00:00.000+00:00",
             campaign_type_array
+        }, {
+            headers: {
+                token
+            }
         }).then(function (response) {
             const { tile_array } = response.data.data;
             console.log("tile_array=>", tile_array)
@@ -99,6 +104,10 @@ const AdvertisingReportContainer = (props) => {
                 "Instant Coffee",
                 "Roasted coffee beans"
             ]
+        }, {
+            headers: {
+                token
+            }
         }).then(function (response) {
             const { category_table_data_array } = response.data.data;
             console.log("category_table_data_array=>", category_table_data_array)
@@ -120,6 +129,10 @@ const AdvertisingReportContainer = (props) => {
                 "Instant Coffee",
                 "Roasted coffee beans"
             ]
+        }, {
+            headers: {
+                token
+            }
         }).then(function (response) {
             const { targets_table_data_array } = response.data.data;
             console.log("targets_table_data_array=>", targets_table_data_array)
@@ -229,6 +242,10 @@ const AdvertisingReportContainer = (props) => {
                 category_array: [
 
                 ]
+            }, {
+                headers: {
+                    token
+                }
             }).then(function (response) {
                 const { category_and_ASIN_of_two_range } = response.data.data;
                 console.log("category_and_ASIN_of_two_range=>", category_and_ASIN_of_two_range);

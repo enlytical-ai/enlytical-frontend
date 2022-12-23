@@ -25,7 +25,7 @@ const DashboardsContainer = () => {
     const [currentOnBoardingEl, setCurrentOnBoardingEl] = useState("Portfolio");
     const [currentDashboard, setCurrentDashboard] = useState("");
     const [currentReport, setCurrentReport] = useState("");
-    const [container, setContainer] = useState("onBoarding");
+    const [container, setContainer] = useState("advertisingReport");
     const [sideberRightToggle, setSideberRightToggle] = useState(true)
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
@@ -96,16 +96,78 @@ const DashboardsContainer = () => {
     const sideberRightToggleFn = () => {
 
     }
-
+    const [toggleOnBoarding, setToggleOnBoarding] = useState(false);
+    const [sidebarToggle, setSidebarToggle] = useState(true);
 
     const { access } = user;
     return (
 
         <div className="dashboardsContainer" style={{ height: containerHeight }}   >
-            <DashboardsLeft>
+            <DashboardsLeft width={sidebarToggle ? 300 : 0} >
+                <div className="sbysp-container" >
+                    <div onClick={() => setToggleOnBoarding(prevState => !prevState)} className="sbysp-el" >
+                        <div className="sbysp-el-left" >
+                            <span className="sbysp-el-icon" ><i class="bi bi-columns-gap"></i></span>
+                            <span>OnBoarding</span>
+                        </div>
+                        <div className="sbysp-el-right" >
+                            <span className="sbysp-el-arrow" ><i class={`bi bi-chevron-${toggleOnBoarding ? "up" : "down"}`}></i></span>
+                        </div>
+                    </div>
+                    <div style={{ display: toggleOnBoarding ? "block" : "none" }} className="on-boarding-sub-container" >
+                        <div className="on-boarding-sub-el" >
+                            <div className="on-boarding-sub-el-circle" >
+                                <i className="bi bi-circle" ></i>
+                            </div>
+                            <div className="on-boarding-sub-el-text" >
+                                Portfolio
+                            </div>
+                        </div>
+                        <div className="on-boarding-sub-el" >
+                            <div className="on-boarding-sub-el-circle" >
+                                <i className="bi bi-circle" ></i>
+                            </div>
+                            <div className="on-boarding-sub-el-text" >
+                                Seller
+                            </div>
+                        </div>
+                        <div className="on-boarding-sub-el" >
+                            <div className="on-boarding-sub-el-circle" >
+                                <i className="bi bi-circle" ></i>
+                            </div>
+                            <div className="on-boarding-sub-el-text" >
+                                Bugjet
+                            </div>
+                        </div>
+                    </div>
+                    <div className="sbysp-el">
+                        <div className="sbysp-el-left" >
+                            <span className="sbysp-el-icon"><i class="bi bi-layout-text-window-reverse"></i></span>
+                            <span> Dashboard</span>
+                        </div>
+                    </div>
+                    <div className="sbysp-el">
+                        <div className="sbysp-el-left" >
+                            <span className="sbysp-el-icon"><i class="bi bi-layout-text-window-reverse"></i></span>
+                            <span> Reports</span>
+                        </div>
+
+                    </div>
+                    <div className="sbysp-el">
+                        <div className="sbysp-el-left" >
+                            <span className="sbysp-el-icon"><i class="bi bi-layout-text-window-reverse"></i></span>
+                            <span>Web Reports</span>
+                        </div>
+                    </div>
+                </div>
+
                 {
                     // access && (
-                    //     <div className="accordion" id="accordionExample">
+                    //     <div style={{
+                    //         display: "flex", 
+                    //         flexDirection: "column",
+                    //         padding:"10px 20px"
+                    //     }} className="accordion" id="accordionExample">
                     //         {
                     //             access.includes("home_onbording") && (<div className="accordion-item">
                     //                 <h2 onClick={() => setContainer("onBoarding")} className="accordion-header" id="headingTwo">
@@ -205,7 +267,7 @@ const DashboardsContainer = () => {
                 {/* <div className="dashboardsLinksContainer" >
                     <Link to={"/dashboards/advertisingReport"} >Advertising Report</Link>
                 </div> */}
-                <div className="sidebarComponent" >
+                {/* <div className="sidebarComponent" >
                     <div className="sidebarLeft" >
                         <div onClick={() => setContainer("onBoarding")} className={`sidebarIconsContainer ${container === "onBoarding" ? "clicked" : "unClicked"}`} >
                             <i class="bi bi-plus-square sidebarIcons"></i>
@@ -273,9 +335,12 @@ const DashboardsContainer = () => {
                         )
                     }
 
-                </div>
+                </div> */}
             </DashboardsLeft>
-            <DashboardsRight>
+            <DashboardsRight
+                setSidebarToggle={setSidebarToggle}
+                sidebarToggle={sidebarToggle}
+            >
                 <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                     {container === "powerBiDashboard" && currentDashboard !== "" && < PowerBiDashboardContainer currentDashboard={currentDashboard} />}
                     {container === "powerBiReports" && currentReport !== "" && <PowerBiDashboardContainer currentDashboard={currentReport} />}
