@@ -1,18 +1,16 @@
 .authHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 48px;
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-bottom: 1px solid #bdbdbd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-bottom: 1px solid #bdbdbd;
 }
 
-
-.authHeader>a {
-    margin-left: 20px;
-    font-size: 18px;
-    text-decoration: none;
-
+.authHeader > a {
+  margin-left: 20px;
+  font-size: 18px;
+  text-decoration: none;
 }

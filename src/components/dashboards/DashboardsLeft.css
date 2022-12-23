@@ -1,8 +1,10 @@
 .dashboardsLeft {
-    height: 100%;
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    overflow-y: auto;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px;
+  overflow-y: auto;
+  transition: all 0.3s ease-in;
+  background: #fff;
 }

@@ -1,7 +1,7 @@
 .homeContainer {
-    /* background-color: #EEEEEE; */
-    flex: 1 1 auto;
+  /* background-color: #EEEEEE; */
+  flex: 1 1 auto;
 }
-.authContent{
-    height: 100%;
+.authContent {
+  height: 100%;
 }

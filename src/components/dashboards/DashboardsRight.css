@@ -1,17 +1,18 @@
 .dashboardsRight {
-    height: 100%;
-    flex: 1;
-    padding: 20px;
-    padding-left: 0px;
-    width: calc(100% - 300px);
-    /* background-color: #EEEEEE; */
+  height: 100%;
+  flex: 1;
+  padding: 20px;
+  padding-left: 0px;
+  width: calc(100% - 300px);
+  /* background-color: #eeeeee; */
+  /* background-color: #f6f9ff; */
 }
 
 .sidebas-arrow {
-    border: 1px solid lightgray;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    height: fit-content;
-    margin-right: 2px;
-    margin-top: 5px;
+  border: 1px solid lightgray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: fit-content;
+  margin-right: 2px;
+  margin-top: 5px;
 }

@@ -1,115 +1,104 @@
 .dashboardsContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-  
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: #f6f9ff;
 }
 
 .dashboardsLinksContainer {
-    flex: 1;
+  flex: 1;
 }
 
-
-
 .menuElement {
-    padding: 0px 8px;
-    color: #757575;
-    border-radius: 5px;
-    margin: 4px 4px 4px 4px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
+  padding: 0px 8px;
+  color: #757575;
+  border-radius: 5px;
+  margin: 4px 4px 4px 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .menuElementClicked {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .menuElement:hover {
-    background-color: #EEEEEE;
-    color: #757575;
+  background-color: #eeeeee;
+  color: #757575;
 }
 
 .accordion-button {
-    padding: 10px;
+  padding: 10px;
 }
 
 .accordion-body {
-    padding: 0px;
-    margin: 0px;
-    padding-left: 10px;
-    background-color: #ffffff;
+  padding: 0px;
+  margin: 0px;
+  padding-left: 10px;
+  background-color: #ffffff;
 }
 
 .accordion-header {
-    padding: 0px;
-    margin: 0px;
+  padding: 0px;
+  margin: 0px;
 }
 
-
-
-
-
-
-
 .sbysp-container {
-    padding: 20px;
-
+  padding: 20px;
 }
 
 .sbysp-el {
-    font-size: 15px;
-    font-weight: 600;
-    color: #012970;
-    padding: 10px 15px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #012970;
+  padding: 10px 15px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .sbysp-el-icon {
-    margin-right: 10px;
-    font-size: 16px;
+  margin-right: 10px;
+  font-size: 16px;
 }
 
-.sbysp-el-arrow {}
+.sbysp-el-arrow {
+}
 
 .sbysp-el:hover {
-    color: #4154f1;
-    background-color: #f6f9ff;
+  color: #4154f1;
+  background-color: #f6f9ff;
 }
 
-
 .on-boarding-sub-container {
-    padding-left: 42px;
+  padding-left: 42px;
+  transition: all 0.3s ease-in;
 }
 
 .on-boarding-sub-el {
-    display: flex;
-    align-items: center;
-    color: #012970;
-    padding: 8px 0px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #012970;
+  padding: 8px 0px;
+  cursor: pointer;
 }
 
 .on-boarding-sub-el:hover {
-    color: #4154f1;
+  color: #4154f1;
 }
 
-
 .on-boarding-sub-el-circle {
-    font-size: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 7px;
+  font-size: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
 }
 
 .on-boarding-sub-el-text {
-    font-size: 14px;
-    font-weight: 600;
-
+  font-size: 14px;
+  font-weight: 600;
 }
