@@ -132,14 +132,18 @@ const DashboardsContainer = () => {
             <div className="sbysp-el-right">
               <span className="sbysp-el-arrow">
                 <i
-                  class={`bi bi-chevron-${toggleOnBoarding ? "up" : "down"}`}
+                  // class={`bi bi-chevron-${toggleOnBoarding ? "down" : "up"}`}
+                  class="bi bi-chevron-down"
                 ></i>
               </span>
             </div>
           </div>
           <div
-            style={{ display: toggleOnBoarding ? "block" : "none" }}
-            className="on-boarding-sub-container"
+            // style={{ display: toggleOnBoarding ? "block" : "none" }}
+            // className="on-boarding-sub-container"
+            className={`on-boarding-sub-container ${
+              toggleOnBoarding && "collapse"
+            }`}
           >
             {container === "onBoarding" && (
               <div>

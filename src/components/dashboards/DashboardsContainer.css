@@ -65,8 +65,27 @@
   font-size: 16px;
 }
 
-.sbysp-el-arrow {
+/* .bi-chevron-down {
+  transition: all 0.3s;
+  transform: rotate(0deg);
 }
+.bi-chevron-up {
+  transition: all 0.3s;
+  transform: rotate(180deg);
+} */
+/* .bi-chevron-down::before {
+  transition: all 0.3s;
+}
+.bi-chevron-down::after {
+  transform: rotate(180deg);
+} */
+.sbysp-el .sbysp-el-right .sbysp-el-arrow .bi-chevron-down {
+  transition: all 0.3s;
+  transform: rotate(180deg);
+}
+/* .sbysp-el .sbysp-el-right .sbysp-el-arrow i.bi-chevron-down.active {
+  transform: rotate(180deg);
+} */
 
 .sbysp-el:hover {
   color: #4154f1;
@@ -75,7 +94,11 @@
 
 .on-boarding-sub-container {
   padding-left: 42px;
-  transition: all 0.3s ease-in;
+  transition: 0.3s ease-in;
+  /* transition-duration: 0.5s; */
+}
+.on-boarding-sub-container.collapse {
+  transition: 0.3s ease-in;
 }
 
 .on-boarding-sub-el {
