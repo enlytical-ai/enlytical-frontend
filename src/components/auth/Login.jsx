@@ -21,7 +21,11 @@ const Login = () => {
     password: "",
     email: "",
   });
-  const [formErrors, setFromErrors] = useState({});
+  const [formErrors, setFromErrors] = useState({
+    email: false,
+    password: false,
+    invalidEmail: false,
+  });
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleInputChange = (e) => {
@@ -32,13 +36,36 @@ const Login = () => {
     }));
   };
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(state);
-    }
-  }, [formErrors]);
+  // useEffect(() => {
+  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
+  //     console.log(state);
+  //   }
+  // }, [formErrors]);
 
   const handleSubmit = (e) => {
+    const { email, invalidEmail, password } = state;
+    const regex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (email === "") {
+      setFromErrors((prevState) => ({
+        ...prevState,
+        email: true,
+      }));
+      return;
+      // } else if (!regex.test(invalidEmail)) {
+      //   setFromErrors((prevState) => ({
+      //     ...prevState,
+      //     invalidEmail: true,
+      //   }));
+      //   return;
+    } else if (password === "") {
+      setFromErrors((prevState) => ({
+        ...prevState,
+        password: true,
+      }));
+      return;
+    }
+    setIsSubmit(true);
     axios
       .post(`${BASE_URL}auth/login`, state)
       .then(function (response) {
@@ -59,24 +86,24 @@ const Login = () => {
       });
 
     e.preventDefault();
-    setFromErrors(validate(state));
-    setIsSubmit(true);
+    // setFromErrors(validate(state));
+    // setIsSubmit(true);
   };
 
-  const validate = (val) => {
-    const errors = {};
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!val.email) {
-      errors.email = "Email is required!";
-    } else if (!regex.test(val.email)) {
-      errors.email = "Invalid Email!";
-    }
-    if (!val.password) {
-      errors.password = "password is required!";
-    }
-    return errors;
-  };
+  // const validate = (val) => {
+  //   const errors = {};
+  //   const regex =
+  //     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  //   if (!val.email) {
+  //     errors.email = "Email is required!";
+  //   } else if (!regex.test(val.email)) {
+  //     errors.email = "Invalid Email!";
+  //   }
+  //   if (!val.password) {
+  //     errors.password = "password is required!";
+  //   }
+  //   return errors;
+  // };
 
   return (
     <div className="mainLoginPage">
@@ -113,7 +140,12 @@ const Login = () => {
                   value={state.email}
                 ></input>
               </div>
-              <p style={{ color: "red" }}>{formErrors.email}</p>
+              {formErrors.email && (
+                <p className="errorContainer">Email is required!</p>
+              )}
+              {formErrors.invalidEmail && (
+                <p className="errorContainer">Invalid Email!</p>
+              )}
               <div className="mb-3">
                 <label>Password</label>
                 <input
@@ -126,7 +158,9 @@ const Login = () => {
                   value={state.password}
                 ></input>
               </div>
-              <p style={{ color: "red" }}>{formErrors.password}</p>
+              {formErrors.password && (
+                <p className="errorContainer">Password is required!</p>
+              )}
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
                   <button

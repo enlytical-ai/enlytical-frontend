@@ -113,3 +113,7 @@
 .loginContainer > input {
   margin-bottom: 5px;
 }
+
+.errorContainer {
+  color: red;
+}
