@@ -28,6 +28,7 @@ const DashboardsContainer = () => {
     "Portfolio",
     "Seller",
     "Budget",
+    "PriorityKW",
   ]);
   const [currentOnBoardingEl, setCurrentOnBoardingEl] = useState("Portfolio");
   const [currentDashboard, setCurrentDashboard] = useState("");
@@ -111,6 +112,7 @@ const DashboardsContainer = () => {
   const sideberRightToggleFn = () => {};
   const [toggleOnBoarding, setToggleOnBoarding] = useState(false);
   const [sidebarToggle, setSidebarToggle] = useState(true);
+  // const [active, setActive] = useState(false);
 
   const { access } = user;
   const clickFn = () => {
@@ -122,7 +124,11 @@ const DashboardsContainer = () => {
       <DashboardsLeft width={sidebarToggle ? 300 : 0}>
         <div className="sbysp-container">
           {/* onboarding */}
-          <div onClick={() => clickFn()} className="sbysp-el">
+
+          <div
+            onClick={() => clickFn()}
+            className={!toggleOnBoarding ? "sbysp-el open" : "sbysp-el"}
+          >
             <div className="sbysp-el-left">
               <span className="sbysp-el-icon">
                 <i class="bi bi-columns-gap"></i>
@@ -132,8 +138,10 @@ const DashboardsContainer = () => {
             <div className="sbysp-el-right">
               <span className="sbysp-el-arrow">
                 <i
-                  // class={`bi bi-chevron-${toggleOnBoarding ? "down" : "up"}`}
-                  class="bi bi-chevron-down"
+                  className={`bi bi-chevron-${
+                    toggleOnBoarding ? "down" : "up"
+                  }`}
+                  // className="bi bi-chevron-down"
                 ></i>
               </span>
             </div>

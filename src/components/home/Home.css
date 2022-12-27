@@ -5,3 +5,12 @@
 .authContent {
   height: 100%;
 }
+.notification-icon {
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.message-icon {
+  padding-right: 20px;
+  cursor: pointer;
+}

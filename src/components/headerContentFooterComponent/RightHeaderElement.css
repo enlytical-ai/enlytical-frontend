@@ -1,8 +1,9 @@
 .authHeaderRight {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
-.logoutButtonContainer{
-    display: flex;
-    align-items: center;
+.logoutButtonContainer {
+  display: flex;
+  align-items: center;
 }

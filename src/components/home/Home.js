@@ -15,6 +15,8 @@ import { saveAppParamsData } from "../../redux/appParams/appParamsActions";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
+import MessageIcon from "@mui/icons-material/Message";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 const Home = () => {
   let navigate = useNavigate();
@@ -66,43 +68,38 @@ const Home = () => {
           </div>
         </LeftHeaderElement>
         <RightHeaderElement className="authHeaderRight">
-          <div className="selectBrandDropDownContainer">
-            {/* <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-              <i className="bi bi-bell"></i>
-              <span className="badge bg-primary badge-number">4</span>
-            </a>
-
-            <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-              <i className="bi bi-chat-left-text"></i>
-              <span className="badge bg-success badge-number">3</span>
-            </a> */}
-
-            <select
-              onChange={onBrandChange}
-              className="form-select form-select-sm"
-              aria-label=".form-select-sm example"
-            >
-              {brands.length > 0 &&
-                brands.map((brand, i) => {
-                  return (
-                    <option
-                      selected={
-                        appParams.current_brans === brand._id ? true : false
-                      }
-                      key={i}
-                      value={brand._id}
-                    >
-                      {brand.brand_name}
-                    </option>
-                  );
-                })}
-            </select>
+          <div className="notification-icon">
+            <NotificationsActiveIcon />
           </div>
+          <div className="message-icon">
+            <MessageIcon />
+          </div>
+
+          <select
+            onChange={onBrandChange}
+            className="form-select form-select-sm"
+            aria-label=".form-select-sm example"
+          >
+            {brands.length > 0 &&
+              brands.map((brand, i) => {
+                return (
+                  <option
+                    selected={
+                      appParams.current_brans === brand._id ? true : false
+                    }
+                    key={i}
+                    value={brand._id}
+                  >
+                    {brand.brand_name}
+                  </option>
+                );
+              })}
+          </select>
 
           <div
             style={{
               paddingLeft: "20px",
-              paddingRight: "10px",
+              paddingRight: "20px",
               display: "flex",
               cursor: "pointer",
             }}
@@ -125,6 +122,17 @@ const Home = () => {
                 "aria-labelledby": "basic-button",
               }}
             >
+              {/* <MenuItem>
+                <span
+                  style={{
+                    fontWeight: "bolder",
+                  }}
+                >
+                  <i>Hi, </i>
+                  <i>{user.first_name}</i>
+                </span>
+              </MenuItem>
+              <hr /> */}
               <MenuItem>Profile</MenuItem>
               <MenuItem>My account</MenuItem>
               <MenuItem>My Brands</MenuItem>
