@@ -8,9 +8,14 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.1",
     "@reduxjs/toolkit": "^1.8.3",
+    "@stitches/react": "^1.2.8",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
     "accordianjs": "^1.0.9",
     "ag-grid-community": "^28.1.1",
     "ag-grid-react": "^28.1.1",
@@ -33,6 +38,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "sass-loader": "^13.1.0",
+    "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
