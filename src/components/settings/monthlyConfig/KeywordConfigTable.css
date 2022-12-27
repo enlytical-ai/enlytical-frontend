@@ -1,0 +1,31 @@
+.keywordConfigTableContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.tableSubContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15vw;
+  height: 80vh;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+}
+.tableContentItem {
+  list-style: none;
+  padding-right: 25px;
+}
+.tableContentItem li {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 8px;
+  border-radius: 10px;
+  /* cursor: pointer; */
+}

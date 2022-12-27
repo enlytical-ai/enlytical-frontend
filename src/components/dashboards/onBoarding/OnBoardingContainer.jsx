@@ -3,7 +3,7 @@ import ProductTable from "../../settings/monthlyConfig/ProductTable";
 import SellerTable from "../../settings/monthlyConfig/SellerTable";
 import { useEffect, useState } from "react";
 import "./OnBoardingContainer.css";
-
+import KeywordConfigTable from "../../settings/monthlyConfig/KeywordConfigTable";
 const OnBoardingContainer = (props) => {
   //To get the height for grid
   const [containerHeight, setContainerHeight] = useState();
@@ -39,6 +39,9 @@ const OnBoardingContainer = (props) => {
       )}
       {currentOnBoardingEl === "Budget" && (
         <BudgetContainer changeOnBoardingEl={changeOnBoardingEl} />
+      )}
+      {currentOnBoardingEl === "PriorityKW" && (
+        <KeywordConfigTable changeOnBoardingEl={changeOnBoardingEl} />
       )}
     </div>
   );

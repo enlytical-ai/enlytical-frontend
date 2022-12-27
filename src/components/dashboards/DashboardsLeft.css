@@ -1,8 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Open+Sans:wght@400;500;600&display=swap");
+
 .dashboardsLeft {
-    height: 100%;
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    overflow-y: auto;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px;
+  overflow-y: auto;
+  transition: all 0.3s ease-in;
+  background: #fff;
+  font-family: "Nunito" sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
