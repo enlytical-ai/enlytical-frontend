@@ -11,23 +11,23 @@ import {
 } from "react-notifications";
 
 const KeywordConfigTable = () => {
-  const [brands, setBrands] = useState([
-    { id: "a", name: "Keyword 1" },
-    { id: "b", name: "Keyword 2" },
-    { id: "c", name: "Keyword 3" },
-  ]);
-  const [core, setCore] = useState([]);
-  const [generic, setGeneric] = useState([]);
-  const [competition, setCompetition] = useState([]);
+  // const [brands, setBrands] = useState([
+  //   { id: "a", name: "Keyword 1" },
+  //   { id: "b", name: "Keyword 2" },
+  //   { id: "c", name: "Keyword 3" },
+  // ]);
+  // const [core, setCore] = useState([]);
+  // const [generic, setGeneric] = useState([]);
+  // const [competition, setCompetition] = useState([]);
 
-  function handleOnDragEnd(result) {
-    if (!result.destination) return;
-    const items = Array.from(brands);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+  // function handleOnDragEnd(result) {
+  //   if (!result.destination) return;
+  //   const items = Array.from(brands);
+  //   const [reorderedItem] = items.splice(result.source.index, 1);
+  //   items.splice(result.destination.index, 0, reorderedItem);
 
-    setBrands(items);
-  }
+  //   setBrands(items);
+  // }
   return (
     <>
       <div>
