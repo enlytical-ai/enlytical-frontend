@@ -9,29 +9,71 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import { useEffect } from "react";
 
 const KeywordConfigTable = () => {
-  const [brands, setBrands] = useState([
-    { id: "a", name: "Keyword 1" },
-    { id: "b", name: "Keyword 2" },
-    { id: "c", name: "Keyword 3" },
+  const [categoryArray, setCategoryArray] = useState([
+    {
+      category: "Face Wash",
+      brand: ["Nykaa", "nykaa"],
+      core: ["n", "N"],
+      generic: ["R", "r"],
+      competition: ["Lacme"]
+    }
   ]);
-  const [core, setCore] = useState([]);
-  const [generic, setGeneric] = useState([]);
-  const [competition, setCompetition] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState();
+  useEffect(() => {
+    setCurrentCategory({ ...categoryArray[0] });
+  }, []);
 
-  function handleOnDragEnd(result) {
-    if (!result.destination) return;
-    const items = Array.from(brands);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+  const onDrag = (newObj) => {
+    const { category } = newObj;
+    let finalObj = {
+      category: category
+    };
+    for (let el in newObj) {
+      let miniObj = newObj[el];
+      let key = miniObj.name;
+      if (el !== "category") {
+        finalObj[key.toLowerCase()] = miniObj.items
+      }
 
-    setBrands(items);
+    }
+
+    const brand = finalObj.brand.map(el => {
+      return el.content
+    })
+    const core = finalObj.core.map(el => {
+      return el.content
+    })
+    const competition = finalObj.competition.map(el => {
+      return el.content
+    })
+    const generic = finalObj.generic.map(el => {
+      return el.content
+    })
+    finalObj.brand = brand;
+    finalObj.core = core;
+    finalObj.competition = competition;
+    finalObj.generic = generic;
+  
+  const categoryArrayUpdated =  categoryArray.map(cat => {
+      if (cat.category === finalObj.category) {
+        return finalObj;
+      }
+      return cat
+    })
+    setCategoryArray(categoryArrayUpdated);
   }
+  console.log(categoryArray);
+
+
+
+  
   return (
     <>
       <div>
-        <Dnd />
+        {currentCategory && <Dnd onDrag={onDrag} currentCategory={currentCategory} />}
       </div>
     </>
     // <div className="keywordConfigTableContainer">
