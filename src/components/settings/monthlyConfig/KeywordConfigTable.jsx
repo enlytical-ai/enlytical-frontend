@@ -1,6 +1,7 @@
 import React from "react";
 import "./KeywordConfigTable.css";
 import { useState, useRef } from "react";
+import Dnd from "../../Dnd/Dnd";
 import { useDrop } from "react-dnd";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Loader from "../../commonComponent/Loader/Loader";
@@ -28,70 +29,75 @@ const KeywordConfigTable = () => {
     setBrands(items);
   }
   return (
-    <div className="keywordConfigTableContainer">
-      <div className="tableSubContainer">
-        <h3>Brand</h3>
-        <div className="tableContent">
-          <ul className="tableContentItem">
-            {brands.map((e, i) => {
-              return <li>{e.name}</li>;
-            })}
-          </ul>
-        </div>
+    <>
+      <div>
+        <Dnd />
       </div>
-      <div className="tableSubContainer">
-        <h3>Core</h3>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <div className="tableContent">
-            <Droppable droppableId="brands">
-              {(provided) => (
-                <ul
-                  className="tableContentItem"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {brands.map(({ id, name }, index) => {
-                    return (
-                      <Draggable key={id} draggableId={id} index={index}>
-                        {(provided) => (
-                          <li
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            {name}
-                          </li>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                </ul>
-              )}
-            </Droppable>
-          </div>
-        </DragDropContext>
-      </div>
-      <div className="tableSubContainer">
-        <h3>Generic</h3>
-        <div className="tableContent">
-          <ul className="tableContentItem">
-            <li>Keyword1</li>
-            <li>Keyword2</li>
-            <li>Keyword3</li>
-          </ul>
-        </div>
-      </div>
-      <div className="tableSubContainer">
-        <h3>Competition</h3>
-        <div className="tableContent">
-          <ul className="tableContentItem">
-            <li>Keyword1</li>
-            <li>Keyword2</li>
-            <li>Keyword3</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    </>
+    // <div className="keywordConfigTableContainer">
+    //   <div className="tableSubContainer">
+    //     <h3>Brand</h3>
+    //     <div className="tableContent">
+    //       <ul className="tableContentItem">
+    //         {brands.map((e, i) => {
+    //           return <li>{e.name}</li>;
+    //         })}
+    //       </ul>
+    //     </div>
+    //   </div>
+    //   <div className="tableSubContainer">
+    //     <h3>Core</h3>
+    //     <DragDropContext onDragEnd={handleOnDragEnd}>
+    //       <div className="tableContent">
+    //         <Droppable droppableId="brands">
+    //           {(provided) => (
+    //             <ul
+    //               className="tableContentItem"
+    //               {...provided.droppableProps}
+    //               ref={provided.innerRef}
+    //             >
+    //               {brands.map(({ id, name }, index) => {
+    //                 return (
+    //                   <Draggable key={id} draggableId={id} index={index}>
+    //                     {(provided) => (
+    //                       <li
+    //                         ref={provided.innerRef}
+    //                         {...provided.draggableProps}
+    //                         {...provided.dragHandleProps}
+    //                       >
+    //                         {name}
+    //                       </li>
+    //                     )}
+    //                   </Draggable>
+    //                 );
+    //               })}
+    //             </ul>
+    //           )}
+    //         </Droppable>
+    //       </div>
+    //     </DragDropContext>
+    //   </div>
+    //   <div className="tableSubContainer">
+    //     <h3>Generic</h3>
+    //     <div className="tableContent">
+    //       <ul className="tableContentItem">
+    //         <li>Keyword1</li>
+    //         <li>Keyword2</li>
+    //         <li>Keyword3</li>
+    //       </ul>
+    //     </div>
+    //   </div>
+    //   <div className="tableSubContainer">
+    //     <h3>Competition</h3>
+    //     <div className="tableContent">
+    //       <ul className="tableContentItem">
+    //         <li>Keyword1</li>
+    //         <li>Keyword2</li>
+    //         <li>Keyword3</li>
+    //       </ul>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
