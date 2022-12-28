@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Column from './Column.tsx'
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
@@ -13,11 +13,13 @@ const StyledColumns = styled('div', {
   gap: '8px'
 })
 
-function DragAndDrop () {
-  const initialColumns = {
-    Brand: {
+function DragAndDrop (props) {
+const {category,core,brand,generic,competition} =props.catObj;
+    
+    
+const [columns, setColumns] = useState({Brand: {
       id: 'Brand',
-      list: ['keyword 1', 'keyword 2', 'keyword 3']
+      list: []
     },
     Core: {
       id: 'Core',
@@ -25,14 +27,38 @@ function DragAndDrop () {
     },
     Generic: {
       id: 'Generic',
-      list: []
+      list:[]
     },
     Competition: {
       id: 'Competition',
-      list: []
+      list:[]
+    }})
+console.log(props.catObj);
+useEffect(() => {
+ const initialColumns = {
+    Brand: {
+      id: 'Brand',
+      list: brand
+    },
+    Core: {
+      id: 'Core',
+      list: core
+    },
+    Generic: {
+      id: 'Generic',
+      list: generic
+    },
+    Competition: {
+      id: 'Competition',
+      list: competition
     }
   }
-  const [columns, setColumns] = useState(initialColumns)
+  setColumns(initialColumns);
+}, [props.catObj])
+
+
+  
+  
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     // Make sure we have a valid destination

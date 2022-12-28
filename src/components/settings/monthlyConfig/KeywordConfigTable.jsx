@@ -11,23 +11,53 @@ import {
 } from "react-notifications";
 
 const KeywordConfigTable = () => {
-  // const [brands, setBrands] = useState([
-  //   { id: "a", name: "Keyword 1" },
-  //   { id: "b", name: "Keyword 2" },
-  //   { id: "c", name: "Keyword 3" },
-  // ]);
-  // const [core, setCore] = useState([]);
-  // const [generic, setGeneric] = useState([]);
-  // const [competition, setCompetition] = useState([]);
+  const [categories, setCategories] = useState([
+    {
+      category: "facewash",
+      brand: [],
+      core: ["Keyword 1", "Keyword 2"],
+      generic: [],
+      competition: ["Keyword 3", "Keyword 4"],
+    },
+    {
+      category: "facecream",
+      brand: [],
+      core: ["Keyword 1", "Keyword 2"],
+      generic: ["Keyword 3", "Keyword 4"],
+      competition: [],
+    },
+    {
+      category: "soap",
+      brand: ["Keyword 3", "Keyword 4", "keyword 5"],
+      core: [],
+      generic: [],
+      competition: ["Keyword 1", "Keyword 2"],
+    },
+    {
+      category: "bodyWash",
+      brand: [],
+      core: [],
+      generic: ["Keyword 3", "Keyword 4", "keyword 5"],
+      competition: ["Keyword 1", "Keyword 2"],
+    },
+  ]);
 
-  // function handleOnDragEnd(result) {
-  //   if (!result.destination) return;
-  //   const items = Array.from(brands);
-  //   const [reorderedItem] = items.splice(result.source.index, 1);
-  //   items.splice(result.destination.index, 0, reorderedItem);
+  const [currentCat, setCurrentCat] = useState({
+    ...categories[0],
+  });
+  const [active, setActive] = useState(true);
+  // const toggleState = () => {
+  //   setActive(!active);
+  // };
+  const categoryChange = (cat) => {
+    // console.log(e.target);
+    // setCategories(e.target.value);
+    // setCategories(categories);
+    // console.log(cat);
+    setCurrentCat(cat);
+    setActive(!active);
+  };
 
-  //   setBrands(items);
-  // }
   return (
     <>
       <div>
@@ -35,8 +65,28 @@ const KeywordConfigTable = () => {
           Please Confirm System recognized Non-negotiable KeyWords
         </h3>
       </div>
-      <div>
-        <DragAndDrop />
+      <div style={{ display: "flex" }}>
+        <aside>
+          <h2>Categories</h2>
+          <div className="categoryContainer">
+            {categories.map((cat, i) => {
+              return (
+                <div
+                  className="categoryItem"
+                  key={cat.category}
+                  onClick={() => categoryChange(cat)}
+                >
+                  <div className={`item ${active ? "active" : ""}`}>
+                    {cat.category}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </aside>
+        <div>
+          <DragAndDrop catObj={currentCat} />
+        </div>
       </div>
     </>
     // <div className="keywordConfigTableContainer">
