@@ -12,50 +12,39 @@ import {
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../appConstants";
+import { useSelector } from "react-redux";
 
 const KeywordConfigTable = () => {
-  const [categoryArray, setCategoryArray] = useState([
-    {
-      category: "Face Wash",
-      brand: ["Nykaa", "nykaa"],
-      core: ["n", "N"],
-      generic: ["R", "r"],
-      competition: ["Lacme"],
-    },
-    {
-      category: "Face cream",
-      brand: ["mamaearth", "mamaearth"],
-      core: ["x", "X"],
-      generic: ["M", "m"],
-      competition: ["nykaa"],
-    },
-    {
-      category: "body wash",
-      brand: ["Nivia"],
-      core: ["x", "X"],
-      generic: ["M", "m"],
-      competition: ["nykaa"],
-    },
-  ]);
-  const [currentCategory, setCurrentCategory] = useState();
+  const [categoryArray, setCategoryArray] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [state, setState] = useState(null);
+
+  const appParams = useSelector((state) => state.appParams);
+  const { current_brand } = appParams;
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    setCurrentCategory({ ...categoryArray[0] });
+    axios
+      .get(`${BASE_URL}keywords?brandId=${current_brand}`, {
+        headers: {
+          token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data.category_data_array.category_data_array);
+        const { category_data_array, _id } =
+          response.data.data.category_data_array;
+
+        setCategoryArray(category_data_array);
+        setCurrentCategory({ ...category_data_array[0] });
+        setState({ _id });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   axios
-  //     .get(`${BASE_URL}keywords?brandId=63ac297622128d99e95bbf25`, {
-  //       headers: {
-  //         token,
-  //       },
-  //     })
-  //     .than((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
+  //
   // }, []);
 
   const onDrag = (newObj) => {
@@ -77,7 +66,7 @@ const KeywordConfigTable = () => {
     const core = finalObj.core.map((el) => {
       return el.content;
     });
-    const competition = finalObj.competition.map((el) => {
+    const competitor = finalObj.competitor.map((el) => {
       return el.content;
     });
     const generic = finalObj.generic.map((el) => {
@@ -85,7 +74,7 @@ const KeywordConfigTable = () => {
     });
     finalObj.brand = brand;
     finalObj.core = core;
-    finalObj.competition = competition;
+    finalObj.competitor = competitor;
     finalObj.generic = generic;
 
     const categoryArrayUpdated = categoryArray.map((cat) => {
@@ -99,10 +88,45 @@ const KeywordConfigTable = () => {
   // console.log(categoryArray);
   const [active, setActive] = useState(false);
   const categoryChange = (cat) => {
-    console.log(cat);
+    // const [current_category] = categoryArray.filter((c) => c.category === cat);
     setCurrentCategory(cat);
-    setActive(!active);
-    console.log(active);
+  };
+
+  const saveData = () => {
+    // console.log("mera token", token);
+    const token = localStorage.getItem("token");
+    axios
+      .put(
+        `${BASE_URL}keywords/${state._id}?brandId=${current_brand}`,
+        { category_data_array: categoryArray },
+        {
+          headers: {
+            token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.data.category_data_array.category_data_array);
+        const { category_data_array, _id } =
+          response.data.data.category_data_array;
+
+        setCategoryArray(category_data_array);
+        setCurrentCategory({ ...category_data_array[0] });
+        setState({ _id });
+        NotificationManager.success(
+          `${response.data.message}`,
+          "Success",
+          2000
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        NotificationManager.error(
+          `${error.response.data.data.message} `,
+          "Error",
+          2000
+        );
+      });
   };
 
   return (
@@ -154,8 +178,11 @@ const KeywordConfigTable = () => {
         </div>
       </div>
       <div style={{ textAlign: "right" }}>
-        <button className="btn btn-primary">Save</button>
+        <button onClick={saveData} className="btn btn-primary">
+          Save
+        </button>
       </div>
+      <NotificationContainer />
     </>
     // <div className="keywordConfigTableContainer">
     //   <div className="tableSubContainer">

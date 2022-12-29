@@ -44,14 +44,6 @@ function Dnd(props) {
   const { currentCategory } = props;
   const { category } = currentCategory;
   const [columns, setColumns] = useState();
-  useEffect(() => {
-    if (columns) {
-      props.onDrag({
-        ...columns,
-        category,
-      });
-    }
-  }, [columns]);
 
   useEffect(() => {
     const brand = currentCategory.brand.map((el) => {
@@ -74,7 +66,7 @@ function Dnd(props) {
       };
     });
 
-    const competition = currentCategory.competition.map((el) => {
+    const competitor = currentCategory.competitor.map((el) => {
       return {
         id: uuid(),
         content: el,
@@ -95,12 +87,21 @@ function Dnd(props) {
         items: generic,
       },
       [uuid()]: {
-        name: "Competition",
-        items: competition,
+        name: "Competitor",
+        items: competitor,
       },
     };
     setColumns(columnsFromBackend);
   }, [currentCategory]);
+
+  useEffect(() => {
+    if (columns && category) {
+      props.onDrag({
+        ...columns,
+        category,
+      });
+    }
+  }, [columns]);
 
   return (
     <>
@@ -156,6 +157,7 @@ function Dnd(props) {
                                   width: 170,
                                   height: "60vh",
                                   borderRadius: "5px",
+                                  overflowY: "scroll",
                                 }}
                               >
                                 {column.items.map((item, index) => {
