@@ -29,3 +29,25 @@
   border-radius: 10px;
   /* cursor: pointer; */
 }
+
+.category-sidebar {
+  width: 220px;
+  height: 60vh;
+  margin-right: 20px;
+}
+
+.item {
+  text-align: center;
+  background-color: rgb(185, 185, 185);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: rgb(136, 136, 136);
+}
+.item.active {
+  background-color: rgb(136, 136, 136);
+}

@@ -110,18 +110,19 @@ const DashboardsContainer = () => {
   //
 
   const sideberRightToggleFn = () => {};
-  const [toggleOnBoarding, setToggleOnBoarding] = useState(false);
+  const [toggleOnBoarding, setToggleOnBoarding] = useState(true);
   const [sidebarToggle, setSidebarToggle] = useState(true);
-  // const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false);
 
   const { access } = user;
   const clickFn = () => {
     setToggleOnBoarding((prevState) => !prevState);
     setContainer("onBoarding");
+    setActive(!active);
   };
   return (
     <div className="dashboardsContainer" style={{ height: containerHeight }}>
-      <DashboardsLeft width={sidebarToggle ? 300 : 0}>
+      <DashboardsLeft width={sidebarToggle ? 260 : 0}>
         <div className="sbysp-container">
           {/* onboarding */}
 
@@ -159,11 +160,15 @@ const DashboardsContainer = () => {
                   onBordingMenu.map((e) => {
                     return (
                       <div key={e} onClick={() => changeOnBoardingEl(e)}>
-                        <div className="on-boarding-sub-el">
+                        <div
+                          className={`on-boarding-sub-el ${
+                            [...onBordingMenu] === e ? "active" : ""
+                          }`}
+                        >
                           <div className="on-boarding-sub-el-circle">
                             <i className="bi bi-circle"></i>
                           </div>
-                          <div className="on-boarding-sub-el-text">{e}</div>
+                          <div className={`on-boarding-sub-el-text `}>{e}</div>
                         </div>
                       </div>
                     );
