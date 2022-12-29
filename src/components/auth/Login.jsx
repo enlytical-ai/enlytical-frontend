@@ -70,9 +70,9 @@ const Login = () => {
       .post(`${BASE_URL}auth/login`, state)
       .then(function (response) {
         console.log(response.data.data);
-        const { token, user } = response.data.data;
+        const { token, user, brand_array } = response.data.data;
         dispatch(saveUserData(user));
-        dispatch(saveAppParamsData({ current_brand: user.brand_id[0] }));
+        dispatch(saveAppParamsData({ current_brand: brand_array[0], brand_array }));
         localStorage.setItem("token", token);
         navigate("/home");
       })

@@ -24,7 +24,7 @@ const ProductTable = (props) => {
     useEffect(() => {
         setLoading(true)
         const token = localStorage.getItem("token");
-        axios.get(`${BASE_URL}clientProductDetail?brandId=${current_brand}`, {
+        axios.get(`${BASE_URL}clientProductDetail?brandId=${current_brand._id}`, {
             headers: {
                 token
             }
@@ -37,7 +37,7 @@ const ProductTable = (props) => {
             setLoading(false);
             console.log("======>", error.response.data.data.message);
         });
-    }, [current_brand]);
+    }, [current_brand._id]);
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
@@ -57,7 +57,7 @@ const ProductTable = (props) => {
         const token = localStorage.getItem("token");
         // const selected = e.target.checked;
         const { _id } = data;
-        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand._id}`, { selected }, {
             headers: {
                 token
             }
@@ -81,7 +81,7 @@ const ProductTable = (props) => {
         const token = localStorage.getItem("token");
         // const selected = e.target.checked;
 
-        axios.put(`${BASE_URL}clientProductDetail/updateClientAllProductDetail?brandId=${current_brand}`, { selected }, {
+        axios.put(`${BASE_URL}clientProductDetail/updateClientAllProductDetail?brandId=${current_brand._id}`, { selected }, {
             headers: {
                 token
             }
@@ -109,7 +109,7 @@ const ProductTable = (props) => {
         }
         const { _id } = data;
 
-        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand}`, { priority }, {
+        axios.put(`${BASE_URL}clientProductDetail/${_id}?brandId=${current_brand._id}`, { priority }, {
             headers: {
                 token
             }

@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../appConstants";
 import axios from "axios";
 const getDynamicData = async (obj) => {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${BASE_URL}dashboard/advertisingReport/getDynamicTableData?brandId=${obj.current_brand}`, {
+    const response = await axios.post(`${BASE_URL}dashboard/advertisingReport/getDynamicTableData?brandId=${obj.current_brand_id}`, {
         time_range_one: {
             "start_time": "2022-11-10T00:00:00.000+00:00",
             "end_time": "2022-11-11T00:00:00.000+00:00"

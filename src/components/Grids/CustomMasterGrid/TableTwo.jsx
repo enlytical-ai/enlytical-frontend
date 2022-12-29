@@ -15,7 +15,7 @@ const TableTwo = (props) => {
             const res = await getDynamicData({
                 filter: { category },
                 group_by: "ad_asin",
-                current_brand,
+                current_brand_id: current_brand._id,
                 campaign_type_array
             })
             console.log("res", res)

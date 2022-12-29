@@ -14,7 +14,7 @@ const TableFour = (props) => {
         (async () => {
             const res = await getDynamicData({
                 filter: { category, ad_asin, campaign_type }, group_by: "type",
-                current_brand,
+                current_brand_id: current_brand._id,
                 campaign_type_array
             })
             console.log("res", res)

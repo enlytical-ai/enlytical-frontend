@@ -40,7 +40,7 @@ const DashboardsContainer = () => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard?brandId=${current_brand}`,
+        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard?brandId=${current_brand._id}`,
         {
           headers: {
             token,
@@ -63,7 +63,7 @@ const DashboardsContainer = () => {
       });
     axios
       .get(
-        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report?brandId=${current_brand}`,
+        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report?brandId=${current_brand._id}`,
         {
           headers: {
             token,
@@ -84,7 +84,7 @@ const DashboardsContainer = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [current_brand]);
+  }, [current_brand._id]);
   const changeDashboard = (e) => {
     setCurrentDashboard(e);
   };
