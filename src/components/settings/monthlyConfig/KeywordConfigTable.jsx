@@ -2,8 +2,6 @@ import React from "react";
 import "./KeywordConfigTable.css";
 import { useState, useRef } from "react";
 import Dnd from "../../Dnd/Dnd";
-import { useDrop } from "react-dnd";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Loader from "../../commonComponent/Loader/Loader";
 import {
   NotificationContainer,
@@ -24,7 +22,7 @@ const KeywordConfigTable = () => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     axios
-      .get(`${BASE_URL}keywords?brandId=${current_brand}`, {
+      .get(`${BASE_URL}keywords?brandId=${current_brand._id}`, {
         headers: {
           token,
         },
@@ -97,7 +95,7 @@ const KeywordConfigTable = () => {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `${BASE_URL}keywords/${state._id}?brandId=${current_brand}`,
+        `${BASE_URL}keywords/${state._id}?brandId=${current_brand._id}`,
         { category_data_array: categoryArray },
         {
           headers: {
