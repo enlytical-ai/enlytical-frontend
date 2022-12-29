@@ -3,7 +3,7 @@ import "./DashboardsContainer.css";
 import "./sidebar/Sidebar.css";
 import DashboardsRight from "./DashboardsRight";
 import DashboardsLeft from "./DashboardsLeft";
-import LineGraph from "./../graphs/LineGraph";
+
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../appConstants";
@@ -15,7 +15,6 @@ import { useDispatch } from "react-redux/es/exports";
 import { saveUserData } from "../../redux/user/userActions";
 import {
   NotificationContainer,
-  NotificationManager,
 } from "react-notifications";
 import AdvertisingReportContainer from "./advertisingReport/AdvertisingReportContainer";
 const DashboardsContainer = () => {
@@ -41,7 +40,7 @@ const DashboardsContainer = () => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard?brandId=${current_brand}`,
+        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/dashboard?brandId=${current_brand._id}`,
         {
           headers: {
             token,
@@ -64,7 +63,7 @@ const DashboardsContainer = () => {
       });
     axios
       .get(
-        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report?brandId=${current_brand}`,
+        `${BASE_URL}powerBi/getPowerBiDashboardMenuArray/report?brandId=${current_brand._id}`,
         {
           headers: {
             token,
@@ -85,7 +84,7 @@ const DashboardsContainer = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [current_brand]);
+  }, [current_brand._id]);
   const changeDashboard = (e) => {
     setCurrentDashboard(e);
   };
@@ -109,7 +108,7 @@ const DashboardsContainer = () => {
   });
   //
 
-  const sideberRightToggleFn = () => {};
+  const sideberRightToggleFn = () => { };
   const [toggleOnBoarding, setToggleOnBoarding] = useState(true);
   const [sidebarToggle, setSidebarToggle] = useState(true);
   const [active, setActive] = useState(false);
@@ -124,237 +123,164 @@ const DashboardsContainer = () => {
     <div className="dashboardsContainer" style={{ height: containerHeight }}>
       <DashboardsLeft width={sidebarToggle ? 260 : 0}>
         <div className="sbysp-container">
-          {/* onboarding */}
+          {
+            access && (
+              <>
+                {
+                  access.includes("home_onbording") && (
+                    <div
+                      onClick={() => clickFn()}
+                      className={!toggleOnBoarding ? "sbysp-el open" : "sbysp-el"}
+                    >
+                      <div className="sbysp-el-left">
+                        <span className="sbysp-el-icon">
+                          <i class="bi bi-columns-gap"></i>
+                        </span>
+                        <span>OnBoarding</span>
+                      </div>
+                      <div className="sbysp-el-right">
+                        <span className="sbysp-el-arrow">
+                          <i
+                            className={`bi bi-chevron-${toggleOnBoarding ? "down" : "up"
+                              }`}
+                          // className="bi bi-chevron-down"
+                          ></i>
+                        </span>
+                      </div>
+                    </div>
+                  )
+                }
 
-          <div
-            onClick={() => clickFn()}
-            className={!toggleOnBoarding ? "sbysp-el open" : "sbysp-el"}
-          >
-            <div className="sbysp-el-left">
-              <span className="sbysp-el-icon">
-                <i class="bi bi-columns-gap"></i>
-              </span>
-              <span>OnBoarding</span>
-            </div>
-            <div className="sbysp-el-right">
-              <span className="sbysp-el-arrow">
-                <i
-                  className={`bi bi-chevron-${
-                    toggleOnBoarding ? "down" : "up"
-                  }`}
-                  // className="bi bi-chevron-down"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div
-            // style={{ display: toggleOnBoarding ? "block" : "none" }}
-            // className="on-boarding-sub-container"
-            className={`on-boarding-sub-container ${
-              toggleOnBoarding && "collapse"
-            }`}
-          >
-            {container === "onBoarding" && (
+                {
+                  access.includes("home_onbording") && (
+                    <div
+                      // style={{ display: toggleOnBoarding ? "block" : "none" }}
+                      // className="on-boarding-sub-container"
+                      className={`on-boarding-sub-container ${toggleOnBoarding && "collapse"
+                        }`}
+                    >
+                      {container === "onBoarding" && (
+                        <div>
+                          {onBordingMenu.length > 0 &&
+                            onBordingMenu.map((e) => {
+                              return (
+                                <div key={e} onClick={() => changeOnBoardingEl(e)}>
+                                  <div
+                                    className={`on-boarding-sub-el ${[...onBordingMenu] === e ? "active" : ""
+                                      }`}
+                                  >
+                                    <div className="on-boarding-sub-el-circle">
+                                      <i className="bi bi-circle"></i>
+                                    </div>
+                                    <div className={`on-boarding-sub-el-text `}>{e}</div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+
+                {/* Dashboard */}
+                {
+                  access.includes("home_dashboards") && (
+                    <div
+                      className="sbysp-el"
+                      onClick={() => setContainer("powerBiDashboard")}
+                    >
+                      <div className="sbysp-el-left">
+                        <span className="sbysp-el-icon">
+                          <i class="bi bi-menu-button-wide"></i>
+                        </span>
+                        <span> Dashboard</span>
+                      </div>
+                    </div>
+                  )
+                }
+
+
+                {/* {container === "powerBiDashboard" && (
               <div>
-                {onBordingMenu.length > 0 &&
-                  onBordingMenu.map((e) => {
+                {dashboardMenuArray.length > 0 &&
+                  dashboardMenuArray.map((e) => {
                     return (
-                      <div key={e} onClick={() => changeOnBoardingEl(e)}>
-                        <div
-                          className={`on-boarding-sub-el ${
-                            [...onBordingMenu] === e ? "active" : ""
-                          }`}
-                        >
+                      <div key={e._id} onClick={() => changeDashboard(e._id)}>
+                        <div className="on-boarding-sub-el">
                           <div className="on-boarding-sub-el-circle">
                             <i className="bi bi-circle"></i>
                           </div>
-                          <div className={`on-boarding-sub-el-text `}>{e}</div>
+                          <div className="on-boarding-sub-el-text">
+                            {e.dashboard_name}
+                          </div>
                         </div>
                       </div>
                     );
                   })}
               </div>
-            )}
-          </div>
+            )} */}
 
-          {/* Dashboard */}
-          <div
-            className="sbysp-el"
-            onClick={() => setContainer("powerBiDashboard")}
-          >
-            <div className="sbysp-el-left">
-              <span className="sbysp-el-icon">
-                <i class="bi bi-menu-button-wide"></i>
-              </span>
-              <span> Dashboard</span>
-            </div>
-          </div>
-          {/* {container === "powerBiDashboard" && (
-            <div>
-              {dashboardMenuArray.length > 0 &&
-                dashboardMenuArray.map((e) => {
-                  return (
-                    <div key={e._id} onClick={() => changeDashboard(e._id)}>
-                      <div className="on-boarding-sub-el">
-                        <div className="on-boarding-sub-el-circle">
-                          <i className="bi bi-circle"></i>
-                        </div>
-                        <div className="on-boarding-sub-el-text">
-                          {e.dashboard_name}
-                        </div>
+                {/* reports */}
+
+                {
+                  access.includes("home_reports") && (
+                    <div
+                      className="sbysp-el"
+                      onClick={() => setContainer("powerBiReports")}
+                    >
+                      <div className="sbysp-el-left">
+                        <span className="sbysp-el-icon">
+                          <i class="bi bi-journal-text"></i>
+                        </span>
+                        <span> Reports</span>
                       </div>
                     </div>
-                  );
-                })}
-            </div>
-          )} */}
+                  )
+                }
 
-          {/* reports */}
-          <div
-            className="sbysp-el"
-            onClick={() => setContainer("powerBiReports")}
-          >
-            <div className="sbysp-el-left">
-              <span className="sbysp-el-icon">
-                <i class="bi bi-journal-text"></i>
-              </span>
-              <span> Reports</span>
-            </div>
-          </div>
-          {/* {container === "powerBiReports" && (
-            <div>
-              {reportsMenuArray.length > 0 &&
-                reportsMenuArray.map((e) => {
-                  return (
-                    <div key={e._id} onClick={() => setCurrentReport(e._id)}>
-                      <div className="on-boarding-sub-el">
-                        <div className="on-boarding-sub-el-circle">
-                          <i className="bi bi-circle"></i>
-                        </div>
-                        <div className="on-boarding-sub-el-text">
-                          {e.dashboard_name}
+                {/* {container === "powerBiReports" && (
+              <div>
+                {reportsMenuArray.length > 0 &&
+                  reportsMenuArray.map((e) => {
+                    return (
+                      <div key={e._id} onClick={() => setCurrentReport(e._id)}>
+                        <div className="on-boarding-sub-el">
+                          <div className="on-boarding-sub-el-circle">
+                            <i className="bi bi-circle"></i>
+                          </div>
+                          <div className="on-boarding-sub-el-text">
+                            {e.dashboard_name}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-            </div>
-          )} */}
+                    );
+                  })}
+              </div>
+            )} */}
 
-          {/* webReports */}
-          <div
-            className="sbysp-el"
-            onClick={() => setContainer("advertisingReport")}
-          >
-            <div className="sbysp-el-left">
-              <span className="sbysp-el-icon">
-                <i class="bi bi-layout-text-window-reverse"></i>
-              </span>
-              <span>Web Reports</span>
-            </div>
-          </div>
+                {/* webReports */}
+                {
+                  access.includes("home_web_reports") && (
+                    <div
+                      className="sbysp-el"
+                      onClick={() => setContainer("advertisingReport")}
+                    >
+                      <div className="sbysp-el-left">
+                        <span className="sbysp-el-icon">
+                          <i class="bi bi-layout-text-window-reverse"></i>
+                        </span>
+                        <span>Web Reports</span>
+                      </div>
+                    </div>
+                  )
+                }
+
+              </>)
+          }
         </div>
 
-        {
-          // access && (
-          //     <div style={{
-          //         display: "flex",
-          //         flexDirection: "column",
-          //         padding:"10px 20px"
-          //     }} className="accordion" id="accordionExample">
-          //         {
-          //             access.includes("home_onbording") && (<div className="accordion-item">
-          //                 <h2 onClick={() => setContainer("onBoarding")} className="accordion-header" id="headingTwo">
-          //                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          //                         Onbording
-          //                     </button>
-          //                 </h2>
-          //                 <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          //                     <div className="accordion-body">
-          //                         {
-          //                             onBordingMenu.length > 0 && onBordingMenu.map((e) => {
-          //                                 return (
-          //                                     <div key={e} onClick={() => changeOnBoardingEl(e)} className={`menuElement ${currentOnBoardingEl === e ? "menuElementClicked" : ""}`} >
-          //                                         {e}
-          //                                     </div>
-          //                                 )
-          //                             })
-          //                         }
-          //                     </div>
-          //                 </div>
-          //             </div>)
-          //         }
-          //         {
-          //             access.includes("home_dashboards") && (
-          //                 <div className="accordion-item">
-          //                     <h2 onClick={() => setContainer("powerBiDashboard")} className="accordion-header" id="headingOne">
-          //                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          //                             Dashboards
-          //                         </button>
-          //                     </h2>
-          //                     <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          //                         <div className="accordion-body">
-          //                             {
-          //                                 dashboardMenuArray.length > 0 && dashboardMenuArray.map((e) => {
-          //                                     return (
-          //                                         <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
-          //                                             {e.dashboard_name}
-          //                                         </div>
-          //                                     )
-          //                                 })
-          //                             }
-          //                         </div>
-          //                     </div>
-          //                 </div>
-          //             )
-          //         }
-          //         {
-          //             access.includes("home_reports") && (
-          //                 <div className="accordion-item">
-          //                     <h2 onClick={() => setContainer("powerBiReports")} className="accordion-header" id="headingThree">
-          //                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          //                             Reports
-          //                         </button>
-          //                     </h2>
-          //                     <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          //                         <div className="accordion-body">
-          //                             {
-          //                                 reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
-          //                                     return (
-          //                                         <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
-          //                                             {e.dashboard_name}
-          //                                         </div>
-          //                                     )
-          //                                 })
-          //                             }
-          //                         </div>
-          //                     </div>
-          //                 </div>
-          //             )
-          //         }
-          //         <div className="accordion-item">
-          //             <h2 onClick={() => setContainer("advertisingReport")} className="accordion-header" id="headingFour">
-          //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-          //                     Web Dashboards
-          //                 </button>
-          //             </h2>
-          //             <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-          //                 <div className="accordion-body">
-          //                     {/* {
-          //                         reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
-          //                             return (
-          //                                 <div key={e._id} onClick={() => changeDashboard(e._id)} className={`menuElement ${currentDashboard === e._id ? "menuElementClicked" : ""}`} >
-          //                                     {e.dashboard_name}
-          //                                 </div>
-          //                             )
-          //                         })
-          //                     } */}
-          //                 </div>
-          //             </div>
-          //         </div>
-          //     </div>
-          // )
-        }
+
 
         {/* <div className="dashboardsLinksContainer" >
                     <Link to={"/dashboards/advertisingReport"} >Advertising Report</Link>

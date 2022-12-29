@@ -39,9 +39,9 @@ function App() {
         token
       }
     }).then(function (response) {
-      const resUser = response.data.data.user;
-      dispatch(saveUserData(resUser));
-      dispatch(saveAppParamsData({ current_brand: resUser.brand_id[0] }))
+      const { user, brand_array } = response.data.data;
+      dispatch(saveUserData(user));
+      dispatch(saveAppParamsData({ current_brand: brand_array[0], brand_array }));
       navigate("/home")
     }).catch(function (error) {
       console.log(error);

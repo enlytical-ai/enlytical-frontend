@@ -24,6 +24,7 @@ const Home = () => {
   const token = localStorage.getItem("token");
   const appParams = useSelector((state) => state.appParams);
   const user = useSelector((state) => state.user);
+
   const [brands, setBrands] = useState([]);
   const [anchorEl, setAnchorEl] = useState("");
   const open = Boolean(anchorEl);
@@ -36,22 +37,28 @@ const Home = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}brand/getAllMyBrands`, {
-        headers: {
-          token,
-        },
-      })
-      .then(function (response) {
-        setBrands(response.data.data.brands);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios
+    //   .get(`${BASE_URL}brand/getAllMyBrands`, {
+    //     headers: {
+    //       token,
+    //     },
+    //   })
+    //   .then(function (response) {
+    //     setBrands(response.data.data.brands);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+
+    const { brand_array } = appParams;
+    setBrands(brand_array);
   }, []);
 
   const onBrandChange = (e) => {
-    dispatch(saveAppParamsData({ current_brand: e.target.value }));
+
+    const [current_brand] = brands.filter(brand => brand._id === e.target.value);
+    console.log(current_brand);
+    dispatch(saveAppParamsData({ current_brand }));
   };
   return (
     <Body className="noAuthBody">

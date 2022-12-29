@@ -58,6 +58,7 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .sbysp-el-icon {
@@ -118,6 +119,7 @@
   color: #012970;
   padding: 8px 0px;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .on-boarding-sub-el:hover {

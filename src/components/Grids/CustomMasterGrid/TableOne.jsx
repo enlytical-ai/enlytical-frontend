@@ -13,7 +13,7 @@ const TableOne = (props) => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         //  loadData({ setDataArray, group_by: "category" })
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getDynamicTableData?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getDynamicTableData?brandId=${current_brand._id}`, {
             time_range_one: {
                 "start_time": "2022-11-10T00:00:00.000+00:00",
                 "end_time": "2022-11-11T00:00:00.000+00:00"

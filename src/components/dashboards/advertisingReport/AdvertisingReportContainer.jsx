@@ -75,7 +75,7 @@ const AdvertisingReportContainer = (props) => {
         if (campaign_type_array.length === 0) {
             campaign_type_array = ["sb", "sbvc", "sd", "sp"]
         }
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTileData?brandId=${current_brand._id}`, {
             time_stamp: "2022-11-20T00:00:00.000+00:00",
             campaign_type_array
         }, {
@@ -90,7 +90,7 @@ const AdvertisingReportContainer = (props) => {
             console.log(error);
         });
 
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryTableData?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryTableData?brandId=${current_brand._id}`, {
             time_stamp: "2022-11-20T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
@@ -115,7 +115,7 @@ const AdvertisingReportContainer = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getTargetsTableData?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getTargetsTableData?brandId=${current_brand._id}`, {
             time_stamp: "2022-07-31T00:00:00.000+00:00",
             campaign_type_array,
             category_array: [
@@ -229,7 +229,7 @@ const AdvertisingReportContainer = (props) => {
                 campaign_type_array = ["sb", "sbvc", "sd", "sp"]
             }
 
-            axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryAndASINOfTwoRange?brandId=${current_brand}`, {
+            axios.post(`${BASE_URL}dashboard/advertisingReport/getCategoryAndASINOfTwoRange?brandId=${current_brand._id}`, {
                 time_range_one: {
                     "start_time": `${startDateArray[0]}T00:00:00.000+00:00`,
                     "end_time": `${endDateArray[0]}T00:00:00.000+00:00`

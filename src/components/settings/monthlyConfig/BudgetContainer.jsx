@@ -33,7 +33,7 @@ const BudgetContainer = (props) => {
     }, [])
     useEffect(() => {
         const token = localStorage.getItem("token");
-        axios.post(`${BASE_URL}clientMonthlyConfig/monthlyBudget?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}clientMonthlyConfig/monthlyBudget?brandId=${current_brand._id}`, {
             time_stamp: searchDate
         },
             {
@@ -57,7 +57,7 @@ const BudgetContainer = (props) => {
                 category_wise_sales_and_spend_target_business_as_usual: []
             });
         });
-    }, [searchDate, current_brand])
+    }, [searchDate, current_brand._id])
 
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
@@ -128,7 +128,7 @@ const BudgetContainer = (props) => {
     }
     const brandConfigEditToggle = () => {
         const token = localStorage.getItem("token");
-        axios.put(`${BASE_URL}brand?brandId=${current_brand}`, {}, {
+        axios.put(`${BASE_URL}brand?brandId=${current_brand._id}`, {}, {
             headers: { token }
         }).then(function (response) {
             NotificationManager.success(response.data.data.message, 'Success', 2000);

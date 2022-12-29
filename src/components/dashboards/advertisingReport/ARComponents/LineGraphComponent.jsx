@@ -32,7 +32,7 @@ const LineGraphComponent = (props) => {
             campaign_type_array = ["sb", "sbvc", "sd", "sp"]
         }
         props.setLoader(prevState => ({ ...prevState, graphLoader: true }));
-        axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData?brandId=${current_brand}`, {
+        axios.post(`${BASE_URL}dashboard/advertisingReport/getGraphData?brandId=${current_brand._id}`, {
             start_date,
             end_date,
             campaign_type_array,
