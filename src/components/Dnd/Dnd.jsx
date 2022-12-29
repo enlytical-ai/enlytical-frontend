@@ -1,33 +1,7 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
-
-const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
-];
-
-const columnsFromBackend = {
-  [uuid()]: {
-    name: "Requested",
-    items: itemsFromBackend,
-  },
-  [uuid()]: {
-    name: "To do",
-    items: [],
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: [],
-  },
-  [uuid()]: {
-    name: "Done",
-    items: [],
-  },
-};
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -66,83 +40,172 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function Dnd() {
-  const [columns, setColumns] = useState(columnsFromBackend);
+function Dnd(props) {
+  const { currentCategory } = props;
+  const { category } = currentCategory;
+  const [columns, setColumns] = useState();
+  useEffect(() => {
+    if (columns) {
+      props.onDrag({
+        ...columns,
+        category,
+      });
+    }
+  }, [columns]);
+
+  useEffect(() => {
+    const brand = currentCategory.brand.map((el) => {
+      return {
+        id: uuid(),
+        content: el,
+      };
+    });
+    const core = currentCategory.core.map((el) => {
+      return {
+        id: uuid(),
+        content: el,
+      };
+    });
+
+    const generic = currentCategory.generic.map((el) => {
+      return {
+        id: uuid(),
+        content: el,
+      };
+    });
+
+    const competition = currentCategory.competition.map((el) => {
+      return {
+        id: uuid(),
+        content: el,
+      };
+    });
+
+    const columnsFromBackend = {
+      [uuid()]: {
+        name: "Brand",
+        items: brand,
+      },
+      [uuid()]: {
+        name: "Core",
+        items: core,
+      },
+      [uuid()]: {
+        name: "Generic",
+        items: generic,
+      },
+      [uuid()]: {
+        name: "Competition",
+        items: competition,
+      },
+    };
+    setColumns(columnsFromBackend);
+  }, [currentCategory]);
+
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
-      <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
       >
-        {Object.entries(columns).map(([columnId, column], index) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              key={columnId}
+        {columns && (
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <DragDropContext
+              onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
             >
-              <h2>{column.name}</h2>
-              <div style={{ margin: 8 }}>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
-                    return (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
+              {Object.entries(columns).map(([columnId, column], index) => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div key={columnId}>
+                      <h3
                         style={{
-                          background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "lightgrey",
-                          padding: 4,
-                          width: 250,
-                          minHeight: 500,
+                          marginLeft: "12px",
+                          width: 170,
+                          backgroundColor: "#13122e",
+                          color: "white",
+                          borderRadius: "5px",
+                          // padding: 10,
                         }}
                       >
-                        {column.items.map((item, index) => {
-                          return (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => {
-                                return (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      backgroundColor: snapshot.isDragging
-                                        ? "#263B4A"
-                                        : "#456C86",
-                                      color: "white",
-                                      ...provided.draggableProps.style,
-                                    }}
-                                  >
-                                    {item.content}
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                        {provided.placeholder}
+                        {column.name}
+                      </h3>
+                      <div style={{ margin: "12px" }}>
+                        <Droppable droppableId={columnId} key={columnId}>
+                          {(provided, snapshot) => {
+                            return (
+                              <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                style={{
+                                  // display: "flex",
+                                  // flexDirection: "column",
+
+                                  background: snapshot.isDraggingOver
+                                    ? "lightblue"
+                                    : "lightgrey",
+                                  padding: 8,
+                                  width: 170,
+                                  height: "60vh",
+                                  borderRadius: "5px",
+                                }}
+                              >
+                                {column.items.map((item, index) => {
+                                  return (
+                                    <Draggable
+                                      key={item.id}
+                                      draggableId={item.id}
+                                      index={index}
+                                    >
+                                      {(provided, snapshot) => {
+                                        return (
+                                          <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            style={{
+                                              textAlign: "center",
+                                              padding: 5,
+                                              margin: "0 0 8px 0",
+                                              borderRadius: "5px",
+                                              backgroundColor:
+                                                snapshot.isDragging
+                                                  ? "#263B4A"
+                                                  : "#456C86",
+                                              color: "white",
+                                              ...provided.draggableProps.style,
+                                            }}
+                                          >
+                                            {item.content}
+                                          </div>
+                                        );
+                                      }}
+                                    </Draggable>
+                                  );
+                                })}
+                                {provided.placeholder}
+                              </div>
+                            );
+                          }}
+                        </Droppable>
                       </div>
-                    );
-                  }}
-                </Droppable>
-              </div>
-            </div>
-          );
-        })}
-      </DragDropContext>
-    </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </DragDropContext>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
