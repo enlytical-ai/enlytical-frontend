@@ -41,7 +41,7 @@ function App() {
     }).then(function (response) {
       const resUser = response.data.data.user;
       dispatch(saveUserData(resUser));
-      dispatch(saveAppParamsData({ current_brand: resUser.brand_id[0] }))
+      dispatch(saveAppParamsData({ current_brand: resUser.brand_id[0] }));
       navigate("/home")
     }).catch(function (error) {
       console.log(error);
