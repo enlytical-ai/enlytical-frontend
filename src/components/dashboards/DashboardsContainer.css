@@ -123,6 +123,9 @@
 .on-boarding-sub-el:hover {
   color: #4154f1;
 }
+.on-boarding-sub-el.active {
+  color: #4154f1;
+}
 
 .on-boarding-sub-el-circle {
   font-size: 7px;
