@@ -158,9 +158,8 @@ const KeywordConfigTable = () => {
                     onClick={() => categoryChange(cat)}
                   >
                     <div
-                      className={`item ${
-                        currentCategory.category == cat.category ? "active" : ""
-                      } `}
+                      className={`item ${currentCategory.category === cat.category ? "active" : ""
+                        } `}
                     >
                       {cat.category}
                     </div>
