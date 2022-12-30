@@ -1,0 +1,3 @@
+.droppable-area::-webkit-scrollbar {
+    display: none;
+}

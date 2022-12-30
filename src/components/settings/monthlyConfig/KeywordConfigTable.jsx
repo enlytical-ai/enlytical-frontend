@@ -128,13 +128,13 @@ const KeywordConfigTable = () => {
   };
 
   return (
-    <>
+    <div className="keywordsConfigContainer" >
       <div style={{ marginBottom: "15px" }}>
         <h3 style={{ fontSize: "20px", color: "#1565C0" }}>
           Please Confirm System recognized Non-negotiable KeyWords
         </h3>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div style={{ display: "flex" }}>
         <aside className="category-sidebar">
           <h2
             style={{
@@ -158,7 +158,7 @@ const KeywordConfigTable = () => {
                     onClick={() => categoryChange(cat)}
                   >
                     <div
-                      className={`item ${currentCategory.category === cat.category ? "active" : ""
+                      className={`item ${currentCategory.category == cat.category ? "active" : ""
                         } `}
                     >
                       {cat.category}
@@ -168,7 +168,7 @@ const KeywordConfigTable = () => {
               })}
           </div>
         </aside>
-        <div>
+        <div style={{ width: "100%" }} >
           {currentCategory && (
             <Dnd onDrag={onDrag} currentCategory={currentCategory} />
           )}
@@ -180,7 +180,7 @@ const KeywordConfigTable = () => {
         </button>
       </div>
       <NotificationContainer />
-    </>
+    </div>
     // <div className="keywordConfigTableContainer">
     //   <div className="tableSubContainer">
     //     <h3>Brand</h3>

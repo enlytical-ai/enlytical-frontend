@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
-
+import "./Dnd.css";
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
@@ -113,7 +113,7 @@ function Dnd(props) {
         }}
       >
         {columns && (
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <div style={{ display: "flex" }}>
             <DragDropContext
               onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
             >
@@ -130,7 +130,7 @@ function Dnd(props) {
                       <h3
                         style={{
                           marginLeft: "12px",
-                          width: 170,
+                          flex: 1,
                           backgroundColor: "#13122e",
                           color: "white",
                           borderRadius: "5px",
@@ -146,6 +146,7 @@ function Dnd(props) {
                               <div
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
+                                className="droppable-area"
                                 style={{
                                   // display: "flex",
                                   // flexDirection: "column",
@@ -154,10 +155,12 @@ function Dnd(props) {
                                     ? "lightblue"
                                     : "lightgrey",
                                   padding: 8,
-                                  width: 170,
+                                  minWidth: 150,
+                                  maxWidth: 200,
                                   height: "60vh",
                                   borderRadius: "5px",
                                   overflowY: "scroll",
+
                                 }}
                               >
                                 {column.items.map((item, index) => {
