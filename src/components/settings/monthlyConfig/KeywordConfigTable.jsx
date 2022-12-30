@@ -24,7 +24,7 @@ const KeywordConfigTable = () => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     axios
-      .get(`${BASE_URL}keywords?brandId=${current_brand}`, {
+      .get(`${BASE_URL}keywords?brandId=${current_brand._id}`, {
         headers: {
           token,
         },
@@ -97,7 +97,7 @@ const KeywordConfigTable = () => {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `${BASE_URL}keywords/${state._id}?brandId=${current_brand}`,
+        `${BASE_URL}keywords/${state._id}?brandId=${current_brand._id}`,
         { category_data_array: categoryArray },
         {
           headers: {
@@ -130,13 +130,13 @@ const KeywordConfigTable = () => {
   };
 
   return (
-    <>
+    <div className="keywordsConfigContainer" >
       <div style={{ marginBottom: "15px" }}>
         <h3 style={{ fontSize: "20px", color: "#1565C0" }}>
           Please Confirm System recognized Non-negotiable KeyWords
         </h3>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div style={{ display: "flex" }}>
         <aside className="category-sidebar">
           <h2
             style={{
@@ -160,9 +160,8 @@ const KeywordConfigTable = () => {
                     onClick={() => categoryChange(cat)}
                   >
                     <div
-                      className={`item ${
-                        currentCategory.category == cat.category ? "active" : ""
-                      } `}
+                      className={`item ${currentCategory.category == cat.category ? "active" : ""
+                        } `}
                     >
                       {cat.category}
                     </div>
@@ -171,7 +170,7 @@ const KeywordConfigTable = () => {
               })}
           </div>
         </aside>
-        <div>
+        <div style={{ width: "100%" }} >
           {currentCategory && (
             <Dnd onDrag={onDrag} currentCategory={currentCategory} />
           )}
@@ -183,7 +182,7 @@ const KeywordConfigTable = () => {
         </button>
       </div>
       <NotificationContainer />
-    </>
+    </div>
     // <div className="keywordConfigTableContainer">
     //   <div className="tableSubContainer">
     //     <h3>Brand</h3>

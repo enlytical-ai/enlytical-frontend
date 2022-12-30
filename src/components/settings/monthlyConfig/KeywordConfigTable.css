@@ -1,12 +1,15 @@
-.keywordConfigTableContainer {
+.keywordsConfigContainer {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  width: 100%;
 }
+
 .tableSubContainer {
   display: flex;
   flex-direction: column;
   text-align: center;
 }
+
 .tableContent {
   display: flex;
   flex-direction: column;
@@ -16,10 +19,12 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
 }
+
 .tableContentItem {
   list-style: none;
   padding-right: 25px;
 }
+
 .tableContentItem li {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 10px;
@@ -48,6 +53,7 @@
 .item:hover {
   background-color: rgb(136, 136, 136);
 }
+
 .item.active {
   background-color: rgb(136, 136, 136);
 }
