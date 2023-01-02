@@ -166,8 +166,7 @@ const DashboardsContainer = () => {
                               return (
                                 <div key={e} onClick={() => changeOnBoardingEl(e)}>
                                   <div
-                                    className={`on-boarding-sub-el ${[...onBordingMenu] === e ? "active" : ""
-                                      }`}
+                                    className={`on-boarding-sub-el ${currentOnBoardingEl === e ? "on-boarding-sub-el-active" : ""}`}
                                   >
                                     <div className="on-boarding-sub-el-circle">
                                       <i className="bi bi-circle"></i>
