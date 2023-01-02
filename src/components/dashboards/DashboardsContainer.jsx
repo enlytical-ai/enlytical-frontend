@@ -96,14 +96,14 @@ const DashboardsContainer = () => {
   const [containerHeight, setContainerHeight] = useState();
   useEffect(() => {
     const height = window.innerHeight;
-    const netHeight = height - 49;
+    const netHeight = height - 60;
     setContainerHeight(netHeight);
     //Header48,padding40,24,32,24
     // console.log("====Height===>", el - 168)
   }, []);
   window.addEventListener("resize", () => {
     const height = window.innerHeight;
-    const netHeight = height - 49;
+    const netHeight = height - 60;
     setContainerHeight(netHeight);
   });
   //
@@ -278,81 +278,6 @@ const DashboardsContainer = () => {
               </>)
           }
         </div>
-
-
-
-        {/* <div className="dashboardsLinksContainer" >
-                    <Link to={"/dashboards/advertisingReport"} >Advertising Report</Link>
-                </div> */}
-        {/* <div className="sidebarComponent" >
-                    <div className="sidebarLeft" >
-                        <div onClick={() => setContainer("onBoarding")} className={`sidebarIconsContainer ${container === "onBoarding" ? "clicked" : "unClicked"}`} >
-                            <i class="bi bi-plus-square sidebarIcons"></i>
-                            <div className="sidebarIconsName" >Onboarding</div>
-                        </div>
-                        <div onClick={() => setContainer("powerBiDashboard")} className={`sidebarIconsContainer ${container === "powerBiDashboard" ? "clicked" : "unClicked"}`} >
-                            <i class="bi bi-bar-chart-line sidebarIcons "></i>
-                            <div className="sidebarIconsName" >Dashboards</div>
-                        </div>
-                        <div onClick={() => setContainer("powerBiReports")} className={`sidebarIconsContainer ${container === "powerBiReports" ? "clicked" : "unClicked"}`}>
-                            <i class="bi bi-layout-text-sidebar-reverse sidebarIcons"></i>
-                            <div className="sidebarIconsName" >Reports</div>
-                        </div>
-                        <div onClick={() => setContainer("advertisingReport")} className={`sidebarIconsContainer ${container === "advertisingReport" ? "clicked" : "unClicked"}`}>
-
-                            <i class="bi bi-layout-text-window-reverse sidebarIcons"></i>
-                            <div className="sidebarIconsName" >Web Reports</div>
-                        </div>
-                    </div>
-                    {
-                        container === "onBoarding" && (
-                            <div className={`sideberRight`} >
-                                {
-                                    onBordingMenu.length > 0 && onBordingMenu.map((e) => {
-                                        return (
-                                            <div key={e} onClick={() => changeOnBoardingEl(e)} className={`sideberRightEl ${currentOnBoardingEl === e ? "sideberRightElClicked" : ""}`} >
-                                                {e}
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        )
-                    }
-                    {
-                        container === "powerBiDashboard" && (
-                            <div className="sideberRight" >
-                                {
-                                    dashboardMenuArray.length > 0 && dashboardMenuArray.map((e) => {
-                                        return (
-                                            <div key={e._id} onClick={() => changeDashboard(e._id)} className={`sideberRightEl ${currentDashboard === e._id ? "sideberRightElClicked" : ""}`} >
-                                                {e.dashboard_name}
-                                            </div>
-                                        )
-                                    })
-                                }
-
-                            </div>
-                        )
-                    }
-                    {
-                        container === "powerBiReports" && (
-                            <div className="sideberRight" >
-                                {
-                                    reportsMenuArray.length > 0 && reportsMenuArray.map((e) => {
-                                        return (
-                                            <div key={e._id} onClick={() => setCurrentReport(e._id)} className={`sideberRightEl ${currentReport === e._id ? "sideberRightElClicked" : ""}`} >
-                                                {e.dashboard_name}
-                                            </div>
-                                        )
-                                    })
-                                }
-
-                            </div>
-                        )
-                    }
-
-                </div> */}
       </DashboardsLeft>
       <DashboardsRight
         setSidebarToggle={setSidebarToggle}
