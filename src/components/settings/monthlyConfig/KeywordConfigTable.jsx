@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../appConstants";
 import { useSelector } from "react-redux";
+import Title from "../Title";
 
 const KeywordConfigTable = () => {
   const [categoryArray, setCategoryArray] = useState(null);
@@ -146,11 +147,7 @@ const KeywordConfigTable = () => {
   //
   return (
     <div className="keywordsConfigContainer" >
-      <div style={{ marginBottom: "15px" }}>
-        <h3 style={{ fontSize: "20px", color: "#1565C0" }}>
-          Please Confirm System recognized Non-negotiable KeyWords
-        </h3>
-      </div>
+      <Title>Please Confirm System recognized Non-negotiable KeyWords</Title>
       <div className="keywordsConfigContainerLeftRightContainer" >
         <aside className="category-sidebar">
           <h2

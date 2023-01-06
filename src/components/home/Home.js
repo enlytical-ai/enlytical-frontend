@@ -17,6 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import { HEADER } from "../../appUiConatsnts";
 
 const Home = () => {
   let navigate = useNavigate();
@@ -63,14 +64,12 @@ const Home = () => {
   const [containerHeight, setContainerHeight] = useState();
   useEffect(() => {
     const height = window.innerHeight;
-    const netHeight = height - 60;
+    const netHeight = height - HEADER.height;
     setContainerHeight(netHeight);
-    //Header48,padding40,24,32,24
-    // console.log("====Height===>", el - 168)
   }, []);
   window.addEventListener("resize", () => {
     const height = window.innerHeight;
-    const netHeight = height - 60;
+    const netHeight = height - HEADER.height;
     setContainerHeight(netHeight);
   });
   //

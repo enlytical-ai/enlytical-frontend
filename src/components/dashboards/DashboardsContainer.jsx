@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./DashboardsContainer.css";
 import "./sidebar/Sidebar.css";
+import { HEADER } from "../../appUiConatsnts";
 import DashboardsRight from "./DashboardsRight";
 import DashboardsLeft from "./DashboardsLeft";
 
@@ -96,14 +97,12 @@ const DashboardsContainer = () => {
   const [containerHeight, setContainerHeight] = useState();
   useEffect(() => {
     const height = window.innerHeight;
-    const netHeight = height - 60;
+    const netHeight = height - HEADER.height;
     setContainerHeight(netHeight);
-    //Header48,padding40,24,32,24
-    // console.log("====Height===>", el - 168)
   }, []);
   window.addEventListener("resize", () => {
     const height = window.innerHeight;
-    const netHeight = height - 60;
+    const netHeight = height - HEADER.height;
     setContainerHeight(netHeight);
   });
   //
