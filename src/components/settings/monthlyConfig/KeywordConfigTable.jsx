@@ -17,6 +17,7 @@ const KeywordConfigTable = () => {
   const [currentCategory, setCurrentCategory] = useState(null);
   const [state, setState] = useState(null);
 
+
   const appParams = useSelector((state) => state.appParams);
   const { current_brand } = appParams;
   const token = localStorage.getItem("token");
@@ -41,9 +42,7 @@ const KeywordConfigTable = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //
-  // }, []);
+
 
   const onDrag = (newObj) => {
     const { category } = newObj;
@@ -91,7 +90,7 @@ const KeywordConfigTable = () => {
   };
 
   const saveData = () => {
-    // console.log("mera token", token);
+
     const token = localStorage.getItem("token");
     axios
       .put(
@@ -175,7 +174,7 @@ const KeywordConfigTable = () => {
         </div>
       </div>
       <div style={{ textAlign: "right" }}>
-        <button onClick={saveData} className="btn btn-primary">
+        <button onClick={saveData} className="btn btn-primary btn-sm">
           Save
         </button>
       </div>

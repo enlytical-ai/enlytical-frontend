@@ -4,6 +4,8 @@ import SellerTable from "../../settings/monthlyConfig/SellerTable";
 import { useEffect, useState } from "react";
 import "./OnBoardingContainer.css";
 import KeywordConfigTable from "../../settings/monthlyConfig/KeywordConfigTable";
+import PCvariation from "../../settings/monthlyConfig/PCvariation";
+import CompetitionConfirmation from "../../settings/monthlyConfig/CompetitionConfirmation";
 const OnBoardingContainer = (props) => {
   //To get the height for grid
   const [containerHeight, setContainerHeight] = useState();
@@ -42,6 +44,12 @@ const OnBoardingContainer = (props) => {
       )}
       {currentOnBoardingEl === "PriorityKW" && (
         <KeywordConfigTable changeOnBoardingEl={changeOnBoardingEl} />
+      )}
+      {currentOnBoardingEl === "PC_Variation" && (
+        <PCvariation changeOnBoardingEl={changeOnBoardingEl} />
+      )}
+      {currentOnBoardingEl === "Competition" && (
+        <CompetitionConfirmation changeOnBoardingEl={changeOnBoardingEl} />
       )}
     </div>
   );

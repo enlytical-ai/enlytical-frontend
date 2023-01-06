@@ -1,0 +1,20 @@
+/* .accordian-container{
+    display: flex;
+    justify-content: space-between;
+    
+} */
+
+.accordion{
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion-button{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.accordion-body{
+    display: flex;
+    flex-direction: row;
+}

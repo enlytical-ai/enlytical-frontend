@@ -26,6 +26,8 @@ const DashboardsContainer = () => {
     "Seller",
     "Budget",
     "PriorityKW",
+    "PC_Variation",
+    "Competition",
   ]);
   const [currentOnBoardingEl, setCurrentOnBoardingEl] = useState("Portfolio");
   const [currentDashboard, setCurrentDashboard] = useState("");
@@ -82,7 +84,7 @@ const DashboardsContainer = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [current_brand._id]);
+  }, [current_brand]);
   const changeDashboard = (e) => {
     setCurrentDashboard(e);
   };
@@ -106,7 +108,7 @@ const DashboardsContainer = () => {
   });
   //
 
-  const sideberRightToggleFn = () => {};
+  const sideberRightToggleFn = () => { };
   const [toggleOnBoarding, setToggleOnBoarding] = useState(true);
   const [sidebarToggle, setSidebarToggle] = useState(true);
   const [active, setActive] = useState(false);
@@ -137,10 +139,9 @@ const DashboardsContainer = () => {
                   <div className="sbysp-el-right">
                     <span className="sbysp-el-arrow">
                       <i
-                        className={`bi bi-chevron-${
-                          toggleOnBoarding ? "down" : "up"
-                        }`}
-                        // className="bi bi-chevron-down"
+                        className={`bi bi-chevron-${toggleOnBoarding ? "down" : "up"
+                          }`}
+                      // className="bi bi-chevron-down"
                       ></i>
                     </span>
                   </div>
@@ -151,9 +152,8 @@ const DashboardsContainer = () => {
                 <div
                   // style={{ display: toggleOnBoarding ? "block" : "none" }}
                   // className="on-boarding-sub-container"
-                  className={`on-boarding-sub-container ${
-                    toggleOnBoarding && "collapse"
-                  }`}
+                  className={`on-boarding-sub-container ${toggleOnBoarding && "collapse"
+                    }`}
                 >
                   {container === "onBoarding" && (
                     <div>
@@ -166,9 +166,8 @@ const DashboardsContainer = () => {
                                   <i className="bi bi-circle"></i>
                                 </div>
                                 <div
-                                  className={`on-boarding-sub-el-text ${
-                                    currentOnBoardingEl === e ? "active" : ""
-                                  } `}
+                                  className={`on-boarding-sub-el-text ${currentOnBoardingEl === e ? "active" : ""
+                                    } `}
                                 >
                                   {e}
                                 </div>
