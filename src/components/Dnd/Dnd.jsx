@@ -122,7 +122,7 @@ function Dnd(props) {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "space-around",
+                      justifyContent: "space-evenly",
                       alignItems: "center",
                     }}
                   >
@@ -130,10 +130,11 @@ function Dnd(props) {
                       <h3
                         style={{
                           marginLeft: "12px",
+                          fontSize:"16px",
                           flex: 1,
-                          backgroundColor: "#13122e",
-                          color: "white",
-                          borderRadius: "5px",
+                          //  backgroundColor: "#13122e",
+                          color: "#13122e",
+                          // borderRadius: "5px",
                           // padding: 10,
                         }}
                       >

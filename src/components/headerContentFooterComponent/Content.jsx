@@ -1,7 +1,7 @@
 import "./Content.css";
 const Content = (props) => {
     return (
-        <div className={props.className} >
+        <div style={props.style} className={props.className} >
             {props.children}
         </div>
     )

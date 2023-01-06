@@ -8,6 +8,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 import Loader from "../../commonComponent/Loader/Loader";
+import Title from "./../Title";
 const SellerTable = (props) => {
     const [loading, setLoading] = useState(false)
     const [sellerDataArray, setSellerDataArray] = useState([]);
@@ -182,10 +183,7 @@ const SellerTable = (props) => {
 
     return (
         <div className="sellerTable" >
-            <div className="sellerTableHeader" >
-                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select you Sellers</h3>
-
-            </div>
+            <Title>Please select you Sellers</Title>
             {
                 loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
                     <Grid

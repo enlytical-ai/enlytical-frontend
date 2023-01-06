@@ -13,8 +13,18 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 const BudgetContainer = (props) => {
+    function getTodaysDate() {
+        const year = new Date().getFullYear();
+        let date = new Date().getMonth() + 1;
+        if (date < 10) {
+            date = `0${date}`;
+        }
+
+        return `${year}-${(date)}-01T00:00:00.000+00:00`
+    }
+
     const [popUp, setPopUp] = useState(false);
-    const [searchDate, setSearchDate] = useState(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-01T00:00:00.000+00:00`);
+    const [searchDate, setSearchDate] = useState(getTodaysDate());
     const [searchDateArray, setSearchDateArray] = useState();
     const [popUpData, setPopUpData] = useState()
     const [state, setState] = useState({

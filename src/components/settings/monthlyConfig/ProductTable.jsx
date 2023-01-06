@@ -8,6 +8,7 @@ import AccordianGrid from "../../Grids/AccordianGrid/AccordianGrid";
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import "./ProductTable.css"
 import Loader from "../../commonComponent/Loader/Loader";
+import Title from "../Title";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
@@ -207,9 +208,7 @@ const ProductTable = (props) => {
     return (
 
         <div className="productTableContainer" >
-            <div className="productTableContainerHeader" >
-                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Please select your ASIN</h3>
-            </div>
+            <Title>Please select your ASIN</Title>
             {
                 loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
                     <AccordianGrid

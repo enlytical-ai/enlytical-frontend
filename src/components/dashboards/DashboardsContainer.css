@@ -65,6 +65,7 @@
   margin-right: 10px;
   font-size: 16px;
 }
+
 /* .sbysp-el-right {
   padding-right: 10px;
   padding-bottom: 20px;
@@ -109,6 +110,7 @@
   height: auto;
   transition: all 0.3s ease;
 }
+
 .on-boarding-sub-container .collapse {
   height: 0;
 }
@@ -125,7 +127,8 @@
 .on-boarding-sub-el:hover {
   color: #4154f1;
 }
-.on-boarding-sub-el {
+
+.on-boarding-sub-el-active {
   color: #4154f1;
 }
 
@@ -140,9 +143,4 @@
 .on-boarding-sub-el-text {
   font-size: 14px;
   font-weight: 600;
-}
-.on-boarding-sub-el-text.active {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4154f1;
 }

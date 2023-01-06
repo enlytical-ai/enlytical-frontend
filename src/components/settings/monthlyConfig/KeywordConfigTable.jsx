@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../appConstants";
 import { useSelector } from "react-redux";
+import Title from "../Title";
 
 const KeywordConfigTable = () => {
   const [categoryArray, setCategoryArray] = useState(null);
@@ -126,26 +127,37 @@ const KeywordConfigTable = () => {
       });
   };
 
+  //To get the height for grid
+  const [gridHeight, setGridHeight] = useState();
+  useEffect(() => {
+    const height = window.innerHeight
+    const netHeight = height - (49 + 40 + 32 + 42 + 24);
+    setGridHeight(netHeight)
+    //Header48,padding40,24,32,24
+    // console.log("====Height===>", el - 168)
+  }, [])
+  window.addEventListener('resize', () => {
+    const height = window.innerHeight
+    const netHeight = height - (49 + 40 + 32 + 42 + 24);
+    setGridHeight(netHeight)
+  });
+  //
   return (
     <div className="keywordsConfigContainer" >
-      <div style={{ marginBottom: "15px" }}>
-        <h3 style={{ fontSize: "20px", color: "#1565C0" }}>
-          Please Confirm System recognized Non-negotiable KeyWords
-        </h3>
-      </div>
-      <div style={{ display: "flex" }}>
+      <Title>Please Confirm System recognized Non-negotiable KeyWords</Title>
+      <div className="keywordsConfigContainerLeftRightContainer" >
         <aside className="category-sidebar">
           <h2
             style={{
-              width: 220,
-              textAlign: "center",
+              width: "100%",
+              fontSize: "16px",
+              textAlign: "left",
               borderRadius: "5px",
-              padding: 5,
+              paddingLeft: "10px"
             }}
           >
             Categories
           </h2>
-          <hr style={{ height: 3 }} />
           <div className="categoryContainer">
             {currentCategory &&
               categoryArray &&
@@ -167,7 +179,7 @@ const KeywordConfigTable = () => {
               })}
           </div>
         </aside>
-        <div style={{ width: "100%" }} >
+        <div className="dndContainer" style={{ width: "100%" }} >
           {currentCategory && (
             <Dnd onDrag={onDrag} currentCategory={currentCategory} />
           )}
