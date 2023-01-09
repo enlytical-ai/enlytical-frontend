@@ -186,7 +186,7 @@ const KeywordConfigTable = () => {
         </div>
       </div>
       <div style={{ textAlign: "right" }}>
-        <button onClick={saveData} className="btn btn-primary btn-sm">
+        <button onClick={saveData} className="btn btn-primary btn-sm mt-3">
           Save
         </button>
       </div>

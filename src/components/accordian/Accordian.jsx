@@ -159,7 +159,7 @@ const Accordian = (props) => {
             </svg>
           )}
         </div>
-        <div>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
           {props.accordianHeaderComponent ? (
             <props.accordianHeaderComponent />
           ) : (

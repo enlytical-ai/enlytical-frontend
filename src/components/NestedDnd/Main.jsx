@@ -275,7 +275,7 @@ function Main() {
                 </DragDropContext>
             </div>
             <div style={{ textAlign: "right" }}>
-                <button onClick={saveData} className="btn btn-primary btn-sm mt-3">
+                <button onClick={saveData} className="btn btn-primary btn-sm">
                     Save
                 </button>
             </div>

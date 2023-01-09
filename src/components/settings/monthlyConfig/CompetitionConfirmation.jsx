@@ -1,45 +1,170 @@
-import { Category } from '@mui/icons-material'
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import "./CompetitionConfirmation.css"
+import Accordian from '../../accordian/Accordian'
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import axios from "axios";
+import { BASE_URL } from "../../../appConstants";
+import { useSelector } from "react-redux";
 
 
 const CompetitionConfirmation = () => {
+
     const item = [
         {
-            id: 1,
+            id: "1",
             Category: "Probiotics",
             content: [
                 {
-                    id: 11,
+                    id: "11",
                     competition: "Yakult"
                 },
                 {
-                    id: 12,
+                    id: "12",
                     competition: "Lactogut"
                 },
             ]
         },
         {
-            id: 2,
+            id: "2",
             Category: "MultiVitamins",
             content: [
                 {
-                    id: 21,
+                    id: "21",
                     competition: "Meadbery"
                 },
                 {
-                    id: 22,
+                    id: "22",
                     competition: "Nutribears"
                 },
                 {
-                    id: 23,
+                    id: "23",
                     competition: "Kapiva"
                 },
             ]
         },
+        {
+            id: "3",
+            Category: "Digestion & Nausea",
+            content: [
+                {
+                    id: "31",
+                    competition: "Ayusheal"
+                },
+                {
+                    id: "32",
+                    competition: "Chubears"
+                },
+                {
+                    id: "33",
+                    competition: "Carbamide"
+                },
+                {
+                    id: "34",
+                    competition: "Gummy Vites"
+                },
+            ]
+        },
     ]
-    const [state, setState] = useState(item)
+
+    const [state, setState] = useState([]);
+    const targetingStrategy = ['Conservative', 'Neutral', 'Aggressive']
+
+    const appParams = useSelector((state) => state.appParams);
+    const { current_brand } = appParams;
+    const token = localStorage.getItem("token");
+    useEffect(() => {
+        axios.get(`${BASE_URL}categoryCompetition?brandId=${current_brand._id}`, {
+            headers: {
+                token,
+            },
+        }).then((response) => {
+            console.log(response.data.data.category_and_competition_array.category_array);
+            const { category_array, _id } =
+                response.data.data.category_and_competition_array
+            setState(category_array, _id)
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [])
+
+    const saveData = () => {
+        const token = localStorage.getItem("token");
+        axios.put(`${BASE_URL}categoryCompetition/${state._id}?brandId=${current_brand._id}`, { category_array: state }, {
+            headers: {
+                token,
+            },
+        }).then((response) => {
+            console.log(response.data.data.category_and_competition_array.category_array);
+            const { category_array, _id } = response.data.data.category_and_competition_array
+            setState(category_array, _id);
+
+            NotificationManager.success(
+                `${response.data.message}`,
+                "Success",
+                2000
+            );
+        }).catch((error) => {
+            console.log(error);
+            NotificationManager.error(
+                `${error.response.data.data.message} `,
+                "Error",
+                2000
+            );
+        })
+    }
+
+
+    const accordianHeaderComponent = (cat) => {
+        return (
+            <div className='accordion-header'>
+                <h6>{cat.category}</h6>
+                <div className='accordion-sub-header'>
+                    <h6>Conservative</h6>
+                    <h6>Neutral</h6>
+                    <h6>Aggressive</h6>
+                </div>
+            </div>
+        )
+    }
+    const accordianBodyComponent = (cat) => {
+        return (
+            <div className='accordion-body-container'>
+                {
+                    cat.competition_array.map((comp) => {
+                        return (
+                            <>
+                                <div className='accordion-body'>
+                                    <h6>{comp.competition}</h6>
+                                    <div className='accordion-sub-body'>
+                                        {
+                                            targetingStrategy.map((result) => {
+                                                return (
+                                                    <div className="form-check" >
+                                                        <input type="radio" id={comp._id} name={comp._id} value={result}
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+
+    const accordianBodyHeight = () => {
+
+    }
+
+
     return (
         <>
             <div style={{ marginBottom: "15px" }}>
@@ -47,103 +172,31 @@ const CompetitionConfirmation = () => {
                     Please Confirm your Priority for each Targeting Strategy
                 </h3>
             </div>
-
-            <div className="accordion" id="accordionPanelsStayOpenExample">
+            <div>
+                <div className="Heading">
+                    <h5 style={{ width: '100%' }}>Category</h5>
+                    <h5 style={{ width: '60%', paddingLeft: "20px" }}>Targeting Strategy</h5>
+                </div>
                 {
                     state.map((cat) => {
                         return (
                             <>
-                                <div className="accordion-item" key={cat.id}>
-                                    <h2 className="accordion-header" id={`panelsStayOpen-heading${cat.id}`}>
-                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            <h6>{cat.Category}</h6>
-                                            <h6 style={{ paddingLeft: '40%' }}>Conservative</h6>
-                                            <h6 style={{ paddingLeft: '85px' }}>Neutral</h6>
-                                            <h6 style={{ paddingLeft: '85px' }}>Aggressive</h6>
-                                        </button>
-                                    </h2>
-                                    {
-                                        cat.content.map((comp) => {
-                                            return (
-                                                <>
-                                                    <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                                                        <div className="accordion-body">
-                                                            <h6>{comp.competition}</h6>
-                                                            <div className="form-check" style={{ paddingLeft: '43%' }}>
-                                                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                            </div>
-                                                            <div className="form-check" style={{ paddingLeft: '165px' }}>
-                                                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                            </div>
-                                                            <div className="form-check" style={{ paddingLeft: '150px' }}>
-                                                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </>
-                                            )
-                                        })
-                                    }
+                                <div>
+                                    <Accordian
+                                        accordianHeaderComponent={() => accordianHeaderComponent(cat)}
+                                        accordianBodyComponent={() => accordianBodyComponent(cat)}
+                                        accordianHeaderHeight={40}
+                                        accordianBodyHeight={120}
+                                    />
 
                                 </div>
                             </>
                         )
                     })
                 }
-                <div className="accordion-item">
-                    <h2 className="accordion-header" id="panelsStayOpen-headingOne">
-                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-
-                            <h6>Category #1</h6>
-                            <h6 style={{ paddingLeft: '40%' }}>Conservative</h6>
-                            <h6 style={{ paddingLeft: '85px' }}>Neutral</h6>
-                            <h6 style={{ paddingLeft: '85px' }}>Aggressive</h6>
-
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                        <div className="accordion-body">
-                            <h6>Competition #1</h6>
-                            <div className="form-check" style={{ paddingLeft: '43%' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                            </div>
-                            <div className="form-check" style={{ paddingLeft: '165px' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                            </div>
-                            <div className="form-check" style={{ paddingLeft: '150px' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                            </div>
-                        </div>
-                        <hr style={{ margin: 0 }} />
-                        <div className="accordion-body">
-                            <h6>Competition #2</h6>
-                            <div className="form-check" style={{ paddingLeft: '43%' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" />
-                            </div>
-                            <div className="form-check" style={{ paddingLeft: '165px' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" />
-                            </div>
-                            <div className="form-check" style={{ paddingLeft: '150px' }}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="accordion-item">
-                    <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                            Accordion Item #2
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                        <div className="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                    </div>
-                </div>
             </div>
             <div style={{ textAlign: "right" }}>
-                <button className="btn btn-primary btn-sm mt-5">
+                <button onClick={saveData} className="btn btn-primary btn-sm mt-5">
                     Save
                 </button>
             </div>
