@@ -70,8 +70,13 @@ const CompetitionConfirmation = () => {
         },
     ]
 
-    const [state, setState] = useState([]);
-    const targetingStrategy = ['Conservative', 'Neutral', 'Aggressive']
+    const [state, setState] = useState({
+        category_array: [],
+        _id: ""
+    });
+    const targetingStrategy = ['conservative', 'neutral', 'aggressive']
+    const [strategy, setStrategy] = useState(...targetingStrategy)
+    console.log(strategy);
 
     const appParams = useSelector((state) => state.appParams);
     const { current_brand } = appParams;
@@ -85,7 +90,7 @@ const CompetitionConfirmation = () => {
             console.log(response.data.data.category_and_competition_array.category_array);
             const { category_array, _id } =
                 response.data.data.category_and_competition_array
-            setState(category_array, _id)
+            setState({ category_array, _id })
         }).catch((error) => {
             console.log(error);
         });
@@ -93,14 +98,14 @@ const CompetitionConfirmation = () => {
 
     const saveData = () => {
         const token = localStorage.getItem("token");
-        axios.put(`${BASE_URL}categoryCompetition/${state._id}?brandId=${current_brand._id}`, { category_array: state }, {
+        axios.put(`${BASE_URL}categoryCompetition/${state._id}?brandId=${current_brand._id}`, { category_array: state.category_array }, {
             headers: {
                 token,
             },
         }).then((response) => {
             console.log(response.data.data.category_and_competition_array.category_array);
             const { category_array, _id } = response.data.data.category_and_competition_array
-            setState(category_array, _id);
+            setState({ category_array, _id });
 
             NotificationManager.success(
                 `${response.data.message}`,
@@ -115,6 +120,29 @@ const CompetitionConfirmation = () => {
                 2000
             );
         })
+    }
+
+    // const isChecked = (value) => value === strategy
+
+    // console.log(comp);
+    // console.log(comp.targeting_strategy);
+    // if (strategy === comp.targeting_strategy) {
+    //     setStrategy(strategy)
+    // }
+
+    const handleChange = (e, cat, comp) => {
+        console.log(e.target.value, cat, comp);
+        let cat_array = [...state.category_array];
+        cat_array.forEach((catEl) => {
+            if (catEl._id === cat._id) {
+                catEl.competition_array.forEach((compEl) => {
+                    if (compEl._id === comp._id) {
+                        compEl.targeting_strategy = e.target.value;
+                    }
+                })
+            }
+        })
+        setState(prevState => ({ ...prevState, category_array: cat_array }));
     }
 
 
@@ -145,6 +173,8 @@ const CompetitionConfirmation = () => {
                                                 return (
                                                     <div className="form-check" >
                                                         <input type="radio" id={comp._id} name={comp._id} value={result}
+                                                            checked={result === comp.targeting_strategy}
+                                                            onChange={(e) => handleChange(e, cat, comp)}
                                                         />
                                                     </div>
                                                 )
@@ -160,9 +190,6 @@ const CompetitionConfirmation = () => {
         )
     }
 
-    const accordianBodyHeight = () => {
-
-    }
 
 
     return (
@@ -178,7 +205,7 @@ const CompetitionConfirmation = () => {
                     <h5 style={{ width: '60%', paddingLeft: "20px" }}>Targeting Strategy</h5>
                 </div>
                 {
-                    state.map((cat) => {
+                    (state.category_array.length) && (state.category_array.map((cat) => {
                         return (
                             <>
                                 <div>
@@ -187,12 +214,13 @@ const CompetitionConfirmation = () => {
                                         accordianBodyComponent={() => accordianBodyComponent(cat)}
                                         accordianHeaderHeight={40}
                                         accordianBodyHeight={120}
+                                        accordianStatus={true}
                                     />
 
                                 </div>
                             </>
                         )
-                    })
+                    }))
                 }
             </div>
             <div style={{ textAlign: "right" }}>

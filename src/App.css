@@ -13,6 +13,7 @@ input::-webkit-inner-spin-button {
 }
 
 ::-webkit-scrollbar{
+  height: 6px;
   width: 6px;
 }
 
