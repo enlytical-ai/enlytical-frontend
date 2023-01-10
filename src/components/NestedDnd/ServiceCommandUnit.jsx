@@ -9,7 +9,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     padding: "10px",
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "#9ED5C5",
+    background: isDragging ? "#a1d7fd" : "#49a6e999",
     padding: "10px",
     marginBottom: '5px',
     borderRadius: "5px",

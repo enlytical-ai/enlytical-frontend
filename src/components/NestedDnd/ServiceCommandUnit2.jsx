@@ -9,7 +9,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     display: "inline-flex",
     // padding: "10px",
 
-    background: isDragging ? "lightgreen" : "#BCEAD5",
+    background: isDragging ? "#a1d7fd" : "#6ebef7b5",
     display: "inline-flex",
     // padding: "10px",
     marginBottom: "5px",

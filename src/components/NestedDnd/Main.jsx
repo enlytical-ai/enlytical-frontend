@@ -26,7 +26,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
     padding: "0 10px 10px 10px",
 
-    background: isDragging ? "lightgreen" : "#8EC3B0",
+    background: isDragging ? "#a1d7fd" : "hsla(205.16129032258064, 63.26530612244897%, 48.03921568627451%, 0.733)",
     borderRadius: "5px",
 
     // styles we need to apply on draggables
