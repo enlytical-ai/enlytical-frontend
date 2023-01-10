@@ -27,6 +27,7 @@ import { saveAppParamsData } from "./redux/appParams/appParamsActions";
 import { BASE_URL } from "./appConstants";
 import { useSelector } from "react-redux";
 import Loader from "./components/commonComponent/Loader/Loader";
+import Admin from "./components/admin/Admin";
 function App() {
   const user = useSelector(state => state.user);
   const token = localStorage.getItem("token");
@@ -42,7 +43,7 @@ function App() {
       const { user, brand_array } = response.data.data;
       dispatch(saveUserData(user));
       dispatch(saveAppParamsData({ current_brand: brand_array[0], brand_array }));
-      navigate("/home")
+      navigate("/home/dashboards")
     }).catch(function (error) {
       console.log(error);
       NotificationManager.error(`${error.response.data.data.message} Please Login.`, 'Error', 2000);
@@ -59,6 +60,8 @@ function App() {
           <Route path="setpassword/:email" element={<Otp />} />
         </Route>
         <Route path="home" element={<Home />} >
+          <Route path="dashboards" element={<DashboardsContainer />} />
+          <Route path="admin" element={<Admin />} />
           {/* <Route path="settings" element={<SettingContainer />} >
               <Route path="monthlyConfig" element={<MonthlyConfig />} >
               </Route>
@@ -72,7 +75,7 @@ function App() {
               </Route>
             </Route> */}
         </Route>
-        <Route path="loading" element={<Loader />}  >
+        <Route path="loading" element={<Loader />} >
 
         </Route>
       </Routes>

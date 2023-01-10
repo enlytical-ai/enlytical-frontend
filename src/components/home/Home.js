@@ -149,8 +149,26 @@ const Home = () => {
               </MenuItem>
               <hr /> */}
               <MenuItem>Profile</MenuItem>
-              <MenuItem>My account</MenuItem>
-              <MenuItem>My Brands</MenuItem>
+              <MenuItem>
+                <span
+                  onClick={() => {
+                    //localStorage.removeItem("token");
+                    navigate("/home/dashboards");
+                  }}
+                >
+                  Dashboards
+                </span>
+              </MenuItem>
+              <MenuItem>
+                <span
+                  onClick={() => {
+                    //localStorage.removeItem("token");
+                    navigate("/home/admin");
+                  }}
+                >
+                  Admin
+                </span>
+              </MenuItem>
               <MenuItem>
                 <span
                   onClick={() => {
@@ -168,7 +186,7 @@ const Home = () => {
         </RightHeaderElement>
       </Header>
       <Content style={{ height: containerHeight }} className="authContent">
-        <DashboardsContainer />
+        <Outlet />
       </Content>
     </Body>
   );
