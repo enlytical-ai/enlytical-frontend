@@ -9,66 +9,11 @@ import {
 import axios from "axios";
 import { BASE_URL } from "../../../appConstants";
 import { useSelector } from "react-redux";
-
+import Title from '../Title';
+import { HEADER } from '../../../appUiConatsnts';
+import { display } from '@mui/system';
 
 const CompetitionConfirmation = () => {
-
-    const item = [
-        {
-            id: "1",
-            Category: "Probiotics",
-            content: [
-                {
-                    id: "11",
-                    competition: "Yakult"
-                },
-                {
-                    id: "12",
-                    competition: "Lactogut"
-                },
-            ]
-        },
-        {
-            id: "2",
-            Category: "MultiVitamins",
-            content: [
-                {
-                    id: "21",
-                    competition: "Meadbery"
-                },
-                {
-                    id: "22",
-                    competition: "Nutribears"
-                },
-                {
-                    id: "23",
-                    competition: "Kapiva"
-                },
-            ]
-        },
-        {
-            id: "3",
-            Category: "Digestion & Nausea",
-            content: [
-                {
-                    id: "31",
-                    competition: "Ayusheal"
-                },
-                {
-                    id: "32",
-                    competition: "Chubears"
-                },
-                {
-                    id: "33",
-                    competition: "Carbamide"
-                },
-                {
-                    id: "34",
-                    competition: "Gummy Vites"
-                },
-            ]
-        },
-    ]
 
     const [state, setState] = useState({
         category_array: [],
@@ -95,6 +40,22 @@ const CompetitionConfirmation = () => {
             console.log(error);
         });
     }, [])
+
+
+    //To get the height for grid
+    const [containerHeight, setContainerHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42 + 32);
+        setContainerHeight(netHeight)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42 + 32);
+        setContainerHeight(netHeight)
+    });
+    //
+
 
     const saveData = () => {
         const token = localStorage.getItem("token");
@@ -186,41 +147,37 @@ const CompetitionConfirmation = () => {
 
     return (
         <>
-            <div style={{ marginBottom: "15px" }}>
-                <h3 style={{ fontSize: "20px", color: "#1565C0" }}>
-                    Please Confirm your Priority for each Targeting Strategy
-                </h3>
-            </div>
-            <div>
-                <div className="Heading">
-                    <h5 style={{ width: '100%' }}>Category</h5>
-                    <h5 style={{ width: '60%', paddingLeft: "20px" }}>Targeting Strategy</h5>
+            <Title>Please Confirm your Priority for each Targeting Strategy</Title>
+            <div style={{ height: containerHeight }} >
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Title style={{ color: "#012970" }} >Category</Title>
+                    <Title style={{ color: "#012970" }} >Targeting Strategy</Title>
                 </div>
                 {
                     (state.category_array.length) && (state.category_array.map((cat) => {
                         return (
-                            <>
-                                <div>
-                                    <Accordian
-                                        accordianHeaderComponent={() => accordianHeaderComponent(cat)}
-                                        accordianBodyComponent={() => accordianBodyComponent(cat)}
-                                        accordianHeaderHeight={40}
-                                        accordianBodyHeight={120}
-                                        accordianStatus={true}
-                                    />
 
-                                </div>
-                            </>
+                            <div style={{ marginBottom: 5 }} >
+                                <Accordian
+                                    accordianHeaderComponent={() => accordianHeaderComponent(cat)}
+                                    accordianBodyComponent={() => accordianBodyComponent(cat)}
+                                    accordianHeaderHeight={40}
+                                    accordianBodyHeight={120}
+                                    accordianStatus={true}
+                                />
+
+                            </div>
+
                         )
                     }))
                 }
             </div>
-            <div style={{ textAlign: "right" }}>
-                <button onClick={saveData} className="btn btn-primary btn-sm mt-5">
+
+            <div className="nextButtonContainer" >
+                <button onClick={saveData} className="btn btn-primary btn-sm">
                     Save
                 </button>
             </div>
-
         </>
     )
 }

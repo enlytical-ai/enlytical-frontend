@@ -3,6 +3,7 @@ import "./KeywordConfigTable.css";
 import { useState, useRef } from "react";
 import Dnd from "../../Dnd/Dnd";
 import Loader from "../../commonComponent/Loader/Loader";
+import { HEADER } from "../../../appUiConatsnts";
 import {
   NotificationContainer,
   NotificationManager,
@@ -33,7 +34,6 @@ const KeywordConfigTable = () => {
         console.log(response.data.data.category_data_array.category_data_array);
         const { category_data_array, _id } =
           response.data.data.category_data_array;
-
         setCategoryArray(category_data_array);
         setCurrentCategory({ ...category_data_array[0] });
         setState({ _id });
@@ -128,24 +128,22 @@ const KeywordConfigTable = () => {
   };
 
   //To get the height for grid
-  const [gridHeight, setGridHeight] = useState();
+  const [containerHeight, setContainerHeight] = useState();
   useEffect(() => {
     const height = window.innerHeight
-    const netHeight = height - (49 + 40 + 32 + 42 + 24);
-    setGridHeight(netHeight)
-    //Header48,padding40,24,32,24
-    // console.log("====Height===>", el - 168)
+    const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+    setContainerHeight(netHeight)
   }, [])
   window.addEventListener('resize', () => {
     const height = window.innerHeight
-    const netHeight = height - (49 + 40 + 32 + 42 + 24);
-    setGridHeight(netHeight)
+    const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+    setContainerHeight(netHeight)
   });
   //
   return (
     <div className="keywordsConfigContainer" >
       <Title>Please Confirm System recognized Non-negotiable KeyWords</Title>
-      <div className="keywordsConfigContainerLeftRightContainer" >
+      <div className="keywordsConfigContainerLeftRightContainer" style={{ height: containerHeight }} >
         <aside className="category-sidebar">
           <h2
             style={{
@@ -185,77 +183,13 @@ const KeywordConfigTable = () => {
           )}
         </div>
       </div>
-      <div style={{ textAlign: "right" }}>
-        <button onClick={saveData} className="btn btn-primary btn-sm mt-3">
+      <div className="nextButtonContainer" >
+        <button onClick={saveData} type="button" className="btn btn-primary btn-sm">
           Save
         </button>
       </div>
       <NotificationContainer />
     </div>
-    // <div className="keywordConfigTableContainer">
-    //   <div className="tableSubContainer">
-    //     <h3>Brand</h3>
-    //     <div className="tableContent">
-    //       <ul className="tableContentItem">
-    //         {brands.map((e, i) => {
-    //           return <li>{e.name}</li>;
-    //         })}
-    //       </ul>
-    //     </div>
-    //   </div>
-    //   <div className="tableSubContainer">
-    //     <h3>Core</h3>
-    //     <DragDropContext onDragEnd={handleOnDragEnd}>
-    //       <div className="tableContent">
-    //         <Droppable droppableId="brands">
-    //           {(provided) => (
-    //             <ul
-    //               className="tableContentItem"
-    //               {...provided.droppableProps}
-    //               ref={provided.innerRef}
-    //             >
-    //               {brands.map(({ id, name }, index) => {
-    //                 return (
-    //                   <Draggable key={id} draggableId={id} index={index}>
-    //                     {(provided) => (
-    //                       <li
-    //                         ref={provided.innerRef}
-    //                         {...provided.draggableProps}
-    //                         {...provided.dragHandleProps}
-    //                       >
-    //                         {name}
-    //                       </li>
-    //                     )}
-    //                   </Draggable>
-    //                 );
-    //               })}
-    //             </ul>
-    //           )}
-    //         </Droppable>
-    //       </div>
-    //     </DragDropContext>
-    //   </div>
-    //   <div className="tableSubContainer">
-    //     <h3>Generic</h3>
-    //     <div className="tableContent">
-    //       <ul className="tableContentItem">
-    //         <li>Keyword1</li>
-    //         <li>Keyword2</li>
-    //         <li>Keyword3</li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    //   <div className="tableSubContainer">
-    //     <h3>Competition</h3>
-    //     <div className="tableContent">
-    //       <ul className="tableContentItem">
-    //         <li>Keyword1</li>
-    //         <li>Keyword2</li>
-    //         <li>Keyword3</li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

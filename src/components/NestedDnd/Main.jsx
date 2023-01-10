@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Main.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ServiceCommandUnit from "./ServiceCommandUnit";
 import { static_items } from "./data";
@@ -9,7 +10,7 @@ import {
 import axios from "axios";
 import { BASE_URL } from "../../appConstants";
 import { useSelector } from "react-redux";
-
+import { HEADER } from "../../../src/appUiConatsnts";
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -223,10 +224,25 @@ function Main() {
     // Normally you would want to split things out into separate components.
     // But in this example everything is just done in one place for simplicity
 
+    //To get the height for grid
+    const [containerHeight, setContainerHeight] = useState();
+    useEffect(() => {
+        const height = window.innerHeight
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+        setContainerHeight(netHeight)
+    }, [])
+    window.addEventListener('resize', () => {
+        const height = window.innerHeight
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+        setContainerHeight(netHeight)
+    });
+    //
+
+
     return (
         <>
-            <div className="main">
-                <DragDropContext onDragEnd={onDragEnd} style={{ overflowX: 'scroll' }} >
+            <div className="main" style={{ height: containerHeight, overflow: 'auto' }}>
+                <DragDropContext onDragEnd={onDragEnd} >
                     <Droppable droppableId="droppable" type="droppableItem">
                         {(provided, snapshot) => (
                             <div
@@ -274,11 +290,12 @@ function Main() {
                     </Droppable>
                 </DragDropContext>
             </div>
-            <div style={{ textAlign: "right" }}>
+            <div className="nextButtonContainer" >
                 <button onClick={saveData} className="btn btn-primary btn-sm">
                     Save
                 </button>
             </div>
+
             <NotificationContainer />
         </>
     );

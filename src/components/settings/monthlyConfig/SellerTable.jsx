@@ -9,8 +9,9 @@ import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
 import Loader from "../../commonComponent/Loader/Loader";
 import Title from "./../Title";
+import { HEADER } from "../../../appUiConatsnts";
 const SellerTable = (props) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [sellerDataArray, setSellerDataArray] = useState([]);
     const appParams = useSelector(state => state.appParams);
     const { current_brand } = appParams;
@@ -29,20 +30,19 @@ const SellerTable = (props) => {
         }).catch(function (error) {
             console.log(error);
             setLoading(false);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }, [current_brand._id])
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24);
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
         setGridHeight(netHeight)
-        //Header48,padding40,24,32,24
-        // console.log("====Height===>", el - 168)
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24);
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
         setGridHeight(netHeight)
     });
     //
@@ -186,23 +186,24 @@ const SellerTable = (props) => {
             <Title>Please select you Sellers</Title>
             {
                 loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
-                    <Grid
-                        headerArray={headerArray}
-                        rowArray={sellerDataArray}
-                        tableHeight={gridHeight}
-                        checkBox={{
-                            field: "selected"
-                        }}
-                        checkBoxClicked={checkBoxClicked}
-                    />
+                    <div style={{ height: gridHeight }} >
+                        <Grid
+                            headerArray={headerArray}
+                            rowArray={sellerDataArray}
+                            tableHeight={gridHeight}
+                            checkBox={{
+                                field: "selected"
+                            }}
+                            checkBoxClicked={checkBoxClicked}
+                        />
+                    </div>
+
                 )
             }
 
             <div className="nextButtonContainer" >
-
                 <button onClick={() => { props.changeOnBoardingEl("Portfolio") }} type="button" className="btn btn-secondary btn-sm">Back</button>
                 <button style={{ marginLeft: 20 }} onClick={() => { props.changeOnBoardingEl("Budget") }} type="button" className="btn btn-primary btn-sm">Next</button>
-
             </div>
             <NotificationContainer />
         </div>

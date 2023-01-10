@@ -12,6 +12,7 @@ import Title from "../Title";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
+import { HEADER } from "../../../appUiConatsnts";
 
 
 const ProductTable = (props) => {
@@ -36,23 +37,25 @@ const ProductTable = (props) => {
             setLoading(false);
         }).catch(function (error) {
             setLoading(false);
-            console.log("======>", error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }, [current_brand._id]);
+
+
     //To get the height for grid
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24);
-        setGridHeight(netHeight)
-        //Header48,padding40,24,32,24
-        // console.log("====Height===>", el - 168)
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+        setGridHeight(netHeight);
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24);
-        setGridHeight(netHeight)
+        const netHeight = height - (HEADER.height + 20 + 32 + 24 + 42);
+        setGridHeight(netHeight);
     });
+
+
     //
     const onRowSelected = (selected, data) => {
         const token = localStorage.getItem("token");
@@ -73,7 +76,6 @@ const ProductTable = (props) => {
             })
             setProductDataArray(productArray);
         }).catch(function (error) {
-            console.log(error.response.data.data.message);
             NotificationManager.error(error.response.data.data.message, 'Error', 3000);
         });
     }
@@ -211,17 +213,20 @@ const ProductTable = (props) => {
             <Title>Please select your ASIN</Title>
             {
                 loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
-                    <AccordianGrid
-                        accordianBodyHeight={230}
-                        headerArray={headerArray}
-                        rowArray={productDataArray}
-                        tableHeight={gridHeight}
-                        checkBox={{
-                            field: "selected"
-                        }}
-                        checkBoxClicked={checkBoxClicked}
-                        accordianBodyArray={accordianBodyArray}
-                    />
+                    <div style={{ height: gridHeight }} >
+                        <AccordianGrid
+                            accordianBodyHeight={230}
+                            headerArray={headerArray}
+                            rowArray={productDataArray}
+                            tableHeight={gridHeight}
+                            checkBox={{
+                                field: "selected"
+                            }}
+                            checkBoxClicked={checkBoxClicked}
+                            accordianBodyArray={accordianBodyArray}
+                        />
+                    </div>
+
                 )
             }
             <div className="nextButtonContainer" >
