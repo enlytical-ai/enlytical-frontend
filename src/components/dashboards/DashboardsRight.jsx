@@ -13,7 +13,6 @@ const DashboardsRight = (props) => {
                 {props.children}
             </div>
         </>
-
     )
 }
 

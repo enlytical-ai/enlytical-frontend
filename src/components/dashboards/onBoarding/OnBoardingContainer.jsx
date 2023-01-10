@@ -6,19 +6,18 @@ import "./OnBoardingContainer.css";
 import KeywordConfigTable from "../../settings/monthlyConfig/KeywordConfigTable";
 import PCvariation from "../../settings/monthlyConfig/PCvariation";
 import CompetitionConfirmation from "../../settings/monthlyConfig/CompetitionConfirmation";
+import { HEADER } from "../../../appUiConatsnts";
 const OnBoardingContainer = (props) => {
   //To get the height for grid
   const [containerHeight, setContainerHeight] = useState();
   useEffect(() => {
     const height = window.innerHeight;
-    const netHeight = height - (49 + 40);
+    const netHeight = height - (HEADER.height + 20);
     setContainerHeight(netHeight);
-    //Header48,padding40,24,32,24
-    // console.log("====Height===>", el - 168)
   }, []);
   window.addEventListener("resize", () => {
     const height = window.innerHeight;
-    const netHeight = height - (49 + 40);
+    const netHeight = height - (HEADER.height + 20);
     setContainerHeight(netHeight);
   });
   //

@@ -5,6 +5,7 @@ import axios from "axios"
 
 import Grid from "./../../Grids/Grid/Grid";
 import Accordian from "../../accordian/Accordian";
+import Loader from "../../commonComponent/Loader/Loader";
 // import { Accordian } from "accordianjs";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { getMonthAndYearArray, getFirstDayOfMonthAndYearArray, getMontheInText } from "../../../utils/commonFunction";
@@ -12,6 +13,8 @@ import { divTwoNum, roundOffToTwoDecimal } from "../../../commonFunction/commomF
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../appConstants";
+import Title from "../Title";
+import { HEADER } from "../../../appUiConatsnts";
 
 
 const BudgetContainer = (props) => {
@@ -24,11 +27,11 @@ const BudgetContainer = (props) => {
 
         return `${year}-${(date)}-01T00:00:00.000+00:00`
     }
+    const [loading, setLoading] = useState(false);
 
-    const [popUp, setPopUp] = useState(false);
     const [searchDate, setSearchDate] = useState(getTodaysDate());
     const [searchDateArray, setSearchDateArray] = useState();
-    const [popUpData, setPopUpData] = useState()
+
     const [state, setState] = useState({
         _id: "",
         category_wise_sales_and_spend_target: [],
@@ -45,6 +48,7 @@ const BudgetContainer = (props) => {
     }, [])
     useEffect(() => {
         const token = localStorage.getItem("token");
+        setLoading(true);
         axios.post(`${BASE_URL}clientMonthlyConfig/monthlyBudget?brandId=${current_brand._id}`, {
             time_stamp: searchDate
         },
@@ -61,7 +65,9 @@ const BudgetContainer = (props) => {
                 category_wise_sales_and_spend_target_deal_days,
                 category_wise_sales_and_spend_target_business_as_usual
             })
+            setLoading(false);
         }).catch(function (error) {
+            setLoading(false);
             NotificationManager.error(error.response.data.data.message, 'Error', 2000);
             setState({
                 _id: "",
@@ -75,12 +81,14 @@ const BudgetContainer = (props) => {
     const [gridHeight, setGridHeight] = useState();
     useEffect(() => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24 + 10);
+        //HEADER height + padding + Title+padding bottom + button top margin + button container
+        const netHeight = height - (HEADER.height + 20 + 32 + 5 + 24 + 42);
         setGridHeight(netHeight)
     }, [])
     window.addEventListener('resize', () => {
         const height = window.innerHeight
-        const netHeight = height - (49 + 40 + 32 + 42 + 24 + 10);
+        //HEADER height + padding + Title+padding bottom + button top margin + button container
+        const netHeight = height - (HEADER.height + 20 + 32 + 5 + 24 + 42);
         setGridHeight(netHeight)
     });
     //
@@ -101,18 +109,16 @@ const BudgetContainer = (props) => {
                 el.spend = spend
             }
         })
-        // setState({ _id: "", category_wise_sales_and_spend_target: [] });
+
         axios.put(`${BASE_URL}clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_deal_days: arr }, {
             headers: { token }
         }).then(function (response) {
             const { category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual, _id } = response.data.data.clientMonthlyConfig;
             setState({ _id: _id, category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual });
-            // closePopUp();
+        }).catch(function (error) {
+            console.log(error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 2000);
         })
-            .catch(function (error) {
-                console.log(error.response.data.data.message);
-                NotificationManager.error(error.response.data.data.message, 'Error', 2000);
-            })
     }
 
     const onRowElSaveBusinessAsUsual = (e) => {
@@ -125,18 +131,16 @@ const BudgetContainer = (props) => {
                 el.spend = spend
             }
         })
-        // setState({ _id: "", category_wise_sales_and_spend_target: [] });
+
         axios.put(`${BASE_URL}clientMonthlyConfig/${state._id}`, { category_wise_sales_and_spend_target_business_as_usual: arr }, {
             headers: { token }
         }).then(function (response) {
             const { category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual, _id } = response.data.data.clientMonthlyConfig;
             setState({ _id: _id, category_wise_sales_and_spend_target_deal_days, category_wise_sales_and_spend_target_business_as_usual });
-            // closePopUp();
+        }).catch(function (error) {
+            console.log(error.response.data.data.message);
+            NotificationManager.error(error.response.data.data.message, 'Error', 2000);
         })
-            .catch(function (error) {
-                console.log(error.response.data.data.message);
-                NotificationManager.error(error.response.data.data.message, 'Error', 2000);
-            })
     }
     const brandConfigEditToggle = () => {
         const token = localStorage.getItem("token");
@@ -411,7 +415,7 @@ const BudgetContainer = (props) => {
     return (
         <div className="salesSpendContainer" >
             <div className="salesSpendContainerHeader" >
-                <h3 style={{ fontSize: "18px", color: "#1565C0" }} >Category wise Sales & Spend Target.</h3>
+                <Title>Category wise Sales & Spend Target.</Title>
                 <div className="salesSpendContainerDateContainer" >
                     <select onChange={searchDateFn} className="form-select form-select-sm" aria-label=".form-select-sm example">
                         {
@@ -425,93 +429,33 @@ const BudgetContainer = (props) => {
                 </div>
             </div>
 
-            <div className="budgetAccordianContainer" style={{ height: gridHeight }} >
-                {/* <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOneBudget">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOneBudget" aria-expanded="false" aria-controls="collapseOneBudget">
-                                Deal Days
-                            </button>
-                        </h2>
-                        <div id="collapseOneBudget" class="accordion-collapse collapse show" aria-labelledby="headingOneBudget" data-bs-parent="#accordionExample">
-                            <div class="accordion-body budget-accordion-body">
-                                <Grid
-                                    headerArray={headerArrayDealDays}
-                                    rowArray={state.category_wise_sales_and_spend_target_deal_days}
-                                    tableHeight={gridHeight - 80}
-                                />
-                            </div>
+            {
+                loading ? <div style={{ height: gridHeight }} ><Loader /></div> : (
+                    <div className="budgetAccordianContainer" style={{ height: gridHeight }} >
+                        <div className="accordianElementContainer" >
+                            <Accordian
+                                accordianHeaderText="Deal Days"
+                                accordianHeaderHeight={40}
+                                accordianBodyComponent={DealDaysAccordianBody}
+                                accordianBodyHeight={(gridHeight - 120)}
+                            />
+                        </div>
+                        <div className="accordianElementContainer" >
+                            <Accordian
+                                accordianHeaderText="Business As Usual"
+                                accordianHeaderHeight={40}
+                                accordianBodyComponent={businessAsUsual}
+                                accordianBodyHeight={(gridHeight - 120)}
+                            />
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwoBudget">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwoBudget" aria-expanded="false" aria-controls="collapseTwoBudget">
-                                Business As Usual
-                            </button>
-                        </h2>
-                        <div id="collapseTwoBudget" class="accordion-collapse collapse" aria-labelledby="headingTwoBudget" data-bs-parent="#accordionExample">
-                            <div class="accordion-body budget-accordion-body">
-                                <Grid
-                                    headerArray={headerArrayBusinessAsUsual}
-                                    rowArray={state.category_wise_sales_and_spend_target_business_as_usual}
-                                    tableHeight={gridHeight - 80}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-                <div className="accordianElementContainer" >
-                    <Accordian
-                        accordianHeaderText="Deal Days"
-                        accordianHeaderHeight={40}
-                        accordianBodyComponent={DealDaysAccordianBody}
-                        accordianBodyHeight={(gridHeight - 80)}
-                    />
-                </div>
-
-                <div className="accordianElementContainer" >
-                    <Accordian
-                        accordianHeaderText="Business As Usual"
-                        accordianHeaderHeight={40}
-                        accordianBodyComponent={businessAsUsual}
-                        accordianBodyHeight={(gridHeight - 80)}
-                    />
-                </div>
-
-            </div>
+                )
+            }
 
             <div className="nextButtonContainer" >
                 <button onClick={() => { props.changeOnBoardingEl("Seller") }} type="button" className="btn btn-secondary btn-sm">Back</button>
                 <button style={{ marginLeft: 20 }} onClick={brandConfigEditToggle} type="button" className="btn btn-primary btn-sm">Save</button>
             </div>
-
-
-            {
-                // popUp && (<div className="editPopUp"  >
-                //     <form >
-                //         <div className="form-group">
-                //             <label for="inputCategory">Category</label>
-                //             <input disabled type="text" value={popUpData.category} className="form-control" id="inputCategory" placeholder="Input Category"></input>
-                //         </div>
-                //         <div className="form-group">
-                //             <label for="monthlyBudget">AD Sales Target</label>
-                //             <input type="number" value={popUpData.ad_sales} name="ad_sales" onChange={onInputChange} className="form-control" id="monthlyBudget" placeholder="AD Sales Target"></input>
-                //         </div>
-                //         <div className="form-group">
-                //             <label for="targetAcos">Spend Target</label>
-                //             <input type="number" value={popUpData.spend} name="spend" onChange={onInputChange} className="form-control" id="targetAcos" placeholder="Spend Target"></input>
-                //         </div>
-                //     </form>
-                //     <div className="editPopUpButtonsContainer" >
-                //         <div className="editPopUpButtons" style={{ display: "flex" }} >
-                //             <button style={{ marginRight: "20px" }} type="button" onClick={closePopUp} className="btn btn-warning btn-sm">Cancel</button>
-                //         </div>
-                //         <div className="editPopUpButtons" style={{ display: "flex" }} >
-                //             <button type="button" onClick={onSave} className="btn btn-primary btn-sm">Save</button>
-                //         </div>
-                //     </div>
-                // </div>)
-            }
             <NotificationContainer />
         </div>
     )

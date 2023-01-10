@@ -1,7 +1,7 @@
 .dashboardsRight {
   height: 100%;
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   padding-left: 0px;
   width: calc(100% - 300px);
   /* background-color: #eeeeee; */

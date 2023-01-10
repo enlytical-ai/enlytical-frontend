@@ -354,12 +354,15 @@ const DashboardsContainer = () => {
           {container === "powerBiReports" && currentReport !== "" && (
             <PowerBiDashboardContainer currentDashboard={currentReport} />
           )}
+
           {container === "onBoarding" && (
             <OnBoardingContainer
               changeOnBoardingEl={changeOnBoardingEl}
               currentOnBoardingEl={currentOnBoardingEl}
             />
           )}
+
+
           {container === "advertisingReport" && <AdvertisingReportContainer />}
         </div>
       </DashboardsRight>
