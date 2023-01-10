@@ -122,14 +122,6 @@ const CompetitionConfirmation = () => {
         })
     }
 
-    // const isChecked = (value) => value === strategy
-
-    // console.log(comp);
-    // console.log(comp.targeting_strategy);
-    // if (strategy === comp.targeting_strategy) {
-    //     setStrategy(strategy)
-    // }
-
     const handleChange = (e, cat, comp) => {
         console.log(e.target.value, cat, comp);
         let cat_array = [...state.category_array];
